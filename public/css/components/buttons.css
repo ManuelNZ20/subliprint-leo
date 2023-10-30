@@ -1,0 +1,70 @@
+:root{
+    --btn-color:rgba(203, 147, 81, 1);
+}
+/* interactiones de color del boton landing page */
+.btn.background-general {
+    background-color:var(--btn-color);
+    color:white;
+}
+.btn.background-general:hover{
+    border:.1px solid rgba(203, 147, 81, 0.8);
+    color:rgba(203, 147, 81, 1);
+}
+.btn.background-general:active{
+    background-color:rgba(203, 147, 81, 0.8);
+}
+/* interancines de botones header */
+/* cuando el usuario da click */
+.btn-landing-page{
+    background-color:var(--btn-color);
+    color:white;
+}
+/* LINKS STYLES */
+.link-landing-page {
+    color: var(--btn-color);
+    text-decoration: none;
+}
+.link-landing-page:hover {
+    color: var(--btn-color);
+
+}
+/* cuando el usuario pasa sobre el link */
+
+/* cuando el usuario pasa sobre el boton */
+.btn.btn-landing-page:hover{
+    border:.1px solid rgba(203, 147, 81, 0.8);
+    color:rgba(203, 147, 81, 1);
+}
+/* cuando el usuario da click */
+.btn.btn-landing-page:active{
+    background-color:rgba(203, 147, 81, 0.8);
+}
+.btn.btn-cart:active {
+    border:none;
+}
+.nav-item {
+    margin:0px 10px;
+    padding:5px 10px;
+    border-radius: 10px;
+}
+/* nav-list item sider */
+.nav-item:hover {
+    background-color: rgba(240, 238, 236, 0.8);
+}
+
+/* listgroud main */
+.list-group-item-title {
+    background-color: var(--btn-color);
+    color:white
+}
+
+@media(max-width:500px) {
+    .btn-landing-page {
+        display: none;
+    }
+}
+@media(max-width:320px) {
+    .cart-btn {
+        display: none;
+    }
+} 

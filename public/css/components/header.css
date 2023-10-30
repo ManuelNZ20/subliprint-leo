@@ -1,0 +1,6 @@
+@import url('../main.css');
+
+.background-header {
+    background-color:var(--background-color-components-1);;
+}
+

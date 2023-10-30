@@ -1,0 +1,22 @@
+/* components */
+@import url('../css/components/buttons.css');
+@import url('../css/components/header.css');
+@import url('../css/components/app.css');
+@import url('../css/components/carousel.css');
+@import url('../css/components/cards.css');
+@import url('../css/components/footer.css');
+/* icons bootstrap */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css");
+
+/* colors */
+:root {
+    --background-color-components-1:rgba(203, 147, 81, 1);
+}
+
+/* media index.php */
+@media(max-width:1300px) {
+    .w-25.list-category {
+        display: block;
+    }
+
+}
