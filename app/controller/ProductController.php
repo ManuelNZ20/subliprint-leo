@@ -8,6 +8,10 @@ class ProductController
         // echo "Página de productos";
         
         $title = 'Productos';
+        // $data = [
+        //     'title' => 'Productos'
+        // ];
+        // extract($data);
         include '../app/views/products/products.php';
     }
 

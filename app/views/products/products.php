@@ -25,7 +25,7 @@
     <h1>Listar Productos</h1>
     <h1>Listar Productos</h1>
     <h1>Listar Productos</h1>
-    <h1><?= $title ?></h1>
+    <h1><?php var_dump($title); ?></h1>
     <h1>Listar Productos</h1>
     <h1>Listar Productoss</h1>
 </main>

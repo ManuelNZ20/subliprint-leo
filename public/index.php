@@ -7,8 +7,9 @@ $router = new Router();
 
 // Define rutas
 $router->get('/roberto-cotlear/public/', 'HomeController@index');
-$router->get('/roberto-cotlear/app/views/products/', 'ProductController@index');
-// $router->get('/products/(\d+)', 'ProductController@show');
+// $router->get('/roberto-cotlear/app/views/products/', 'ProductController@index');
+// $router->get('/roberto-cotlear/app/views/products/show', 'ProductController@show');
+
 
 // Ejecuta el enrutador
 $router->run();

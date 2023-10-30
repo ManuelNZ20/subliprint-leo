@@ -22,10 +22,21 @@
   ?>   
 <!-- main -->
 <main class="container pt-4">
+    <?php
+      include '../../../app/controller/ProviderController.php';
+      $provider = new ProviderController();
+
+    ?>
     <h1>VISTA DE PROVEEDORES</h1>
     <h1>VISTA DE PROVEEDORES</h1>
     <h1>VISTA DE PROVEEDORES</h1>
     <h1>VISTA DE PROVEEDORES</h1>
+    <h1><?php
+      // echo $provider->getCategory();
+      foreach($provider->getCategory() as $category) {
+        echo $category['nameCategory'];
+      }
+    ?></h1>
     <h1>VISTA DE PROVEEDORES</h1>
 </main>
 <!-- footer -->
