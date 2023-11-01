@@ -1,14 +1,27 @@
 <?php
-include '../../../app/model/ProviderModel.php';
+require __DIR__.'/../model/ProviderModel.php';
 
-$contollerProvider = new ProviderController();
-
+$controllerProvider = new ProviderController();
 // crear proveedor
-if(isset($_POST['createProvider'])) {
-    $contollerProvider -> createProvider();
-    return;
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if(isset($_POST['btnProvider'])) {
+        if($_POST['btnProvider']=='Crear') {
+            $controllerProvider -> createProvider();
+            header('Location: '.'../../app/views/admin/providers.php');
+        }elseif($_POST['btnProvider']=='Guardar') {
+            $id = $_GET['id'];
+            $controllerProvider -> updateProvider($id);
+            header('Location: '.'../../app/views/admin/providers.php');
+        }
+    }    
+}else {
+    if(isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $provider = $controllerProvider -> deleteProvider($id);
+        header('Location: '.'../../app/views/admin/providers.php');
+    }
 }
-
+// eliminar proveedor
 
 class ProviderController {
     private $providerModel;
@@ -18,14 +31,43 @@ class ProviderController {
     }
 
     public function index() {
-        include '../app/views/admin/providers.php';
+        require '../app/views/admin/providers.php';
     }
 
     public function getProvider() {
         $providers = $this -> providerModel -> getProvider();
         return $providers;
     }
+    // buscar al proveedor por id
+    public function getProviderById($id) {
+        $provider = $this -> providerModel -> getProviderById($id);
+        return $provider;
+    }
 
+
+    public function filterProvider() {
+        $providers = $this -> providerModel -> filterProvider();
+        return $providers;
+    }
+    // buscar proveedor
+    public function searchProvider() {
+        // mostrar todos los proveedores
+        // conocer que es un método get y que no se ha enviado el formulario
+        $providers = $this -> providerModel -> getProvider();
+        if($_SERVER['REQUEST_METHOD'] == 'GET') {
+            if(isset($_GET['search-provider'])) 
+            {
+            // llamar al metodo searchProvider del modelo
+            $providers = $this -> providerModel -> searchProvider();
+            }elseif (isset($_GET['filter-provider'])) {
+                $providers = $this -> providerModel -> filterProvider();
+            }elseif (isset($_GET['all-provider'])) {
+                $providers = $this -> providerModel -> getProvider();
+            }
+        } 
+        // buscar proveedor si se ha enviado el formulario
+        return $providers;
+    }
     // test listCategory
     public function getCategory() {
         $categories = $this -> providerModel -> getCategory();
@@ -33,27 +75,94 @@ class ProviderController {
     }
 
     public function createProvider() {
-        if(isset($_POST['name']) && isset($_POST['state']) && isset($_POST['phone']) && isset($_POST['address']) && isset($_POST['email']) && isset($_POST['dateRegister'])) {
-            $name = $_POST['name'];
-            $state = $_POST['state'];
-            $phone = $_POST['phone'];
-            $address = $_POST['address'];
-            $email = $_POST['email'];
-            $dateRegister = $_POST['dateRegister'];
-
-            $create = $this -> providerModel -> createProvider($name, $state, $phone, $address, $email, $dateRegister);
+        if(isset($_POST['nameProvider']) &&
+           isset($_POST['stateProvider']) &&
+           isset($_POST['phoneProvider']) &&
+           isset($_POST['addressProvider']) &&
+           isset($_POST['emailProvider']) &&
+           isset($_POST['dateProvider']) &&
+           isset($_POST['descriptionProvider'])
+           ) {
+            $name = $_POST['nameProvider'];
+            $state = $_POST['stateProvider'];
+            $phone = $_POST['phoneProvider'];
+            $address = $_POST['addressProvider'];
+            $email = $_POST['emailProvider'];
+            $dateRegister = $_POST['dateProvider'];
+            $description = $_POST['descriptionProvider'];
+            $create = $this -> providerModel -> createProvider($name, $state, $phone, $address, $email, $dateRegister,$description);
             if($create) {
-                echo "Proveedor creado";
-                header('Location: ../app/views/admin/providers.php');
-            } else {
-                echo "Error al crear proveedor";
+                echo '<div class="alert alert-success">'.
+                    '<strong>Éxito!</strong> Provider creado exitosamente'.
+                    '</div>';
+                } else {
+                echo '<div class="alert alert-danger">'.
+                '<strong>Error!</strong> No se pudo crear el proveedor Interno'.
+                '</div>';
             }
         } else {
-            echo "Error al crear proveedor";
+            echo '<div class="alert alert-danger">'.
+            '<strong>Error!</strong> No se pudo crear el proveedor Fuera'.
+            '</div>';
+            return;
+        }
+    }
+    // Actualizar al proveedor
+    public function updateProvider($id) {
+        if(isset($_POST['nameProvider']) &&
+            isset($_POST['stateProvider']) &&
+            isset($_POST['phoneProvider']) &&
+            isset($_POST['addressProvider']) &&
+            isset($_POST['emailProvider']) &&
+            isset($_POST['dateProvider']) &&
+            isset($_POST['descriptionProvider'])) {
+
+            $name = $_POST['nameProvider'];
+            $state = $_POST['stateProvider'];
+            $phone = $_POST['phoneProvider'];
+            $address = $_POST['addressProvider'];
+            $email = $_POST['emailProvider'];
+            $dateRegister = $_POST['dateProvider'];
+            $description = $_POST['descriptionProvider'];
+            echo $description;
+            $update = $this -> providerModel -> updateProvider($id, $name, $state, $phone, $address, $email, $dateRegister,$description);
+            if($update) {
+                echo '<div class="alert alert-success">'.
+                    '<strong>Éxito!</strong> Proveedor actualizado exitosamente'.
+                    '</div>';
+                    return;
+                } else {
+                    echo '<div class="alert alert-danger">'.
+                    '<strong>Error!</strong> No se pudo actualizar el proveedor'.
+                    '</div>';
+                    return;
+                }
+            } else {
+                echo '<div class="alert alert-danger">'.
+                '<strong>Error!</strong> No se pudo actualizar el proveedor'.
+                '</div>';
         }
     }
 
-
+    // eliminar proveedor
+    public function deleteProvider($id) {
+        $delete = $this -> providerModel -> deleteProvider($id);
+        if($delete) {
+            echo '<div class="alert alert-success">'.
+                '<strong>Éxito!</strong> Proveedor eliminado exitosamente'.
+                '</div>';
+                return;
+            } else {
+                echo '<div class="alert alert-danger">'.
+                '<strong>Error!</strong> No se pudo eliminar el proveedor'.
+                '</div>';
+                return;
+            }
+    }
+    public function paginationProvider($page) {
+        $pagination = $this -> providerModel -> paginationProvider($page);
+        return $pagination;
+    }
 
 }
 

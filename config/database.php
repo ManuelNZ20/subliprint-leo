@@ -1,5 +1,5 @@
 <?php
-include '../../../config/config.php';
+include __DIR__.'../../config/config.php';
 
 class ConnectionDataBase {
     private $con;
@@ -11,10 +11,9 @@ class ConnectionDataBase {
             echo "Error en la conexión";
             exit;
         } else {
-            echo "Conexión exitosa";
+            // echo "Conexión exitosa";
             return;
         }
-        echo '<br>FAKNSKL';
     }
 
     public function getConnection()
