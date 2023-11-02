@@ -1,9 +1,8 @@
 <?php
-require_once '../../../app/controller/ProviderController.php';
-$controller = new ProviderController();
 
-if($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if(isset($_GET['id'])){
+   if(isset($_GET['id'])){
+     include_once '../../../app/controller/ProviderController.php';
+      $controller = new ProviderController();
       $id = $_GET['id'];
       $provider = $controller->getProviderById($id);
       $name = $provider['name'];
@@ -20,7 +19,6 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
       $dateRegister = date('Y-m-d');
       $state = 'all';
     }
-}
 ?>
 
 <!doctype html>
@@ -73,6 +71,8 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
                 <h4 class="col-auto">Fecha de registro:</h4>
                 <h4 class="col-auto"><?php
                     echo $dateRegister;
+                    ?> <?php
+                   
                     ?>
                 </h4>
             </div>

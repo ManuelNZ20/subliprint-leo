@@ -114,8 +114,8 @@ class ProviderModel {
         $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $categories;
     }
-    public function paginationProvider($page) {
-        $sql = "SELECT * FROM providers LIMIT $page, 5";
+    public function paginationProvider($pageInit, $pageEnd) {
+        $sql = "SELECT * FROM providers LIMIT $pageInit, $pageEnd";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
         $stmt->execute();
         $providers = $stmt->fetchAll(PDO::FETCH_ASSOC);

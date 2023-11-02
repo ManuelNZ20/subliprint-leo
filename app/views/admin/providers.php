@@ -64,7 +64,31 @@
     <h4 class="col-2">N° <?=  count($provider->getProvider())?></h4>
   </div>
   <hr>
-  <div class="table-responsive"  style="height:500px;">
+ 
+  <?php
+    if(!empty($_REQUEST['page'])) {
+      $_REQUEST['page'] = $_REQUEST['page'];
+    } else {
+      $_REQUEST['page'] = "1";
+    }
+    if($_REQUEST['page'] == 1) {
+      $previous = "1";
+    }
+    $totalPages = count($provider->getProvider());// cuenta el total de registros
+    $registros = 8 -1 ; // cantidad de registros por pagina menos 1
+    $page = $_REQUEST['page']; // pagina actual
+    if(is_numeric($page)) { // comprueba si la pagina es un numero
+      $inicio = (($page - 1) * $registros); // toma la pagina actual y la multiplica por la cantidad de registros por pagina
+      $totalPages = ceil($totalPages / $registros); // redondea un numero hacia arriba
+      $providerPage = $provider->paginationProvider($inicio, $registros); // llama al metodo pagination
+      $next = $_REQUEST['page'] + 1; // suma 1 a la pagina actual
+      $previous = $_REQUEST['page'] - 1; // resta 1 a la pagina actual
+    }else {
+      $providerPage = $provider-> paginationProvider(0, $registros);// muestra la pagina 1
+      $page = ceil($totalPages / $registros);// redondea un numero hacia arriba
+    }
+  ?>
+  <div class="table-responsive rs-2"  style="">
     <table class="table table-sm table-hover">
       <thead class="table-dark">
       <tr>
@@ -80,7 +104,7 @@
     </thead>
     <tbody id="content" name="content" class="">
     <?php
-      foreach($provider->searchProvider() as $value) {
+      foreach($providerPage as $value) {
         ?>
           <tr>
             <th scope="row"><?= $value['idProvider']?></th>
@@ -91,33 +115,52 @@
             <td class="text-truncate"><?= $value['email']?></td>
             <td class="text-truncate"><?= $value['dateRegister']?></td>
             <td class="">
-                <a class="col me-2 btn btn-outline-secondary" href="../../../app/views/admin/FormProvider.php?id=<?=$value['idProvider']?>" ><i class="bi bi-pencil" >
-              </i> Editar
-              </a>
+              <a href="../../../app/views/admin/FormProvider.php?id=<?=$value['idProvider']?>" class="col me-2 btn btn-outline-secondary"><i class="bi bi-pencil" >
+              </i> Editar</a>
             </td>
-              <td class="">
-                <a href="../../../app/controller/ProviderController.php?id=<?= $value['idProvider'] ?>" class="col me-2 btn btn-outline-secondary"><i class="bi bi-trash3"></i> Eliminar</a>
-              </td>
+            <td class="">
+              <form action="../../../app/controller/ProviderController.php?id=<?= $value['idProvider'] ?>" method="POST">
+                <button class="col me-2 btn btn-outline-secondary" name="btnDelete" ><i class="bi bi-trash3"></i> Eliminar
+              </button>
+              </form>
+            <!-- ../../../app/views/admin/FormProvider.php -->
+            </td>
           </tr>
               <?php
             }
             ?>
-            
     </tbody>
   </table>
   </div>
-  <?php
-    if(!empty($_REQUEST['page'])) {
-      $_REQUEST['page'] = $_REQUEST['page'];
-    } else {
-      $_REQUEST['page'] = "1";
-    }
-    if($_REQUEST['page'] == 1) {
-      $previous = "1";
-    }
-    $totalPages = count($provider->getProvider());
-    
-  ?>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item">
+        <?php
+            if($_REQUEST['page'] == 1) {
+              $_REQUEST['page'] = 0;
+            } else {
+              if($page > 1 ) {
+                $previous = $_REQUEST['page'] - 1;
+        ?>
+              <a class="page-link link-secondary" href="?page=<?=$previous ?>" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+        <?php
+              }
+            }
+        ?>
+      </li>
+        <?php
+          for($i = 1; $i <= $totalPages; $i++) {
+            if($page == $i) {
+              echo '<li class="page-item"><a class="page-link link-secondary" href="?page='.$i.'">'.$i.'</a></li>';
+            } else {
+              echo '<li class="page-item"><a class="page-link link-secondary" href="?page='.$i.'">'.$i.'</a></li>';
+            }
+          }
+        ?>
+    </ul>
+  </nav>
 </main>
 <!-- Script -->
   <!-- Bootstrap JavaScript Libraries -->  

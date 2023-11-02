@@ -1,6 +1,5 @@
 <?php
 require __DIR__.'/../model/ProviderModel.php';
-
 $controllerProvider = new ProviderController();
 // crear proveedor
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -13,16 +12,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $controllerProvider -> updateProvider($id);
             header('Location: '.'../../app/views/admin/providers.php');
         }
-    }    
-}else {
-    if(isset($_GET['id'])) {
-        $id = $_GET['id'];
-        $provider = $controllerProvider -> deleteProvider($id);
-        header('Location: '.'../../app/views/admin/providers.php');
+    } 
+    // eliminar proveedor
+    if (isset($_POST['btnDelete'])) { // si se ha enviado el formulario
+        $id = $_GET['id']; // obtener el id del proveedor
+        $controllerProvider->deleteProvider($id); // llamar al metodo deleteProvider del controlador
+        header('Location: ../../app/views/admin/providers.php'); // redireccionar a la vista de proveedores
     }
 }
-// eliminar proveedor
 
+
+// eliminar proveedor
 class ProviderController {
     private $providerModel;
 
@@ -53,6 +53,7 @@ class ProviderController {
     public function searchProvider() {
         // mostrar todos los proveedores
         // conocer que es un método get y que no se ha enviado el formulario
+
         $providers = $this -> providerModel -> getProvider();
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
             if(isset($_GET['search-provider'])) 
@@ -159,8 +160,18 @@ class ProviderController {
                 return;
             }
     }
-    public function paginationProvider($page) {
-        $pagination = $this -> providerModel -> paginationProvider($page);
+    public function paginationProvider($pageInit, $pageEnd) {
+        $pagination = $this -> providerModel -> paginationProvider($pageInit, $pageEnd);
+        if($_SERVER['REQUEST_METHOD'] == 'GET') {
+            if(isset($_GET['search-provider'])) {
+                // llamar al metodo searchProvider del modelo
+                $pagination = $this -> providerModel -> searchProvider();
+            }elseif (isset($_GET['filter-provider'])) {
+                $pagination = $this -> providerModel -> filterProvider();
+            }elseif (isset($_GET['all-provider'])) {
+                $pagination = $this -> providerModel -> paginationProvider($pageInit, $pageEnd);
+            }
+        } 
         return $pagination;
     }
 
