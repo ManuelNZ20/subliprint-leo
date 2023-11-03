@@ -1,7 +1,5 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
   <title>Roberto Cotlear</title>
   <!-- Required meta tags -->
@@ -13,8 +11,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../../../public/css/main.css">
 </head>
-
-
 <body>
   <!-- header -->
   <?php
@@ -34,7 +30,6 @@
             <div class="input-group mb-3">
               <input type="search" class="form-control" placeholder="Nombre del proveedor" aria-label="Search" aria-describedby="basic-addon1" name="term" id="term">
               <button type="submit" class="btn btn-outline-secondary" id="basic-addon1" name="search-provider">Buscar</button>
-            
             </div>
           </form>
         </div>
@@ -52,7 +47,7 @@
             </form>
         </div>
         <div class="col col-lg-2 mb-2">
-            <a class="btn btn-outline-secondary"  href="../../../app/views/admin/FormProvider.php">
+            <a class="btn btn-outline-secondary w-100"  href="../../../app/views/admin/FormProvider.php">
                     Crear Proveedor
             </a>
         </div>
@@ -60,19 +55,19 @@
   </div>
   <br>
   <div class="row justify-content-between">
-    <h4 class="col-2 "><span class="">Proveedores</span></h4>
-    <h4 class="col-2">N° <?=  count($provider->getProvider())?></h4>
+    <h4 class="col"><span class="">Proveedores</span></h4>
+    <h4 class="col text-end">N° <?=  count($provider->getProvider())?></h4>
   </div>
   <hr>
- 
+
   <?php
-    if(!empty($_REQUEST['page'])) {
-      $_REQUEST['page'] = $_REQUEST['page'];
+    if(!empty($_REQUEST['page'])) { // comprueba si la variable page esta vacia
+      $_REQUEST['page'] = $_REQUEST['page']; // si no esta vacia pasa el valor de la variable page a $page
     } else {
-      $_REQUEST['page'] = "1";
+      $_REQUEST['page'] = "1"; // si esta vacia el valor de la variable page es 1
     }
     if($_REQUEST['page'] == 1) {
-      $previous = "1";
+      $previous = "1"; // si la variable page es 1 el valor de previous es 1
     }
     $totalPages = count($provider->getProvider());// cuenta el total de registros
     $registros = 8 -1 ; // cantidad de registros por pagina menos 1
@@ -88,7 +83,7 @@
       $page = ceil($totalPages / $registros);// redondea un numero hacia arriba
     }
   ?>
-  <div class="table-responsive rs-2"  style="">
+  <div class="table-responsive mb-5"  style="">
     <table class="table table-sm table-hover">
       <thead class="table-dark">
       <tr>
@@ -97,23 +92,62 @@
         <th scope="col">Estado</th>
         <th scope="col">Teléfono</th>
         <th scope="col">Dirección</th>
+        <th scope="col">Correo</th>
         <th scope="col">Registro</th>
-        <th scope="col">Descripción</th>
-        <th colspan="2" scope="col">Acción</th>
+        <th class="text-center" colspan="2" scope="col">Acción</th>
       </tr>
     </thead>
     <tbody id="content" name="content" class="">
     <?php
       foreach($providerPage as $value) {
         ?>
+        <!-- <span class="d-inline-block text-truncate"  style="max-width: 150px;">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo laboriosam facere quasi, molestias, aut perspiciatis ipsa, exercitationem odio labore obcaecati corporis! Animi accusantium hic, qui quidem eos a? Obcaecati, temporibus?
+            </span> -->
           <tr>
-            <th scope="row"><?= $value['idProvider']?></th>
-            <td class="text-truncate"><?= $value['name']?></td>
-            <td class="text-truncate"><?= $value['state']?></td>
-            <td class="text-truncate"><?= $value['phone']?></td>
-            <td class="text-truncate"><?= $value['address']?></td>
-            <td class="text-truncate"><?= $value['email']?></td>
-            <td class="text-truncate"><?= $value['dateRegister']?></td>
+            <th class="align-middle" scope="row">
+              <?= $value['idProvider']?>
+            </th>
+            <td class="align-middle">
+              <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                <?= $value['name']?>
+              </span>
+            </td>
+            <td class="align-middle">
+              <?php
+                if($value['state']=='activo') { // comprueba si el estado es activo
+                  ?>
+                  <i class="bi bi-circle text-success"></i>
+                  <span class="text-success"><?= ucfirst($value['state']);?></span>
+                  <?php
+                } else { // si no es activo es inactivo
+                  ?>
+                  <i class="bi bi-circle text-danger"></i>
+                  <span class="text-danger"><?= ucfirst($value['state']);?></span>
+                  <?php
+                }
+                ?>
+            </td>
+            <td class="align-middle">
+              <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                <?= $value['phone']?>
+              </span>
+            </td>
+            <td class="align-middle">
+              <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                <?= $value['address']?>
+              </span>
+            </td>
+            <td class="align-middle">
+              <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                <?= $value['email']?>
+              </span>
+            </td>
+            <td class="align-middle">
+              <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                <?= $value['dateRegister']?>
+              </span>
+            </td>
             <td class="">
               <a href="../../../app/views/admin/FormProvider.php?id=<?=$value['idProvider']?>" class="col me-2 btn btn-outline-secondary"><i class="bi bi-pencil" >
               </i> Editar</a>
@@ -167,6 +201,4 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
-
 </html>
-

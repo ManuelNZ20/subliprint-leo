@@ -106,14 +106,7 @@ class ProviderModel {
         $provider = $stmt->fetch(PDO::FETCH_ASSOC);
         return $provider;
     }
-    // test para determinar la conexión con la base de datos
-    public function getCategory() {
-        $sql = "SELECT * FROM category";
-        $stmt = $this->dbCon->getConnection()->prepare($sql);
-        $stmt->execute();
-        $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $categories;
-    }
+   
     public function paginationProvider($pageInit, $pageEnd) {
         $sql = "SELECT * FROM providers LIMIT $pageInit, $pageEnd";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
