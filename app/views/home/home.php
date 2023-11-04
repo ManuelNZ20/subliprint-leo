@@ -26,7 +26,6 @@
       </div>
     </div>
     <!-- cards -->
-    <h1><?php //$title ?></h1>
     <div class="row">
       <?php
         include('../app/views/layout/cards.php');
@@ -35,7 +34,6 @@
         // include '../config/database.php'; conexión e
       ?>
     </div>
-
     <div class="card-group mt-3 shadow-sm rounded">
       <div class="card">
         <div class="card-body">

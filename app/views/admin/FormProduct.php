@@ -1,5 +1,4 @@
 <?php
-
    if(isset($_GET['id'])){
      include_once '../../../app/controller/ProductController.php';
       $controller = new ProviderController();
@@ -12,10 +11,8 @@
       $providers = 'all';
     }
 ?>
-
 <!doctype html>
 <html lang="en">
-
 <head>
   <title>Roberto Cotlear</title>
   <!-- Required meta tags -->
@@ -27,8 +24,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../../../public/css/main.css">
 </head>
-
-
 <body>
   <!-- header -->
   <?php
@@ -72,16 +67,12 @@
   <hr>
   </div>
   <form class="row g-3" action="../../../app/controller/ProviderController.php?id=<?= ($id!=0)?$id:''; ?>" method="POST">
-
   <!--  Nombre -->
   <div class="col-md-6">
       <label for="nameProvider" class="form-label">Nombre</label>
       <input type="text" class="form-control" id="nameProvider" name="nameProvider" value="<?= ($id>0)?$name:'';?>" required>
     </div>
-    <!--  Categoría -->
-   
-
-  <!-- Cantidad -->
+   <!--  Categoría -->
   <div class="col-md-3">
     <label for="emailProvider" class="form-label">Cantidad</label>
     <input type="email" class="form-control" id="emailProvider" name="emailProvider" value="<?= ($id>0)?$email:'';?>" required>
@@ -132,12 +123,8 @@
         <hr>
         <img class="img " src="../../../public/img/img-home.png" alt="imagen" style="border-radius:10px; width:270px;">
     </div>
-  
     <div class="col-md-8">
-   
     </div>
-   
-    
   <!-- buttons -->
   <div class="col-12 text-end">
     <button id="btnProvider" class="col-3 btn btn-outline-secondary"  name="btnProvider" value="<?= ($id!=0)?'Guardar':'Crear'; ?>">
@@ -154,9 +141,7 @@
     </a>
   </div>
 </form>
-  
 </main>
-<!-- Script -->
   <!-- Bootstrap JavaScript Libraries -->  
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>

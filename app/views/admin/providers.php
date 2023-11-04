@@ -59,7 +59,6 @@
     <h4 class="col text-end">N° <?=  count($provider->getProvider())?></h4>
   </div>
   <hr>
-
   <?php
     if(!empty($_REQUEST['page'])) { // comprueba si la variable page esta vacia
       $_REQUEST['page'] = $_REQUEST['page']; // si no esta vacia pasa el valor de la variable page a $page
@@ -101,9 +100,6 @@
     <?php
       foreach($providerPage as $value) {
         ?>
-        <!-- <span class="d-inline-block text-truncate"  style="max-width: 150px;">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo laboriosam facere quasi, molestias, aut perspiciatis ipsa, exercitationem odio labore obcaecati corporis! Animi accusantium hic, qui quidem eos a? Obcaecati, temporibus?
-            </span> -->
           <tr>
             <th class="align-middle" scope="row">
               <?= $value['idProvider']?>

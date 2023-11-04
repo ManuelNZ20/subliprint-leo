@@ -1,6 +1,4 @@
 <?php
-
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -16,8 +14,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../../../public/css/main.css">
 </head>
-
-
 <body>
   <!-- header -->
   <?php
@@ -45,7 +41,6 @@
           <div class="input-group mb-3">
             <select class="form-select" aria-label="Default select example" name="filterCategory" id="filterCategory">
                 <option value="all" selected>Seleccionar</option>
-                
                 <?php
                 foreach($category->getCategory() as $category) {
                   if($category['statusCategory'] == 'activo') {

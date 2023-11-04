@@ -20,8 +20,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         header('Location: ../../app/views/admin/providers.php'); // redireccionar a la vista de proveedores
     }
 }
-
-
 // eliminar proveedor
 class ProviderController {
     private $providerModel;
@@ -44,7 +42,6 @@ class ProviderController {
         return $provider;
     }
 
-
     public function filterProvider() {
         $providers = $this -> providerModel -> filterProvider();
         return $providers;
@@ -53,7 +50,6 @@ class ProviderController {
     public function searchProvider() {
         // mostrar todos los proveedores
         // conocer que es un método get y que no se ha enviado el formulario
-
         $providers = $this -> providerModel -> getProvider();
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
             if(isset($_GET['search-provider'])) 
@@ -108,6 +104,7 @@ class ProviderController {
             return;
         }
     }
+
     // Actualizar al proveedor
     public function updateProvider($id) {
         if(isset($_POST['nameProvider']) &&
@@ -160,6 +157,7 @@ class ProviderController {
                 return;
             }
     }
+
     public function paginationProvider($pageInit, $pageEnd) {
         $pagination = $this -> providerModel -> paginationProvider($pageInit, $pageEnd);
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
