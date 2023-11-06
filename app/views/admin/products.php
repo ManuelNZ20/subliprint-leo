@@ -1,4 +1,12 @@
 <?php
+  require_once('../../../app/controller/ProductController.php');
+  require_once('../../../app/controller/CategoryController.php');
+
+  if(isset($_GET['id']) && !empty($_GET['id'])) {
+    $idInventory = $_GET['id'];
+  } else {
+    $idInventory = 0;
+  }
 ?>
 <!doctype html>
 <html lang="en">
@@ -20,15 +28,18 @@
     require_once('../../../app/views/layout/header.php');
   ?>   
 <!-- main -->
-<main class="container pt-4">
+<main class="container pt-4 pb-4">
   <?php
-      require_once('../../../app/controller/CategoryController.php');
       $category = new CategoryController();
+      $productController = new ProductController();
       $id = 0;
     ?>
   <div class="container pt-5">
     <div class="row ">
-    <div class="col  mb-2">
+      <div class="col-md-auto mb-2">
+        <a href="../../../app/views/admin/inventory.php" class="btn btn-outline-secondary w-100 row"><i class="bi bi-arrow-left"></i> <b>Volver</b></a>
+      </div>
+       <div class="col mb-2">
           <form action="" class="" role="search" method="GET">
             <div class="input-group mb-3">
               <input type="search" class="form-control" placeholder="Nombre del producto" aria-label="Search" aria-describedby="basic-addon1" name="term" id="term">
@@ -55,20 +66,21 @@
             </form>
         </div>
         <div class="col-md-2 mb-2">
-            <a class="btn btn-outline-secondary w-100"  href="../../../app/views/admin/FormProduct.php">
-                    Crear Producto
+            <a class="btn btn-outline-secondary w-100"  href="../../../app/views/admin/FormProduct.php"><i class="bi bi-box-seam"></i> Crear Producto
             </a>
         </div>
     </div>
   </div>
   <br>
   <div class="row justify-content-between">
-    <h4 class="col"><span class="">Productos</span></h4>
-    <h4 class="col text-end"><i class="bi bi-box"></i> N° 10</h4>
+    <h4 class="col-md-2 text-truncate"><span class=" align-middle"><i class="bi bi-box-seam"></i> Productos</span></h4>
+    <h4 class="col-md-2 text-truncate"><span class="align-middle"><i class="bi bi-box"></i> Inventario <?= $idInventory ?></span></h4>
+    <h4 class="col text-end"><span class="align-middle">N° <?=$productController->countProducts($idInventory)?></span>
+    </h4>
   </div>
   <hr>
   <!-- table products -->
-  <div class="table-responsive mb-5"  style="">
+  <div class="table-responsive mb-5"  style="height:500px;">
     <table class="table table-sm table-hover">
       <thead class="table-dark">
       <tr>
@@ -155,7 +167,6 @@
         ?>
     </ul>
   </nav>
-
 </main>
 <!-- footer -->
 <!-- include('../../../presentation/templates/footer.php'); -->

@@ -32,48 +32,48 @@
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 gap-2">
           <li class="nav-item">
             <a class="nav-link active rounded-pill primary" aria-current="page" href="<?= '/roberto-cotlear/public/'
-            ?>">Inicio</a>
+            ?>"><i class="bi bi-house"></i> Inicio</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active rounded-pill" aria-current="page" href="<?= $url_base.'about/about.php'
-            ?>">Sobre nosotros</a>
+            ?>"><i class="bi bi-people"></i> Sobre nosotros</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active rounded-pill" aria-current="page" href="
-            <?= $url_base.'products/products.php' ?>">Productos</a>
+            <?= $url_base.'products/products.php' ?>"><i class="bi bi-tools"></i> Productos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active rounded-pill" aria-current="page" href="
-            <?= $url_base.'about/contact.php' ?>">Contacto</a>
+            <?= $url_base.'about/contact.php' ?>"><i class="bi bi-envelope-at"></i> Contacto</a>
           </li>
           <!-- Botón de carrito de compras -->
           <li class="nav-item">
-            <a class="nav-link active rounded-pill  d-flex justify-content-between" aria-current="page" href="<?= $url_base.'cart/carts.php' ?> ">Carrito de compras  <span class="badge text-bg-danger">0</span></a>
+            <a class="nav-link active rounded-pill  d-flex justify-content-between" aria-current="page" href="<?= $url_base.'cart/carts.php' ?> "><i class="bi bi-cart3"></i> Carrito de compras  <span class="badge text-bg-danger">0</span></a>
           </li>
           <!-- Configuración de usuario -->
           <li class="nav-item">
             <a class="nav-link active rounded-pill" aria-current="page" href="
-            <?= $url_base.'about/contact.php' ?>">Configuración</a>
+            <?= $url_base.'about/contact.php' ?>"><i class="bi bi-gear"></i> Configuración</a>
           </li>
           <li class="nav-item">
               <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dashboard
+                <i class="bi bi-graph-up"></i> Dashboard
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="<?= $url_base.'admin/admin.php'?>">Inicio</a></li>
+                  <li><a class="dropdown-item" href="<?= $url_base.'admin/admin.php'?>"><i class="bi bi-house"></i> Inicio</a></li>
                   <li><a class="dropdown-item" href="
                   <?= $url_base.'admin/orders.php'?>
-                  ">Pedidos</a></li>
+                  "><i class="bi bi-truck"></i> Pedidos</a></li>
                   <li><a class="dropdown-item" href="
                   <?= $url_base.'admin/users.php'?>
-                  ">Usuarios</a></li>
+                  "><i class="bi bi-person-rolodex"></i> Usuarios</a></li>
                   <li><a class="dropdown-item" href="
                   <?= $url_base.'admin/inventory.php'?>
-                  ">Inventario de productos</a></li>
+                  "><i class="bi bi-box-seam"></i> Inventario de productos</a></li>
                   <li><a class="dropdown-item" href="
                   <?= $url_base.'admin/providers.php'?>
-                  ">Proveedores</a></li>
+                  "><i class="bi bi-boxes"></i> Proveedores</a></li>
                 </ul>
               </div>
             <!-- <a class="nav-link active rounded-pill" aria-current="page" href=" -->

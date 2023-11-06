@@ -1,6 +1,7 @@
 <?php
     require_once('../../../app/controller/ProviderController.php');
     $providerController = new ProviderController();
+    date_default_timezone_set('America/Lima');
     $id = 0;
     $dateRegister = date('Y-m-d');
 ?>

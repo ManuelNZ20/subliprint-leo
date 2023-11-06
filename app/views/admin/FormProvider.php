@@ -1,23 +1,24 @@
 <?php
-   if(isset($_GET['id'])){
-     include_once '../../../app/controller/ProviderController.php';
-      $controller = new ProviderController();
-      $id = $_GET['id'];
-      $provider = $controller->getProviderById($id);
-      $name = $provider['name'];
-      $state = $provider['state'];
-      $phone = $provider['phone'];
-      $address = $provider['address'];
-      $email = $provider['email'];
-      $dateOriginal = $provider['dateRegister'];
-      $dateRegister = date("Y-m-d", strtotime($dateOriginal));
-      $description = $provider['description'];
-      $id = $provider['idProvider'];
-    }else {
-      $id = 0;
-      $dateRegister = date('Y-m-d');
-      $state = 'all';
-    }
+date_default_timezone_set('America/Lima');
+if(isset($_GET['id'])){
+  include_once '../../../app/controller/ProviderController.php';
+  $controller = new ProviderController();
+  $id = $_GET['id'];
+  $provider = $controller->getProviderById($id);
+  $name = $provider['name'];
+  $state = $provider['state'];
+  $phone = $provider['phone'];
+  $address = $provider['address'];
+  $email = $provider['email'];
+  $dateOriginal = $provider['dateRegister'];
+  $dateRegister = date("Y-m-d", strtotime($dateOriginal));
+  $description = $provider['description'];
+  $id = $provider['idProvider'];
+}else {
+  $id = 0;
+  $dateRegister = date('Y-m-d');
+  $state = 'all';
+}
 ?>
 <!doctype html>
 <html lang="en">

@@ -30,23 +30,21 @@
     ?>
   <div class="container pt-5">
     <div class="row ">
-    <div class="col  mb-2">
+    <div class="col mb-2">
           <form action="" class="" role="search" method="GET">
-            <div class="input-group mb-3">
+            <div class="input-group">
               <input type="date" class="form-control" placeholder="Fecha de inventario" aria-label="Search" aria-describedby="basic-addon1" name="date" id="date">
               <button type="submit" class="btn btn-outline-secondary" id="basic-addon1" name="search-inventory">Buscar</button>
             </div>
           </form>
         </div>
-        <div class="col-md-auto">
+        <div class="col-md-auto mb-2">
           <form action="" method="GET">
-          <button type="submit" class="btn btn-outline-secondary" id="basic-addon1" name="all-provider"><i class="bi bi-arrow-clockwise"></i></button>
+          <button type="submit" class="btn btn-outline-secondary" id="basic-addon1" name="all-inventory"><i class="bi bi-arrow-clockwise"></i></button>
           </form>
         </div>
         <div class="col-md-2 mb-2">
-            <a class="btn btn-outline-secondary w-100"  href="../../../app/views/admin/FormInventory.php">
-                    Crear Inventario
-            </a>
+            <a class="btn btn-outline-secondary w-100"  href="../../../app/views/admin/FormInventory.php"><i class="bi bi-journal-plus"></i> Crear Inventario </a>
         </div>
     </div>
   </div>

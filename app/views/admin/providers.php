@@ -47,15 +47,13 @@
             </form>
         </div>
         <div class="col col-lg-2 mb-2">
-            <a class="btn btn-outline-secondary w-100"  href="../../../app/views/admin/FormProvider.php">
-                    Crear Proveedor
-            </a>
+            <a class="btn btn-outline-secondary w-100"  href="../../../app/views/admin/FormProvider.php"><i class="bi bi-boxes"></i> Crear Proveedor</a>
         </div>
   </div>
   </div>
   <br>
   <div class="row justify-content-between">
-    <h4 class="col"><span class="">Proveedores</span></h4>
+    <h4 class="col"><span class=""><i class="bi bi-boxes"></i>  Proveedores</span></h4>
     <h4 class="col text-end">N° <?=  count($provider->getProvider())?></h4>
   </div>
   <hr>
