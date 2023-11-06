@@ -1,16 +1,16 @@
 <?php
 // DATABASE
-require_once __DIR__.'../../vendor/autoload.php';
+require_once(__DIR__.'/../vendor/autoload.php');
 // uso de la libería de composer
 // Usar el archivo .env
-$dontenv = Dotenv\Dotenv::createImmutable(__DIR__.'../../');
+$dontenv = Dotenv\Dotenv::createImmutable(__DIR__.'/../');
 $dontenv->load();
 
 define('DRIVER', $_ENV['DRIVER']);
 define('HOST', $_ENV['HOST']);
 define('USER', $_ENV['USER']);
 define('PASS', $_ENV['PASSWORD']);
-
+// 
 define('BASE', $_ENV['BASE']);
 define('PORT', $_ENV['PORT']);
 

@@ -1,4 +1,5 @@
 <?php
+// TODO: Cambiar el controllador y revisar detalles
    if(isset($_GET['id'])){
      include_once '../../../app/controller/ProductController.php';
       $controller = new ProviderController();
@@ -90,7 +91,6 @@
     <div class="col-md-3">
         <label for="stateProvider" class="form-label">Estado</label>
         <select class="form-select" aria-label="Default select example" name="stateProvider" id="stateProvider" required>
-            <option value="all" <?php if($state=='all') echo 'selected';?>>Seleccionar</option>
             <option value="activo" <?php if($state=='activo') echo 'selected';?>>Activo</option>
             <option value="inactivo" <?php if($state=='inactivo') echo 'selected';?>>Inactivo</option>
         </select>

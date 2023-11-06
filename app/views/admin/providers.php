@@ -19,7 +19,7 @@
 <!-- main -->
 <main class="container pt-4 pb-4">
     <?php
-      include '../../../app/controller/ProviderController.php';
+      require_once('../../../app/controller/ProviderController.php');
       $provider = new ProviderController();
       $id = 0;
     ?>

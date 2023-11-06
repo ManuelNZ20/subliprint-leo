@@ -22,7 +22,7 @@
 <!-- main -->
 <main class="container pt-4">
   <?php
-      include '../../../app/controller/CategoryController.php';
+      require_once('../../../app/controller/CategoryController.php');
       $category = new CategoryController();
       $id = 0;
     ?>
