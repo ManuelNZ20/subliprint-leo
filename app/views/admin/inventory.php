@@ -40,7 +40,7 @@
         </div>
         <div class="col-md-auto mb-2">
           <form action="" method="GET">
-          <button type="submit" class="btn btn-outline-secondary" id="basic-addon1" name="all-inventory"><i class="bi bi-arrow-clockwise"></i></button>
+          <button type="submit" class="btn btn-outline-secondary" id="basic-addon1" name=""><i class="bi bi-arrow-clockwise"></i></button>
           </form>
         </div>
         <div class="col-md-2 mb-2">
@@ -113,7 +113,7 @@
               </span>
             </td>
             <td>
-              <a class="col me-2 btn btn-outline-secondary" href="../../../app/views/admin/products.php?id=<?= $value['idInventory'] ?>" name="btnExam"><i class="bi bi-info-circle"></i> Detalles</a>
+              <a class="col me-2 btn btn-outline-secondary" href="../../../app/views/admin/products.php?idInventory=<?= $value['idInventory'] ?>" name="btnExam"><i class="bi bi-info-circle"></i> Detalles</a>
             </td>
             <td class="">
               <form action="../../../app/controller/InventoryController.php?id=<?= $value['idInventory'] ?>" method="POST">

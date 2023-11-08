@@ -11,6 +11,8 @@
 /* colors */
 :root {
     --background-color-components-1:rgba(203, 147, 81, 1);
+    --about-1:rgba(203, 146, 81, 0.833);
+    
 }
 /* media index.php */
 @media(max-width:1300px) {

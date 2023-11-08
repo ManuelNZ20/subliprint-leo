@@ -42,7 +42,7 @@
                 <option value="inactivo">Inactivo</option>
               </select>
               <button type="submit" class="btn btn-outline-secondary" id="basic-addon1" name="filter-provider">Filtrar</button>
-              <button type="submit" class="btn btn-outline-secondary" id="basic-addon1" name="all-provider"><i class="bi bi-arrow-clockwise"></i></button>
+              <button type="submit" class="btn btn-outline-secondary" id="basic-addon1" name=""><i class="bi bi-arrow-clockwise"></i></button>
             </div>
             </form>
         </div>

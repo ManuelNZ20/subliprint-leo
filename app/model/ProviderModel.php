@@ -81,6 +81,7 @@ class ProviderModel {
         $providers = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $providers;
     }
+
     public function filterProvider() {
         if(isset($_GET['filter'])) {
             $filter = $_GET['filter'];

@@ -2,8 +2,8 @@
   require_once('../../../app/controller/ProductController.php');
   require_once('../../../app/controller/CategoryController.php');
 
-  if(isset($_GET['id']) && !empty($_GET['id'])) {
-    $idInventory = $_GET['id'];
+  if(isset($_GET['idInventory'])) {
+    $idInventory = $_GET['idInventory'];
   } else {
     $idInventory = 0;
   }
@@ -49,6 +49,8 @@
         </div>
         <div class="col-md-4 mb-2">
           <form action="" method="GET">
+            <!-- Campo oculto para idInventory -->
+          <input type="hidden" name="idInventory" value="<?=$idInventory; ?>">
           <div class="input-group mb-3">
             <select class="form-select" aria-label="Default select example" name="filterCategory" id="filterCategory">
                 <option value="all" selected>Seleccionar</option>
@@ -66,7 +68,7 @@
             </form>
         </div>
         <div class="col-md-2 mb-2">
-            <a class="btn btn-outline-secondary w-100"  href="../../../app/views/admin/FormProduct.php"><i class="bi bi-box-seam"></i> Crear Producto
+            <a class="btn btn-outline-secondary w-100"  href="../../../app/views/admin/FormProduct.php<?='?idInventory='.$idInventory?>" ><i class="bi bi-box-seam"></i> Crear Producto
             </a>
         </div>
     </div>
@@ -80,7 +82,7 @@
   </div>
   <hr>
   <!-- table products -->
-  <div class="table-responsive mb-5"  style="height:500px;">
+  <div class="table-responsive mb-5"  style="height:600px;">
     <table class="table table-sm table-hover">
       <thead class="table-dark">
       <tr>
@@ -95,44 +97,50 @@
       </tr>
     </thead>
     <tbody id="content" name="content" class="">
+      <?php
+        foreach( $productController->getProductsByIdInventory($idInventory) as $product ) {
+      ?>
         <tr class=" ">
-          <th class="align-middle" scope="row">1</th>
+          <th class="align-middle" scope="row"><?=$product['idProduct']?></th>
           <td class="text-truncate align-middle">
             <span class="d-inline-block text-truncate"  style="max-width: 150px;">
-            Martillo de acero
+            <?=$product['nameProduct']?>
             </span>
           </td>
           <td class="align-middle">
-            <img class="img " src="../../../public/img/img-home.png" alt="imagen" style="border-radius:10px; width:270px;">
+            <img class="img " src="<?=$product['imgProduct']?>" alt="imagen" style="border-radius:10px; width:270px;">
           </td>
           <td class="text-truncate align-middle">
             <span class="d-inline-block text-truncate"  style="max-width: 150px;">
-              100</span>
+              <?=$product['price']?></span>
           </td>
           <td  class="text-truncate align-middle">
             <span class="d-inline-block text-truncate"  style="max-width: 150px;">
-              400</span>
+              <?=$product['amountInit']?></span>
           </td>
           <td  class="align-middle" >
             <span class="d-inline-block text-truncate"  style="max-width: 150px;">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo laboriosam facere quasi, molestias, aut perspiciatis ipsa, exercitationem odio labore obcaecati corporis! Animi accusantium hic, qui quidem eos a? Obcaecati, temporibus?
+              <?=$product['nameCategory']?>
             </span>
           </td>
           <td  class="text-truncate align-middle text-success">
-            <i class="bi bi-circle"></i> Activo
+            <i class="bi bi-circle"></i> <?=$product['statusProduct']?>
           </td>
           <td class="align-middle">
-              <a href="" class="col me-2 btn btn-outline-secondary"><i class="bi bi-pencil" >
+              <a href="../../../app/views/admin/FormProduct.php?id=<?=$product['idProduct']?>&idInventory=<?=$idInventory?>" class="col me-2 btn btn-outline-secondary"><i class="bi bi-pencil" >
               </i> Editar</a>
             </td>
           <td class="align-middle">
-            <form action="" method="POST">
+            <form action="../../../app/controller/ProductController.php?id=<?=$product['idProduct']?>&idInventory=<?=$idInventory?>" method="POST">
              <button class="col me-2 btn btn-outline-secondary" name="btnDelete" ><i class="bi bi-trash3"></i> Eliminar
             </button>
             </form>
           <!-- ../../../app/views/admin/FormProvider.php -->
           </td>
         </tr>
+      <?php
+        }
+      ?>
     </tbody>
   </table>
   </div>

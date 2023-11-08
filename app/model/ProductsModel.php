@@ -1,5 +1,6 @@
 <?php
 require_once(__DIR__.'/../../config/database.php');
+
 class ProductModel {
     private $dbCon;
     
@@ -7,10 +8,10 @@ class ProductModel {
         $this->dbCon = new ConnectionDataBase();
     }
     //  Obtenemos el número de productos de la tabla productinventory por id de inventario
-    public function countProducts($idInvetnory) {
+    public function countProducts($idInventory) {
         $sql = "SELECT COUNT(*) AS products FROM productinventory WHERE idInventory = :idInventory";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
-        $stmt->bindParam(':idInventory',$idInvetnory,PDO::PARAM_INT);
+        $stmt->bindParam(':idInventory',$idInventory,PDO::PARAM_INT);
         $stmt->execute();
         $count = $stmt->fetchColumn();
         return $count;
@@ -45,7 +46,8 @@ class ProductModel {
     // Creamos un productos en la tabla products y en la tabla productinventory
     public function createProduct($idInventory,$amount,$id,$name,$brand,$description,$status,$img,$price,$unit,$create,$update,$idCategory) {
         // Creamos el producto
-        $sql = "INSERT INTO products (idProduct,nameProduct,brand,description,statusProduct,imgProduct,price,unit,create_at,update_at,idCategory) VALUES (:idProduct,:nameProduct,:brandProduct,:descriptionProduct,:statusProduct,:imgProduct,:priceProduct,:unitProduct,:create_at,:update_at,:idCategory)";
+        $sql = "INSERT INTO product (idProduct,nameProduct,brand,description,statusProduct,imgProduct,price,unit,create_at,update_at,idCategory) VALUES 
+         (:idProduct,:nameProduct,:brand,:description,:statusProduct,:imgProduct,:price,:unit,:create_at,:update_at,:idCategory)";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
         $stmt->bindParam(':idProduct',$id);
         $stmt->bindParam(':nameProduct',$name);
@@ -59,15 +61,14 @@ class ProductModel {
         $stmt->bindParam(':update_at',$update);
         $stmt->bindParam(':idCategory',$idCategory);
         $stmt->execute();
-        $stmt = null;
 
         // Obtenemos el id del producto recien creado
-        $idProduct = $this->dbCon->getConnection()->lastInsertId();
+        $idProduct = $id;
 
         // Llamamos al procedimiento almacenado para crear el producto en el inventario
         $sql = "CALL CreateProductInventory(:idProduct,:idInventory,:priceInit,:amountInit)";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
-        $stmt->bindParam(':idProduct',$idProduct,PDO::PARAM_INT);
+        $stmt->bindParam(':idProduct',$idProduct,PDO::PARAM_STR);
         $stmt->bindParam(':idInventory',$idInventory,PDO::PARAM_INT);
         $stmt->bindParam(':priceInit',$price);
         $stmt->bindParam(':amountInit',$amount,PDO::PARAM_INT);
@@ -75,7 +76,49 @@ class ProductModel {
         return $stmt? true : false;
     }
 
+    // Eliminamos un producto de la tabla products y de la tabla productinventory
+    public function deleteProduct($idProduct) {
+        $sql = "CALL DeleteProduct(:idProduct)";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->bindParam(':idProduct',$idProduct,PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt? true : false;
+    }
 
+    public function updateProdudct($amount,$id,$name,$brand,$description,$status,$img,$price,$unit,$update,$idCategory) {
+        // Actualizar producto
+        $sql = "UPDATE product SET nameProduct = :nameProduct, brand = :brand, description = :description, statusProduct = :statusProduct, imgProduct = :imgProduct, price = :price, unit = :unit, update_at = :update_at, idCategory = :idCategory WHERE idProduct = :idProduct";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->bindParam(':idProduct',$id);
+        $stmt->bindParam(':nameProduct',$name);
+        $stmt->bindParam(':brand',$brand);
+        $stmt->bindParam(':description',$description);
+        $stmt->bindParam(':statusProduct',$status);
+        $stmt->bindParam(':imgProduct',$img);
+        $stmt->bindParam(':price',$price);
+        $stmt->bindParam(':unit',$unit);
+        $stmt->bindParam(':update_at',$update);
+        $stmt->bindParam(':idCategory',$idCategory);
+        $stmt->execute();
+        // Actualizar producto en el inventario
+        $sql = "CALL UpdateProductInventory(:idProduct,:priceInit,:amountInit)";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->bindParam(':idProduct',$id,PDO::PARAM_STR);
+        $stmt->bindParam(':priceInit',$price);
+        $stmt->bindParam(':amountInit',$amount,PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt? true : false;
+    }
+
+    // Obtenemos el producto por id de producto
+    public function getProductByIdInventoryByProduct($idProduct) {
+        $sql = 'CALL GetProductByIdProduct(:idProduct)';
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->bindParam(':idProduct',$idProduct,PDO::PARAM_STR);
+        $stmt->execute();
+        $product = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $product;
+    }
 
 }
 
