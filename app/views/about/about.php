@@ -86,7 +86,7 @@
             <p class="card-subtitle mb-2 text-body-secondary col-md-auto fs-5">Puedes encontrarnos en Av. Sanchez Cerro 629-633, donde nuestro equipo de expertos en ferretería estará encantado de ayudarte a encontrar las herramientas y materiales adecuados para tu próximo proyecto.</p>
           </div>
           <div class="col-md-12 text-center">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.444007127352!2d-80.63016752510295!3d-5.192676394784893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x904a10795a73c181%3A0x8229277bef89b950!2sAv.%20S%C3%A1nchez%20Cerro%20629%2C%20Piura%2020001!5e0!3m2!1ses-419!2spe!4v1699457804434!5m2!1ses-419!2spe" width="800" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="rounded"></iframe>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.444007127352!2d-80.63016752510295!3d-5.192676394784893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x904a10795a73c181%3A0x8229277bef89b950!2sAv.%20S%C3%A1nchez%20Cerro%20629%2C%20Piura%2020001!5e0!3m2!1ses-419!2spe!4v1699457804434!5m2!1ses-419!2spe" width="800" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="container-fluid w-75 mt-2"></iframe>
           </div>
         </div>
     </div>
