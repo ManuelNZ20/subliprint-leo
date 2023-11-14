@@ -1,0 +1,4 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_URI} ^/roberto-cotlear/$
+RewriteRule ^roberto-cotlear/(.*)$ /roberto-cotlear/public/$1 [L,R=301]
