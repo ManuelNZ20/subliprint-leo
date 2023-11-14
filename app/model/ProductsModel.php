@@ -120,6 +120,67 @@ class ProductModel {
         return $product;
     }
 
-}
+    public function paginationProduct($idInventory,$pageInit,$pageEnd) {
+        $sql = "CALL GetProductsByInventoryPagination(:idInventory,:pageInit,:pageEnd)";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->bindParam(':idInventory',$idInventory,PDO::PARAM_INT);
+        $stmt->bindParam(':pageInit',$pageInit,PDO::PARAM_INT);
+        $stmt->bindParam(':pageEnd',$pageEnd,PDO::PARAM_INT);
+        $stmt->execute();
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $products;
+    }
 
+    public function searchProduct($idInventory,$search) {
+        $sql = "CALL SearchProduct(:idInventory,:search)";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->bindParam(':idInventory',$idInventory,PDO::PARAM_INT);
+        $stmt->bindParam(':search',$search);
+        $stmt->execute();
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $products;
+    }
+
+    public function filterProductsByCategory($idInventory,$idCategory) {
+        if($idCategory=='all') {
+            return $this->getProductsByIdInventory($idInventory);
+        }
+        else 
+        {
+            return $this->getProductsByInventoryAndCategory($idInventory,$idCategory);
+        }
+    }
+
+    public function getProductsByInventoryAndCategory($idInventory,$idCategory) {
+        $sql = "CALL GetProductsByInventoryAndCategory(:idInventory,:idCategory)";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->bindParam(':idInventory',$idInventory,PDO::PARAM_INT);
+        $stmt->bindParam(':idCategory',$idCategory,PDO::PARAM_INT);
+        $stmt->execute();
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $products;
+    }
+
+    public function getProducts() {
+        $sql = "SELECT * FROM product p 
+        INNER JOIN productinventory pi 
+        ON pi.idProduct=p.idProduct WHERE pi.amountInit > 0 AND p.statusProduct = 'activo'";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->execute();
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $products;
+    }
+
+    public function getProductsRand() {
+        $sql = "SELECT * FROM product p 
+        INNER JOIN productinventory pi 
+        ON pi.idProduct=p.idProduct WHERE pi.amountInit > 0 AND p.statusProduct = 'activo' ORDER BY RAND() LIMIT 10";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->execute();
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $products;
+    }
+
+
+}
 ?>

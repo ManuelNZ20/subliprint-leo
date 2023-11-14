@@ -1,5 +1,5 @@
 <?php
-require __DIR__.'/../model/CategoryModel.php';
+require_once(__DIR__.'/../model/CategoryModel.php');
 
 class CategoryController {
 
@@ -18,6 +18,10 @@ class CategoryController {
         return $categories;
     }
 
+    public function getCategoryActive() {
+        $categories = $this -> categoryModel -> getCategoryActive();
+        return $categories;
+    }
 }
 
 ?>

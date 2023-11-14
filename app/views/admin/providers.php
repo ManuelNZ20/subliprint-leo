@@ -67,7 +67,7 @@
       $previous = "1"; // si la variable page es 1 el valor de previous es 1
     }
     $totalPages = count($provider->getProvider());// cuenta el total de registros
-    $registros = 8 -1 ; // cantidad de registros por pagina menos 1
+    $registros = 7 ; // cantidad de registros por pagina menos 1
     $page = $_REQUEST['page']; // pagina actual
     if(is_numeric($page)) { // comprueba si la pagina es un numero
       $inicio = (($page - 1) * $registros); // toma la pagina actual y la multiplica por la cantidad de registros por pagina

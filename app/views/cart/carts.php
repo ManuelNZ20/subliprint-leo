@@ -1,3 +1,8 @@
+<?php
+session_start();
+require_once('../../../app/controller/CartController.php');
+
+?>
 <!doctype html>
 <html lang="en">
 
@@ -21,10 +26,60 @@
   ?>
 <!-- main -->
 <main class="container pt-4 mb-3">
-  <h1>CARRITO DE COMPRAS</h1>
-  <h1>CARRITO DE COMPRAS</h1>
-  <h1>CARRITO DE COMPRAS</h1>
-  <h1>CARRITO DE COMPRAS</h1>
+<div class="table-responsive mb-5 mt-5"  style="height:600px;">
+    <table class="table table-sm table-hover">
+      <thead class="table-dark">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Imagen</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Sub Total</th>
+        <th scope="col" colspan="2">Acción</th>
+      </tr>
+    </thead>
+    <tbody id="content" name="content" class="">
+      <tr class=" ">
+          <th class="align-middle" scope="row">1</th>
+          <td class="align-middle">
+            <img class="img " src="" alt="imagen" style="border-radius:10px; width:270px;">
+          </td>
+          <td class="text-truncate align-middle">
+            <span class="d-inline-block text-truncate"  style="max-width: 150px;">
+            Producto A
+            </span>
+          </td>
+          
+          <td class="text-truncate align-middle">
+            <span class="d-inline-block text-truncate"  style="max-width: 150px;">
+              100</span>
+          </td>
+          <td  class="text-truncate align-middle">
+            <span class="d-inline-block text-truncate"  style="max-width: 150px;">
+            330
+            </span>
+          </td>
+          <td  class="align-middle" >
+            <span class="align-middle d-inline-block text-truncate"  style="max-width: 150px;">
+            3300
+            </span>
+          </td>
+          <td class="align-middle">
+              <a href="../../../app/views/admin/FormProduct.php?id=<?=$product['idProduct']?>&idInventory=<?=$idInventory?>" class="col me-2 btn btn-outline-secondary"><i class="bi bi-info-circle"></i>
+            </a>
+            </td>
+          <td class="align-middle">
+            <form action="../../../app/controller/ProductController.php?id=<?=$product['idProduct']?>&idInventory=<?=$idInventory?>" method="POST">
+             <button class="col me-2 btn btn-outline-secondary" name="btnDelete" ><i class="bi bi-trash3"></i>
+            </button>
+            </form>
+          </td>
+        </tr>
+
+    </tbody>
+  </table>
+  </div>
  
 </main>
 <!-- footer -->

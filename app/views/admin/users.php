@@ -1,4 +1,8 @@
+<?php
+require_once('../../../app/controller/UserController.php');
+$userController = new UserController();
 
+?>
 <!doctype html>
 <html lang="en">
 
@@ -21,12 +25,94 @@
      require_once('../../../app/views/layout/header.php');
   ?>   
 <!-- main -->
-<main class="container pt-4">
-    <h1>VISTA DE USUARIOS</h1>
-    <h1>VISTA DE USUARIOS</h1>
-    <h1>VISTA DE USUARIOS</h1>
-    <h1>VISTA DE USUARIOS</h1>
-    <h1>VISTA DE USUARIOS</h1>
+<main class="container pt-5">
+<div class="container" style="padding-top:40px;">
+    <div class="row">
+        <div class="col-md-6">
+          <form action="" class="" role="search" method="GET">
+            <div class="input-group">
+              <input type="search" class="form-control" placeholder="Buscar por nombres" aria-label="Search" aria-describedby="basic-addon1" name="term" id="term">
+              <button type="submit" class="btn btn-outline-secondary" id="basic-addon1" name="search-user">Buscar</button>
+              <button type="submit" class="btn btn-outline-secondary" id="basic-addon1" name="all-user"><i class="bi bi-arrow-clockwise"></i></button>
+            </div>
+          </form>
+        </div>
+    </div>
+    <div class="row justify-content-between mt-4">
+    <h4 class="col"><span class=""><i class="bi bi-people"></i> Usuarios</span></h4>
+    <h4 class="col text-end">N° <?=$userController->countUser();?></h4>
+  </div>
+  <hr>
+    <div class="table-responsive mb-5"  style="height:500px;">
+    <table class="table table-sm table-hover">
+      <thead class="table-dark">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombres</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Dirección</th>
+        <th scope="col">Referencia</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Teléfono</th>
+        <th class="text-center" colspan="1" scope="col">Acción</th>
+      </tr>
+    </thead>
+    <tbody id="content" name="content" class="">
+      <?php
+          foreach($userController->searchUser() as $value):
+      ?>
+      <tr>
+        <th class="align-middle" scope="row">
+          <?=$value['idUser']?>
+        </th>
+        <td class="align-middle">
+            <span class="d-inline-block text-truncate" style="max-width: 150px;">
+              <?=$value['name']?>
+            </span>
+        </td>
+        <td class="align-middle">
+            <span class="d-inline-block text-truncate" style="max-width: 150px;">
+              <?=$value['lastname']?>
+            </span>
+        </td>
+        <td class="align-middle">
+            <span class="d-inline-block text-truncate" style="max-width: 150px;">
+              <?=$value['address']?>
+            </span>
+        </td>
+        <td class="align-middle">
+            <span class="d-inline-block text-truncate" style="max-width: 150px;">
+              <?=$value['reference']?>
+            </span>
+        </td>
+        <td class="align-middle">
+            <span class="d-inline-block text-truncate" style="max-width: 150px;">
+              <?=$value['mail']?>
+            </span>
+        </td>
+        <td class="align-middle">
+            <span class="d-inline-block text-truncate" style="max-width: 150px;">
+              <?=$value['phone']?>
+            </span>
+        </td>
+        <td class="">
+          <form action="../../../app/controller/UserController?mail=<?=$value['mail']?>" method="POST">
+          <select class="form-select" aria-label="Default select example"  name="typeUser">
+            <option value="user">Usuario</option>
+            <option value="admin">Administrador</option>
+          </select>
+            <button class="col me-2 btn btn-outline-success" name="btnConfirm" ><i class="bi bi-check-circle"></i> Confirmar
+          </button>
+          </form>
+        </td>
+      </tr>
+      <?php
+          endforeach;
+      ?> 
+    </tbody>
+  </table>
+</div>
+  </div>
 </main>
 <!-- footer -->
 <!-- include('../../../presentation/templates/footer.php'); -->

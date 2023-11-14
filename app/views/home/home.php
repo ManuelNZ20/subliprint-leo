@@ -1,3 +1,8 @@
+<?php
+session_start();
+require_once('../app/controller/ProductController.php');
+require_once('../app/controller/UserController.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,10 +16,12 @@
 </head>
 <body>
     <?php
-        require_once '../app/views/layout/header.php';
+        require_once('../app/views/layout/header.php');
     ?>
-   <main class="container pt-4 ">
-      <div class="pt-5">
+   <main class="container pt-5">
+      <div class="pt-4" style="<?=
+        (!isset($_SESSION['idUser']))? 'padding-top:10px':'padding-top:10px'
+      ?>">
           <div class="mb-3" style="border:none; background-color:rgba(215, 139, 50, 0.1);">
             <div class="row g-0">
               <div class="col-md-6">
@@ -24,70 +31,71 @@
             <div class="card-body mx-auto p-2  w-75 text-start" >
               <h5 class="card-title fs-3">"TODO LO QUE NECESITAS PARA CONSTRUIR TUS SUEÑOS".</h5>
               <p class="card-text text-wrap ">Explorar los productos de las mejores marcas que tenemos para ofrecerte</p>
-              <a href="<?="../app/views/about/about.php"?>" class="btn btn-landing-page mb-2">Sobre nosotros</a>
-            <a href="#" class="btn btn-outline-secondary mb-2">Contáctanos</a>
+              <a href="<?="../app/views/about/about.php"?>" class="btn background-general  mb-2">Sobre nosotros</a>
+             <a href="<?="../app/views/about/contact.php"?>" class="btn btn-outline-secondary mb-2">Contáctanos</a>
             </div>
           </div>
         </div>
       </div>
       </div>
-  
+    <?php
+    ?>
     <!-- cards -->
     <div class="row">
       <?php
         include('../app/views/layout/cards.php');
-        echo cardInformation('','Nuevos Productos para arreglar','Herramientas innovadoras para proyectos modernos.','url','','img/tools-construction-1.png','Comprar ahora');
-        echo cardInformation('','Contamos con varios Productos','Haz click para explorar nuestros productos.','url','','img/tools-construction-2.png','Comprar ahora');
-        // include '../config/database.php'; conexión e
+        echo cardInformation('../app/views/products/products.php','Nuevos Productos para arreglar','Herramientas innovadoras para proyectos modernos.','../app/views/products/products.php','','img/tools-construction-1.png','Comprar ahora');
+        echo cardInformation('../app/views/products/products.php','Contamos con varios Productos','Haz click para explorar nuestros productos.','../app/views/products/products.php','','img/tools-construction-2.png','Comprar ahora');
       ?>
     </div>
-    <div class="card-group mt-3 shadow-sm rounded">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">
+    <div class="p-5 row pt-3 pb-1 mt-3 shadow rounded align-items-center justify-content-between">
+      <div class="col-md">
+      <h5 class="">
             <img src="icons/engineering.svg" alt="payment" style="width:35px;">
             Asesoramiento técnico
           </h5>
           <p class="card-subtitle mb-2 text-body-secondary">Te ayudamos a seleccionar las mejores herramientas para tus proyectos</p>
-        </div>
       </div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">
+      
+      <div class="col-md">
+      <h5 class="">
             <img src="icons/delivery.svg" alt="payment" style="width:35px;">
-            Asesoramiento técnico
+            Envío gratis
           </h5>
-          <p class="card-subtitle mb-2 text-body-secondary">Te ayudamos a seleccionar las mejores herramientas para tus proyectos</p>
-        </div>
+          <p class="card-subtitle mb-2 text-body-secondary">Por ordenes mayores a S/. 99</p>
       </div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">
-            <img src="icons/payment.svg" alt="payment" style="width:35px;">
-            Asesoramiento técnico
+      <div class="col-md">
+      <h5 class="">
+            <img src="icons/payment.svg" alt="payment" style="width:35px;"> 
+            Pago seguro
           </h5>
-          <p class="card-subtitle mb-2 text-body-secondary">Te ayudamos a seleccionar las mejores herramientas para tus proyectos.
-          </p>
-        </div>
+          <p class="card-subtitle mb-2 text-body-secondary">Pago seguro al 100%</p>
       </div>
+      
     </div>
     <h3 class="text-center mt-3 mb-3"><span class="badge"  style="background-color:var(--background-color-components-1);">PRODUCTOS DESTACADOS</span></h3>
+    <!--TODO: listar con base de datos al menos 8 productos -->
     <hr>
-   <!--TODO: listar con base de datos al menos 8 productos -->
-   <div class="row row-cols-1 row-cols-md-4 g-5 mb-3 p-3">
+    <div class="w-100 row justify-content-center gap-3 g-1">
     <!-- content card -->
-    <?php for ($i=0; $i < 8 ; $i++) { ?>
-      <div class="col-md-3">
-        <div class="card w-100">
-          <img src="img/img-home-1.png" class="card-img-top" alt="...">
-          <div class="card-body p-3">
-            <h5 class="card-title col-10 text-truncate">Set de herramientas</h5>
-            <p class="card-text text-warning">S/. 19,90</p>
-            <button class="btn btn-outline-secondary rounded-circle" type=""><i class="bi bi-bag"></i></button>
-          </div>
+    <?php
+      $productController = new ProductController();
+      foreach($productController->getProductsRand() as $product) {
+    ?>
+      <div class="card p-0 shadow-sm pt-1" style="width: 15rem; border:none;">
+        <img src="<?=$product['imgProduct']?>" class="w-100 card-img-top" alt="<?=$product['nameProduct']?>" style="height:200px;object-fit:cover;"
+        >
+        <div class="card-body" style="height:120px;">
+          <h5 class="card-title text-wrap text-truncate" style="height:50px;"><?=$product['nameProduct']?></h5>
+          <p class="card-text text-truncate fs-5" style="color:rgba(203, 147, 81, 1);">S/. <?=number_format($product['price'],2)?></p>
         </div>
-   </div>
-  <?php }?>
+        <div class="card-body">
+          <a href="../app/views/products/productDetail.php?idProduct=<?=$product['idProduct']?>" class="btn btn-outline-secondary rounded-circle"><i class="bi bi-bag-plus"></i></a>
+        </div>
+      </div>
+    <?php
+      }
+    ?>
 </div>
  <hr>
  <div class="row text-center align-items-center p-4" style="border:none;background-color:rgba(203, 146, 81, 0.3);">

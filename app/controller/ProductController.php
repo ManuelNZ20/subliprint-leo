@@ -1,12 +1,12 @@
 <?php
-    session_start();
-?>
-<?php
 date_default_timezone_set('America/Lima');
 require_once(__DIR__.'/../model/ProductsModel.php');
 require_once __DIR__.'../../../config/config.php';// configuracion de cloudinary para subir imagenes
 require_once(__DIR__.'/ImageControllerCloudinary.php');
 $productController = new ProductController();
+
+
+
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     if(isset($_POST['create-update-product'])) {
@@ -79,8 +79,6 @@ class ProductController
                 $uploadSecure = $this->upload->uploadImage($imgProduct,$route);
                 $this->deleteImageHelpers($imgProduct);
             } else {
-                $_SESSION['message'] = 'Error al subir la imagen';
-                $_SESSION['message_type'] = 'danger';
                 header('Location: ../../app/views/admin/products.php');
             }
             $idInventory = $_POST['idInventory'];
@@ -99,13 +97,9 @@ class ProductController
             $product = $this->productModel->createProduct($idInventory,$amount,$id,$name,$brand,$description,$status,$img,$price,$unit,$create,$update,$idCategory);
             
             if($product) {
-                $_SESSION['message'] = 'Producto creado correctamente';
-                $_SESSION['message_type'] = 'success';
                 $this->deleteImageHelpers($imgProduct);
                 header('Location: ../../app/views/admin/products.php?idInventory='.$idInventory);
             } else {
-                $_SESSION['message'] = 'Error al crear el producto';
-                $_SESSION['message_type'] = 'danger';
                 $this->deleteImageHelpers($imgProduct);
                 header('Location: ../../app/views/admin/products.php');
             }
@@ -157,13 +151,9 @@ class ProductController
             $product = $this->productModel->updateProdudct($amount,$id,$name,$brand,$description,$status,$img,$price,$unit,$update,$idCategory);
             
             if($product) {
-                $_SESSION['message'] = 'Producto creado correctamente';
-                $_SESSION['message_type'] = 'success';
                 $this->deleteImageHelpers($imgProduct);
                 header('Location: ../../app/views/admin/products.php?idInventory='.$idInventory);
             } else {
-                $_SESSION['message'] = 'Error al crear el producto';
-                $_SESSION['message_type'] = 'danger';
                 $this->deleteImageHelpers($imgProduct);
                 header('Location: ../../app/views/admin/products.php');
             }
@@ -183,22 +173,52 @@ class ProductController
             $this->upload->deleteImage($img);
             $product = $this->productModel->deleteProduct($id);
             if($product) {
-                $_SESSION['message'] = 'Producto eliminado correctamente';
-                $_SESSION['message_type'] = 'success';
                 $this->deleteImageHelpers($img);
                 header('Location: ../../app/views/admin/products.php?idInventory='.$idInventory);
             } else {
-                $_SESSION['message'] = 'Error al eliminar el producto';
-                $_SESSION['message_type'] = 'danger';
                 $this->deleteImageHelpers($imgProduct);
                 header('Location: ../../app/views/admin/products.php?idInventory='.$idInventory);
             }
         }
     }
+    // Obtenemos el producto por id de producto
     public function getProductByIdInventoryByProduct($idProduct) {
         $product = $this->productModel->getProductByIdInventoryByProduct($idProduct);
         return $product;
     }
+    //TODO:Implementar en el product el metodo searchProduct
+    public function searchProduct($idInventory,$search) {
+        $products = $this->productModel->searchProduct($idInventory,$search);
+        return $products;
+    }
+
+    public function paginationProduct($idInventory,$init,$end) {
+        $products = $this->productModel->paginationProduct($idInventory,$init,$end);
+        if($_SERVER['REQUEST_METHOD'] == 'GET') {
+            if(isset($_GET['search-product'])) {
+                $search = $_GET['term'];
+                $products = $this->productModel->searchProduct($idInventory,$search);
+                return $products;
+            }elseif(isset($_GET['filter-product'])) {
+                $idCategory = $_GET['filterCategory'];
+                $products = $this->productModel->filterProductsByCategory($idInventory,$idCategory);
+            } else if(isset($_GET['all-product'])) {
+                $products = $this->productModel->paginationProduct($idInventory,$init,$end);
+            }
+        }
+        return $products;
+    }
+
+    public function getProducts() {
+        $products = $this->productModel->getProducts();
+        return $products;
+    }
+
+    public function getProductsRand() {
+        $products = $this->productModel->getProductsRand();
+        return $products;
+    }
+
     // AlMACENAR IMAGENES TEMPORALES
     public function createImageHelpers() {
         $fileName = $_FILES['imgProduct']['name'];

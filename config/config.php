@@ -1,4 +1,5 @@
 <?php
+
 // DATABASE
 require_once(__DIR__.'/../vendor/autoload.php');
 // uso de la libería de composer

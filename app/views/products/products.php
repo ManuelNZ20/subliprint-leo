@@ -1,4 +1,10 @@
-
+<?php
+session_start();
+require_once('../../../app/controller/ProductController.php');
+require_once('../../../app/controller/CategoryController.php');
+$categoryController = new CategoryController();
+$productController = new ProductController();
+?>
 <!doctype html>
 <html lang="en">
 
@@ -18,16 +24,59 @@
 <body>
   <!-- header -->
   <?php
-    require_once('../../../app/views/layout/header.php');
+    require_once('../../../app/views/layout/header.php');  
   ?>
+
 <!-- main -->
-<main class="container pt-4">
-    <h1>Listar Productos</h1>
-    <h1>Listar Productos</h1>
-    <h1>Listar Productos</h1>
-    <h1><?php var_dump($title); ?></h1>
-    <h1>Listar Productos</h1>
-    <h1>Listar Productoss</h1>
+<main class="pt-4">
+    <div class="container pt-5">
+    <div class="row justify-content-between ">
+        <h4 class="col"><span class=""><i class="bi bi-box-seam"></i>  Productos <?=count($productController->getProducts()) ?></span></h4>
+        <div class="col-md-4">
+          <form action="" method="GET">
+          <div class="input-group mb-3">
+            <select class="form-select" aria-label="Default select example" name="filterCategory" id="filterCategory">
+                <option value="all" selected>Seleccionar</option>
+                <?php
+                foreach($categoryController->getCategoryActive() as $category) {
+                ?>
+                 <option value="<?=$category['idCategory'];?>">
+                  <?=$category['nameCategory']?>
+                </option>;
+                 <?php
+                }
+                 ?>
+              </select>
+              <button type="submit" class="btn btn-outline-secondary" id="basic-addon1" name="filter-product">Filtrar</button><!--Filtrar por id category-->
+              <button type="submit" class="btn btn-outline-secondary" id="basic-addon1" name="all-product"><i class="bi bi-arrow-clockwise"></i></button>
+              </div>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <div class="row justify-content-center gap-3 g-1">
+    <!-- content card -->
+    <?php
+      $productController = new ProductController();
+      foreach($productController->getProducts() as $product) {
+    ?>
+        <div class="card p-0 shadow-sm pt-1" style="width: 15rem; border:none;">
+          <img src="<?=$product['imgProduct']?>" class="w-100 card-img-top" alt="<?=$product['nameProduct']?>" style="height:200px;object-fit:cover;"
+            >
+          <div class="card-body" style="height:120px;">
+            <h5 class="card-title text-wrap text-truncate" style="height:50px;"><?=$product['nameProduct']?></h5>
+            <p class="card-text text-truncate fs-5" style="color:rgba(203, 147, 81, 1);">S/. <?=number_format($product['price'],2)?></p>
+          </div>
+          <div class="card-body">
+          <a href="../../../app/views/products/productDetail.php?idProduct=<?=$product['idProduct']?>" class="btn btn-outline-secondary rounded-circle"><i class="bi bi-bag-plus"></i></a>
+          </div>
+        </div>
+    <?php
+      }
+    ?>
+</div>
+<hr>
+    </div>
 </main>
 <!-- footer -->
 <?php

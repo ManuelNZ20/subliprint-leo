@@ -19,5 +19,13 @@ class CategoryModel {
         return $categories;
     }
 
+    public function getCategoryActive() {
+        $sql = "SELECT * FROM category WHERE statusCategory = 'activo'";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->execute();
+        $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $categories;
+    }
+
 }
 ?>

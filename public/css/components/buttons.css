@@ -15,7 +15,8 @@
 }
 /* interancines de botones header */
 /* cuando el usuario da click */
-.btn-landing-page{
+.btn-landing-page
+{
     background-color:var(--btn-color);
     color:white;
 }
@@ -31,7 +32,8 @@
 /* cuando el usuario pasa sobre el link */
 
 /* cuando el usuario pasa sobre el boton */
-.btn.btn-landing-page:hover{
+.btn.btn-landing-page:hover,
+.btn.btn-login{
     border:.1px solid rgba(203, 147, 81, 0.8);
     color:rgba(203, 147, 81, 1);
 }
@@ -59,6 +61,9 @@
 }
 
 @media(max-width:500px) {
+    .img-login {
+        display: none;
+      }       
     .btn-landing-page {
         display: none;
     }

@@ -144,7 +144,7 @@ if(isset( $_GET['id'] )){
         <h4 class="text-start">Imagen</h4>
         <input class="form-control mb-2" type="file" id="imageInput" name="imgProduct" accept="image/*" multiple>
         <div class="container mt-2 pt-4 pb-2" style="height:180px; background-color:var(--bs-tertiary-bg);">
-            <img id="imgShow" class="img-fluid float-start rounded mx-auto d-block" src="<?=($edit===true)?$imgUrl:''?>" alt=""  style="width: 16rem; display:<?=($edit===true)?"block":"none;"?>">
+            <img id="imgShow" class="img-fluid float-start rounded mx-auto d-block" src="<?=($edit===true)?$imgUrl:''?>" alt=""  style="width: 16rem; height:150px; display:<?=($edit===true)?"block":"none;"?>">
       </div>
       <hr>
       </div>
