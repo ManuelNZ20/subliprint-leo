@@ -6,14 +6,20 @@
 // $url_base = 'http://localhost:8080/roberto-cotlear/app/views/';
 $url_base = '/roberto-cotlear/app/views/';
 $url = $_SERVER['REQUEST_URI'];
+print_r($_SESSION['cart']);
 if($url == '/roberto-cotlear/public/') {
     require_once('../app/controller/UserController.php');
-    require_once('../app/controller/CartController.php');
+    // require_once('../app/controller/CartController.php');
+    require_once('../app/model/CartModel.php');
   }else {
     require_once('../../../app/controller/UserController.php');
-    require_once('../../../app/controller/CartController.php');
+    // require_once('../../../app/controller/CartController.php');
+    require_once('../../../app/model/CartModel.php');
 }
-$cartController = new CartController();
+
+
+
+
 ?>
 <header class="fixed-top" >
 <nav class="navbar bg-body-tertiary text-lime-50">
@@ -31,7 +37,8 @@ $cartController = new CartController();
       ?>
         <a href="<?= $url_base.'cart/carts.php'?>" class="btn position-relative me-3 mt-2 cart-btn">
             <i class="bi bi-cart3"></i>
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="num_cart">0
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="num_cart">
+                <?=$cartModel->countProducts()?>
                 <span class="visually-hidden">unread messages</span>
               </span>
             </a>
@@ -141,3 +148,4 @@ $cartController = new CartController();
   </div>
 </nav>
 </header>
+

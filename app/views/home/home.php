@@ -1,5 +1,7 @@
 <?php
 session_start();
+print_r(session_id());
+print_r($_SESSION['cart']);
 require_once('../app/controller/ProductController.php');
 require_once('../app/controller/UserController.php');
 ?>

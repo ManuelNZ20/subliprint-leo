@@ -34,6 +34,10 @@ class CartController {
     public function clearCart() {
         $this->cartModel->clearCart();
     }
+    public function getSession() 
+    {
+        return $this->cartModel->getSession();
+    }
 }
 
 ?>

@@ -1,5 +1,7 @@
 <?php
 session_start();
+print_r(session_id());
+print_r($_SESSION['cart']);
 
 require_once('../../../app/controller/ProductController.php');
 require_once('../../../app/controller/CategoryController.php');
@@ -90,20 +92,26 @@ $product = $productController->getProductByIdInventoryByProduct($id);
                 <div class="col-md-12 mt-3">
                     <div class="row g-2">
                         <div class="col-md" >
-                            <button id="aumentar" class="btn btn-outline-secondary">
+                            <!-- <button id="aumentar" class="btn btn-outline-secondary">
                                 <i class="bi bi-plus-lg"></i>
                             </button>
-                            <span id="contador" class="align-middle m-2 fs-5">1</span>
+                            <span class="align-middle m-2 fs-5" id="contador">1</span>
                             <button id="disminuir" class="btn btn-outline-secondary">
                                 <i class="bi bi-dash-lg"></i>
-                            </button>
-                        </div>
-                        <div class="col-md">
-                            <button type="button" class="btn background-general mb-2" onclick="addProduct('<?=$product['idProduct']?>')">
-                            Agregar al carrito
-                            </button>
-                            <a href="products.php" class="btn btn-outline-secondary mb-2">Cancelar</a>
-                        </div>
+                            </button> -->
+                            <form action="../../../app/model/CartModel.php" method="post">
+                                <input type="hidden" name="idProduct" value="<?=$product['idProduct']?>">
+                                <button type="button" class="btn btn-outline-secondary" onclick="incrementar()"><i class="bi bi-plus-lg"></i></button>
+                                <input class="align-middle m-2 fs-5" type="text" id="contadorInput" value="1" style="width:100px; text-align:center;" name="amount"readonly>
+                                <button type="button" class="btn btn-outline-secondary" onclick="decrementar()"> <i class="bi bi-dash-lg"></i></button>
+                            </div>
+                            <div class="col-md">
+                                <button type="submit"  class="btn background-general mb-2" onclick="">
+                                    Agregar al carrito
+                                </button>
+                                <a href="products.php" class="btn btn-outline-secondary mb-2">Cancelar</a>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -116,7 +124,6 @@ $product = $productController->getProductByIdInventoryByProduct($id);
     <div class="w-100 row justify-content-center gap-3 g-1">
     <!-- content card -->
     <?php
-      $productController = new ProductController();
       foreach($productController->getProductsRand() as $product) {
     ?>
         <div class="card p-0 shadow-sm pt-1" style="width: 15rem; border:none;">
@@ -143,19 +150,9 @@ $product = $productController->getProductByIdInventoryByProduct($id);
     require_once('../../../app/views/layout/footer.php');
     // require_once '../app/views/layout/header.php';
   ?> 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Obtener el valor de idProduct de la URL
-        
-      // Si se proporciona un idProduct, realizar el desplazamiento suave
-        // Desplazar suavemente hacia la parte superior de la pantalla
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  </script>
-
-  
-<script src="../../../public/js/cartProducts.js"></script>
 <script src="../../../public/js/amountProduct.js"></script>
+
+
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
