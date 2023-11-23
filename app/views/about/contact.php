@@ -2,6 +2,7 @@
 session_start();
 require_once('../../../app/controller/ProductController.php');
 require_once('../../../app/controller/UserController.php');
+$_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '../../../public/';
 ?>
 <!doctype html>
 <html lang="en">

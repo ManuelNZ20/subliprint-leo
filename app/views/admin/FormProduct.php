@@ -160,7 +160,12 @@ if(isset( $_GET['id'] )){
             }
             ?>
     </button>
-    <a class="col-3 btn btn-outline-secondary"  href="../../../app/views/admin/products.php?idInventory=<?=$idInventory?>">
+    <a class="col-3 btn btn-outline-secondary"  href="<?php
+          if($idInventory != null){ 
+            echo '../../../app/views/admin/products.php?idInventory='.$idInventory;
+          } else {
+            echo '../../../app/views/admin/admin.php';
+          }?>">
     <i class="bi bi-arrow-left-circle"></i> Cerrar
     </a>
   </div>

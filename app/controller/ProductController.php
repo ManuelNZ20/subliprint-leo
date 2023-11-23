@@ -219,6 +219,21 @@ class ProductController
         return $products;
     }
 
+    public function getProductsByCategory() {
+        $products = $this->productModel->getProducts();
+        if($_SERVER['REQUEST_METHOD'] == 'GET') {
+            if(isset($_GET['filter-productCategory'])) {
+                $idCategory = $_GET['filterCategory'];
+                $products = $this->productModel->getProductsByCategory($idCategory);
+                return $products;
+            } else if(isset($_GET['all-product'])) {
+                $products = $this->productModel->getProducts();
+                return $products;
+            }
+        }
+        return $products;
+    }
+
     // AlMACENAR IMAGENES TEMPORALES
     public function createImageHelpers() {
         $fileName = $_FILES['imgProduct']['name'];

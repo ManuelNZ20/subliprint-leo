@@ -13,8 +13,6 @@ $(document).ready(function() {
     }
   });
 });
-console.log('jfndjsnf')
-
 // $(document).ready(function() {
 //   $('#showPasswordToggleLogin').click(function() {
 //     const passwordField = $('#floatingPassword');

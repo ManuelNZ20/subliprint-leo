@@ -37,13 +37,14 @@ class AuthController {
                     ,$user['password'])) {
                     $_SESSION['idUser'] = $user['idUser'];
                     $_SESSION['name'] = $user['name'];
-                    $_SESSION['last_page'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '../../../public/';
-                    header('Location: ../../../public/'/* .$_SESSION['last_page'] */);
+                    
+                    header('Location: '.$_SESSION['last_page']??'../../../public/');
                     exit;
                 } else {
-                    echo '<div class="alert alert-danger" role="alert">
-                            Contraseña incorrecta
-                        </div>';
+                    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>La contraseña es incorrecta</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>';
                 }
             } else {
                 echo '<div class="alert alert-danger" role="alert">

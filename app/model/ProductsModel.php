@@ -151,6 +151,33 @@ class ProductModel {
         }
     }
 
+    // Filtrar productos por id de categoria para la pagina principal
+    public function getProductsByCategory($idCategory) {
+        $sql = "SELECT 
+        p.idProduct,
+        p.nameProduct,
+        p.brand,
+        p.description,
+        p.statusProduct,
+        p.imgProduct,
+        p.price,
+        p.unit,
+        p.create_at,
+        p.update_at,
+        c.nameCategory,
+        pi.amountInit
+    FROM product p
+    INNER JOIN category c ON p.idCategory = c.idCategory
+    INNER JOIN productinventory pi ON pi.idProduct = p.idProduct
+    INNER JOIN inventory ip ON ip.idInventory = pi.idInventory
+    WHERE p.idCategory = :idCategory AND pi.amountInit > 0 AND p.statusProduct = 'activo'";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->bindParam(':idCategory',$idCategory,PDO::PARAM_INT);
+        $stmt->execute();
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $products;
+    }
+
     public function getProductsByInventoryAndCategory($idInventory,$idCategory) {
         $sql = "CALL GetProductsByInventoryAndCategory(:idInventory,:idCategory)";
         $stmt = $this->dbCon->getConnection()->prepare($sql);

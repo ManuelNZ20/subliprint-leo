@@ -11,7 +11,7 @@
 /* colors */
 :root {
     --background-color-components-1:rgba(203, 147, 81, 1);
-    --about-1:rgba(203, 146, 81, 0.833);
+    --about-1:rgba(203, 146, 81, 0.6);
     
 }
 button.btn.btn-login {

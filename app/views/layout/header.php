@@ -6,7 +6,6 @@
 // $url_base = 'http://localhost:8080/roberto-cotlear/app/views/';
 $url_base = '/roberto-cotlear/app/views/';
 $url = $_SERVER['REQUEST_URI'];
-print_r($_SESSION['cart']);
 if($url == '/roberto-cotlear/public/') {
     require_once('../app/controller/UserController.php');
     // require_once('../app/controller/CartController.php');
@@ -80,7 +79,7 @@ if($url == '/roberto-cotlear/public/') {
           </li>
           <li class="nav-item">
             <a class="nav-link active rounded-pill" aria-current="page" href="
-            <?= $url_base.'products/products.php' ?>"><i class="bi bi-tools"></i> Productos</a>
+            <?= $url_base.'products/products.php' ?>"><i class="bi bi-tools"></i> Catalogo Productos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active rounded-pill" aria-current="page" href="
@@ -88,9 +87,22 @@ if($url == '/roberto-cotlear/public/') {
           </li>
           <!-- Botón de carrito de compras -->
           <li class="nav-item">
-            <a class="nav-link active rounded-pill  d-flex justify-content-between" aria-current="page" href="<?= $url_base.'cart/carts.php' ?> "><i class="bi bi-cart3"></i> Carrito de compras  <span class="badge text-bg-danger">0</span></a>
+            <a class="nav-link active rounded-pill" aria-current="page" href="<?= $url_base.'cart/carts.php' ?>">
+              <i class="bi bi-cart3"></i> <span>Carrito de compras
+                <span class="badge text-bg-danger"><?=$cartModel->countProducts()?></span>
+              </span>
+            </a>
           </li>
-         
+          <?php
+            if(isset($_SESSION['idUser'])):
+          ?>
+          <li class="nav-item">
+            <a class="nav-link active rounded-pill" aria-current="page" href="
+            <?= $url_base.'order/orders.php' ?>"><i class="bi bi-shop"></i> Mis ordenes</a>
+          </li>
+          <?php
+            endif;
+          ?>
           <?php
             if(isset($_SESSION['idUser'])):
           ?>
@@ -99,7 +111,7 @@ if($url == '/roberto-cotlear/public/') {
             ?>
               <li class="nav-item">
               <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi bi-graph-up"></i> Dashboard
                 </button>
                 <ul class="dropdown-menu">

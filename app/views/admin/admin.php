@@ -1,6 +1,18 @@
 <?php
+// Proteger ruta
+
+session_start();
+// Proteger ruta de acceso directo, solo para usuarios logueados
+if(!isset($_SESSION['idUser'])) {
+    header('Location: ../../../public/');
+}
+// guardar la ruta de acceso
+$_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '../../../public/';
 require_once('../../../app/controller/UserController.php');
+require_once('../../../app/controller/OrderController.php');
+
 $userController = new UserController();
+$orderController = new OrderController();
 
 ?>
 <!doctype html>
@@ -39,14 +51,14 @@ $userController = new UserController();
             <div class="row gap-2 align-items-center justify-content-between">
               <h5 class="col-md-auto text-secondary text-start">Total de pedidos</h5>
               <div class="col-1">
-                <a href="" class="btn btn-outline-secondary">
+                <a href="../../../app/views/admin/orders.php" class="btn btn-outline-secondary">
                   <i class="bi bi-three-dots"></i>
                 </a>
               </div>
             </div>
           </div>
           <div class="col-md-12">
-            <h3 class="fs-4">500</h3>
+            <h3 class="fs-4"><?=$orderController->countOrderProducts()?></h3>
           </div>
         </div>
       </div>
@@ -61,14 +73,14 @@ $userController = new UserController();
             <div class="row gap-2 align-items-center justify-content-between">
               <h5 class="col-md-auto text-secondary text-start">Pedidos pendientes</h5>
               <div class="col-1">
-                <a href="" class="btn btn-outline-secondary">
+                <a href="../../../app/views/admin/orders.php" class="btn btn-outline-secondary">
                   <i class="bi bi-three-dots"></i>
                 </a>
               </div>
             </div>
           </div>
           <div class="col-md-12">
-            <h3 class="fs-4">500</h3>
+            <h3 class="fs-4"><?=$orderController->countOrderBuyState()?></h3>
           </div>
         </div>
       </div>
@@ -90,7 +102,7 @@ $userController = new UserController();
             </div>
           </div>
           <div class="col-md-12">
-            <h3 class="fs-4">800,00</h3>
+            <h3 class="fs-4"><?=number_format($orderController->sumOrderBuyState(),2) ?></h3>
           </div>
         </div>
       </div>
@@ -139,63 +151,67 @@ $userController = new UserController();
   </div>
   <div class="row justify-content-between mt-5">
     <h4 class="col"><span class=""><i class="bi bi-cart-dash"></i> Pedidos pendientes</span></h4>
-    <h4 class="col text-end">N° <?= "1"?></h4>
+    <h4 class="col text-end">N° <?=$orderController->countOrderBuyState()?></h4>
   </div>
   <hr>
-  <div class="table-responsive mb-5"  style="">
+  <div class="table-responsive mb-5"  style="height:400px;">
     <table class="table table-sm table-hover">
       <thead class="table-dark">
       <tr>
         <th scope="col">ID</th>
-        <th scope="col">Nombre del clientes</th>
+        <th scope="col">Cliente</th>
         <th scope="col">Fecha de pedido</th>
-        <th scope="col">Método de pago</th>
         <th scope="col">Monto cobrado</th>
-        <th scope="col">Estado pendiente</th>
+        <th scope="col">Estado
+
+        </th>
         <th class="text-center" colspan="2" scope="col">Acción</th>
       </tr>
     </thead>
     <tbody id="content" name="content" class="">
+      <?php
+          $order = $orderController->listOrderBuyState();
+          foreach($order as $o):
+      ?>
       <tr>
         <th class="align-middle" scope="row">
-          1
+          <?=$o['idOrderBuy']?>
         </th>
         <td class="align-middle">
             <span class="d-inline-block text-truncate" style="max-width: 150px;">
-              <?="value['name']"?>
+              <?=$o['name']?>
             </span>
         </td>
         <td class="align-middle">
             <span class="d-inline-block text-truncate" style="max-width: 150px;">
-              <?="value['name']"?>
+              <?=$o['dateOrder']?>
             </span>
         </td>
         <td class="align-middle">
             <span class="d-inline-block text-truncate" style="max-width: 150px;">
-              <?="value['name']"?>
+              <?=$o['total']?>
             </span>
         </td>
         <td class="align-middle">
-            <span class="d-inline-block text-truncate" style="max-width: 150px;">
-              <?="value['name']"?>
+            <span class="d-inline-block text-truncate text-warning" style="max-width: 150px;">
+              <i class="bi bi-clock"></i>
+              <?=$o['stateOrder']?>
             </span>
         </td>
         <td class="align-middle">
-            <span class="d-inline-block text-truncate" style="max-width: 150px;">
-              <?="value['name']"?>
-            </span>
+          <a href="../../../app/views/admin/orderDetailAdmin.php?idOrder=<?=$o['idBuyUser']?>" class="col me-2 btn btn-outline-secondary"><i class="bi bi-info-circle"></i> Detalles</a>
         </td>
-        <td class="">
-          <a href="../../../app/views/admin/FormProvider.php?id=<?=$value['idProvider']?>" class="col me-2 btn btn-outline-secondary"><i class="bi bi-info-circle"></i> Detalles</a>
-        </td>
-        <td class="">
-          <form action="../../../app/controller/ProviderController.php?id=<?= $value['idProvider'] ?>" method="POST">
-            <button class="col me-2 btn btn-outline-success" name="btnDelete" ><i class="bi bi-check-circle"></i> Confirmar
-          </button>
+        <td class="aling-middle">
+          <form action="../../../app/controller/OrderController.php" method="POST">
+                <input type="hidden" name="idBuyUser" value="<?=$o['idBuyUser']?>">
+                <button class="col-md-10 me-2 btn btn-outline-success" name="btn-successOrder" ><i class="bi bi-check-circle"></i> Confirmar</button>
+            </form>
           </form>
-        <!-- ../../../app/views/admin/FormProvider.php -->
         </td>
       </tr>   
+      <?php
+         endforeach;
+        ?>
     </tbody>
   </table>
 </div>

@@ -1,9 +1,8 @@
 <?php
 session_start();
-print_r(session_id());
-print_r($_SESSION['cart']);
 require_once('../app/controller/ProductController.php');
 require_once('../app/controller/UserController.php');
+$_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '../../../public/';
 ?>
 <!DOCTYPE html>
 <html lang="en">

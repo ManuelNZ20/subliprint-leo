@@ -1,5 +1,9 @@
 <?php
 session_start();
+require_once('../../../app/controller/UserController.php');
+$idUser = $_SESSION['idUser'];
+$userController = new UserController();
+$user = $userController->getUserData($idUser);
 ?>
 <!doctype html>
 <html lang="en">
@@ -22,62 +26,53 @@ session_start();
   <?php
     require_once('../../../app/views/layout/header.php');
   ?>
-
 <!-- main -->
-<main class="container pt-4 mb-3">
+<main class="container pt-4">
   <div class="container pt-5 pb-3">
-    <form action="">
+    <form action="
+    " method="post">
         <div class="row">
-          <div class="col-md-6 p-4 rounded mb-3">
+          <div class="col-md-6 rounded mb-3">
             <h5 class="text-secondary">Información de tu cuenta</h5>
                 <div class="row justify-content-between">
-                    <h6 class="col-md-auto">ID: 021</h6>
-                    <h6 class="col-md-auto">Cliente</h6>
+                    <h6 class="col-md-auto">ID: <?=$idUser?></h6>
+                    <h6 class="col-md-auto"><?=$userController->getNameTypeUser($idUser)['nameTypeUser']?></h6>
                 </div>
                 <div class="mb-2">
-                  <label for="formGroupExampleInput" class="form-label">Nombres</label>
-                  <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Nombres">
+                  <label for="nameUser" class="form-label">Nombres</label>
+                  <input type="text" class="form-control" id="nameUser" placeholder="Nombres" name="nameUser" value="<?=isset($user['name']) ? $user['name']:'';?>">
                 </div>
                 <div class="mb-2">
-                  <label for="formGroupExampleInput2" class="form-label">Apellidos</label>
-                  <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Apellidos">
+                  <label for="lastnameUser" class="form-label">Apellidos</label>
+                  <input type="text" class="form-control" id="lastnameUser" placeholder="Apellidos" name="lastnameUser" value="<?=
+                 isset($user['lastname']) ? $user['lastname']:'';?>">
                 </div>
-
                 <div class="mb-2">
-                  <label for="inputPassword3" class="col-sm-2 col-form-label">Contraseña</label>
-                  <div class="input-group">
-                    <input type="password" class="form-control" id="password" placeholder="Contraseña">
-                    <button class="btn btn-outline-secondary" type="button" id="showPasswordToggle"><i class="bi bi-eye"></i></button>
-                  </div>
+                  <label for="addressUser" class="form-label">Dirección</label>
+                  <input type="text" class="form-control" id="addressUser" placeholder="Dirección" name="addressUser" value="<?=isset($user['address'])?$user['address']:''?>">
                 </div>
-
-                <div class="mb-2">
-                  <label for="formGroupExampleInput2" class="form-label">Dirección</label>
-                  <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Dirección">
-                </div>
-
-               
           </div>
           <div class="col-md-6 mb-3">
           <div class="mb-2">
-                  <label for="formGroupExampleInput2" class="form-label">Referencia</label>
-                  <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Referencia">
+                  <label for="addressReference" class="form-label">Referencia</label>
+                  <input type="text" class="form-control" id="addressReference" placeholder="Referencia" name="addressReference" value="<?=isset($user['reference'])?$user['reference']:''?>">
                 </div>
                 
            <div class="mb-2">
-                  <label for="formGroupExampleInput2" class="form-label">Teléfono</label>
-                  <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Teléfono">
+                  <label for="phoneUser" class="form-label">Teléfono</label>
+                  <input type="text" class="form-control" id="phoneUser" placeholder="Teléfono" name="phoneUser" value="<?=isset($user['phone'])?$user['phone']:''?>">
                 </div>
 
               <div class="mb-2">
-                <label for="exampleFormControlInput1" class="form-label">Email</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                <label for="emailUser" class="form-label">Email</label>
+                <input type="email" class="form-control" id="emailUser" placeholder="name@example.com" name="emailUser" value="<?=isset($user['mail'])?$user['mail']:''?>">
               </div>
               <div class="mb-2">
-                <label for="exampleFormControlTextarea1" class="form-label">Ciudad</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" cols="1" style="resize:none;"></textarea>
+                <label for="cityUser" class="form-label">Ciudad</label>
+                <textarea class="form-control" id="cityUser" rows="3" cols="1" style="resize:none;"><?=isset($user['city'])?$user['city']:''?></textarea>
               </div>
-              <button type="submit "class="col-4 btn btn-landing-page mb-2">Enviar</button>
+              <button type="submit "class="btn background-general mb-2" style="width:150px;">Modificar</button>
+              <a href="#" class="btn btn-outline-secondary mb-2" style="width:183px;">Modificar constraseña</a>
             </div>
         </div>
     </form>

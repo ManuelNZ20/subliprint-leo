@@ -1,16 +1,11 @@
 <?php
 session_start();
-print_r(session_id());
-print_r($_SESSION['cart']);
-
 require_once('../../../app/controller/ProductController.php');
 require_once('../../../app/controller/CategoryController.php');
-
 $categoryController = new CategoryController();
 $productController = new ProductController();
-
 $id = isset($_GET['idProduct']) ? $_GET['idProduct'] : '';
-
+$amount = isset($_GET['amountProduct']) ? $_GET['amountProduct'] : 1;
 $product = $productController->getProductByIdInventoryByProduct($id);
 ?>
 <!doctype html>
@@ -34,7 +29,6 @@ $product = $productController->getProductByIdInventoryByProduct($id);
   <?php
     require_once('../../../app/views/layout/header.php');  
   ?>
-
 <!-- main -->
 <main class="pt-4">
     <div class="pt-5 container">
@@ -75,7 +69,7 @@ $product = $productController->getProductByIdInventoryByProduct($id);
                     </div>
                     <div class="row">
                         <div class="col-md-3">
-                            <h6>Disponibilidad: </h6>
+                            <h6 class="text-truncate">Disponibilidad:</h6>
                         </div>
                         <div class="col-md-2">
                             <h6 class="text-secondary">
@@ -91,22 +85,15 @@ $product = $productController->getProductByIdInventoryByProduct($id);
                 </div>
                 <div class="col-md-12 mt-3">
                     <div class="row g-2">
-                        <div class="col-md" >
-                            <!-- <button id="aumentar" class="btn btn-outline-secondary">
-                                <i class="bi bi-plus-lg"></i>
-                            </button>
-                            <span class="align-middle m-2 fs-5" id="contador">1</span>
-                            <button id="disminuir" class="btn btn-outline-secondary">
-                                <i class="bi bi-dash-lg"></i>
-                            </button> -->
+                        <div class="col-md">
                             <form action="../../../app/model/CartModel.php" method="post">
                                 <input type="hidden" name="idProduct" value="<?=$product['idProduct']?>">
-                                <button type="button" class="btn btn-outline-secondary" onclick="incrementar()"><i class="bi bi-plus-lg"></i></button>
-                                <input class="align-middle m-2 fs-5" type="text" id="contadorInput" value="1" style="width:100px; text-align:center;" name="amount"readonly>
-                                <button type="button" class="btn btn-outline-secondary" onclick="decrementar()"> <i class="bi bi-dash-lg"></i></button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="incrementar('<?=$product['idProduct']?>')"><i class="bi bi-plus-lg"></i></button>
+                                <input class="align-middle m-2 fs-4 d-inline-flex focus-ring py-1 px-2 text-decoration-none border rounded-2" type="text" id="contadorInput<?=$product['idProduct']?>" value="<?=$amount?>" style="width:80px; text-align:center;" name="amount" readonly>
+                                <button type="button" class="btn btn-outline-secondary" onclick="decrementar('<?=$product['idProduct']?>')"> <i class="bi bi-dash-lg"></i></button>
                             </div>
                             <div class="col-md">
-                                <button type="submit"  class="btn background-general mb-2" onclick="">
+                                <button type="submit"  class="btn background-general mb-2" onclick="" name="btn-addCart">
                                     Agregar al carrito
                                 </button>
                                 <a href="products.php" class="btn btn-outline-secondary mb-2">Cancelar</a>
@@ -142,17 +129,15 @@ $product = $productController->getProductByIdInventoryByProduct($id);
     <?php
       }
     ?>
-</div>
     </div>
+    </div>
+
 </main>
-<!-- footer -->
-<?php
+  <!-- footer --> 
+  <?php
     require_once('../../../app/views/layout/footer.php');
-    // require_once '../app/views/layout/header.php';
   ?> 
-<script src="../../../public/js/amountProduct.js"></script>
-
-
+  <script src="../../../public/js/amountProduct.js"></script>
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>

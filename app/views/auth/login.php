@@ -1,4 +1,6 @@
-
+<?php
+require_once('../../../app/controller/AuthController.php');
+?>
 <!doctype html>
 <html lang="en">
 
@@ -48,9 +50,14 @@
               <span class="fs-5">Iniciar sesión</span>
             </button>
           </form>
-          <div class=" p-5 pt-0">
-            <a href="../../../public/" class="text-body-secondary text-end link">Volver</a>
-            <hr>
+          <div class="">
+          <div class=" row justify-content-between">
+            <a href="<?=$_SESSION['last_page']?>" class="col-md-3 text-body-secondary text-end link">Volver</a>
+            <a href="" class="link col-md-4">Olvidaste tu contraseña?</a>
+          </div>
+          </div>
+          <div class="p-5 pt-0">
+          <hr>
             <a href="checkIn.php" class="w-100 btn-lg btn btn-outline-secondary" style="">Registrarse</a>
           </div>
         </div>

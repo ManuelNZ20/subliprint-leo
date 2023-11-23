@@ -1,6 +1,22 @@
 <?php
 require_once(__DIR__.'/../model/UserModel.php');
 
+$userController = new UserController();
+
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if(isset($_POST['btn-updateUser'])) {
+        $idUser = $_POST['idUser'];
+        $name = $_POST['nameUser'];
+        $lastname = $_POST['lastnameUser'];
+        $address = $_POST['addressUser'];
+        $reference = $_POST['addressReference'];
+        $phone = $_POST['phoneUser'];
+        $city = $_POST['cityUser'];
+        $updateUser = $userController->updateUser($idUser,$name,$lastname,$address,$reference,$phone,$city);
+    }
+}
+
+
 class UserController {
     private $userModel;
 
@@ -22,6 +38,11 @@ class UserController {
         $userData = $this->userModel->getUserData($idUser);
         return $userData;
     }
+    
+    public function getNameTypeUser($idUser) {
+        $nameTypeUser = $this->userModel->getNameTypeUser($idUser);
+        return $nameTypeUser;
+    }
 
 
     public function countUser() {
@@ -32,6 +53,11 @@ class UserController {
     public function getUsers() {
         $users = $this->userModel->getUsers();
         return $users;
+    }
+
+    public function updateUser($idUser,$name,$lastname,$address,$reference,$phone,$city) {
+        $updateUser = $this->userModel->updateUser($idUser,$name,$lastname,$address,$reference,$phone,$city);
+        return $updateUser?true:false;
     }
 
     public function searchUser() {

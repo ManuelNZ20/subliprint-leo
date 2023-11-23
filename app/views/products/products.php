@@ -4,6 +4,7 @@ require_once('../../../app/controller/ProductController.php');
 require_once('../../../app/controller/CategoryController.php');
 $categoryController = new CategoryController();
 $productController = new ProductController();
+$_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '../../../public/';
 ?>
 <!doctype html>
 <html lang="en">
@@ -38,27 +39,28 @@ $productController = new ProductController();
             <select class="form-select" aria-label="Default select example" name="filterCategory" id="filterCategory">
                 <option value="all" selected>Seleccionar</option>
                 <?php
-                foreach($categoryController->getCategoryActive() as $category) {
+                  foreach($categoryController->getCategoryActive() as $category):
                 ?>
-                 <option value="<?=$category['idCategory'];?>">
-                  <?=$category['nameCategory']?>
-                </option>;
-                 <?php
-                }
-                 ?>
+                   <option value="<?=$category['idCategory'];?>">
+                    <?=$category['nameCategory']?>
+                  </option>;
+                <?php
+                  endforeach;
+                ?>
               </select>
-              <button type="submit" class="btn btn-outline-secondary" id="basic-addon1" name="filter-product">Filtrar</button><!--Filtrar por id category-->
+              <button type="submit" class="btn btn-outline-secondary" id="basic-addon1" name="filter-productCategory">Filtrar</button><!--Filtrar por id category-->
               <button type="submit" class="btn btn-outline-secondary" id="basic-addon1" name="all-product"><i class="bi bi-arrow-clockwise"></i></button>
               </div>
             </form>
         </div>
     </div>
     <hr>
-    <div class="row justify-content-center gap-3 g-1">
+    <div class="row justify-content-center gap-2 g-1">
     <!-- content card -->
     <?php
       $productController = new ProductController();
-      foreach($productController->getProducts() as $product) {
+      // $productController->ge
+      foreach($productController->getProductsByCategory() as $product) {
     ?>
         <div class="card p-0 shadow-sm pt-1" style="width: 15rem; border:none;">
           <img src="<?=$product['imgProduct']?>" class="w-100 card-img-top" alt="<?=$product['nameProduct']?>" style="height:200px;object-fit:cover;"
