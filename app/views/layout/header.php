@@ -4,7 +4,7 @@
 // url base para la navegación
 // $url_base = '../app/views/';
 // $url_base = 'http://localhost:8080/roberto-cotlear/app/views/';
-$url_base = '/roberto-cotlear/app/views/';
+$url_base = '../../../app/views/';
 $url = $_SERVER['REQUEST_URI'];
 if($url == '/roberto-cotlear/public/') {
     require_once('../app/controller/UserController.php');
@@ -86,7 +86,7 @@ if($url == '/roberto-cotlear/public/') {
             endif;
           ?>
           <li class="nav-item">
-            <a class="nav-link active rounded-pill primary" aria-current="page" href="<?= '/roberto-cotlear/public/'
+            <a class="nav-link active rounded-pill primary" aria-current="page" href="<?= $url_base.'home/home.php'
             ?>"><i class="bi bi-house"></i> Inicio</a>
           </li>
           <li class="nav-item">
