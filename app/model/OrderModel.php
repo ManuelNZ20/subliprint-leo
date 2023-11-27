@@ -120,6 +120,18 @@ class OrderModel {
         return $data;
     }
 
+    // obtener datos para formar un grafico que muestre el total de ordenes por estado
+    public function listOrderBuyStateChart() {
+        $sql = "SELECT ob.stateOrder,COUNT(*) AS total FROM buyuser bu INNER JOIN orderbuy ob ON bu.idOrder=ob.idOrderBuy GROUP BY ob.stateOrder;";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+        $stmt->closeCursor();
+        return $data;
+    }
+
+    
+
 }
 
 

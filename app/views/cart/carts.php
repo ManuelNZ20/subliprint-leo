@@ -113,7 +113,8 @@ $cart = $cartController->getProducts();
 ?>
 <div class="col-md-3">
   <div class="row border rounded py-3 px-3 mb-2" style="" >
-    <form action="../../../app/controller/BuyController.php" method="post">
+    <!-- <form action="../../../app/controller/BuyController.php" method="post"> -->
+    <form action="../../../app/views/order/validateOrder.php" method="post">
       <!-- se envian los datos del carrito de compras -->
       <input type="hidden" name="cart" value="<?=htmlentities(serialize($cart)) ?>">
       <input type="hidden" name="idUser" value="<?php

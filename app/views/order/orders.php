@@ -47,6 +47,7 @@ $buy = $buyController->getBuyUserDetails($idUser);
         <th scope="col">ID</th>
         <th scope="col">Fecha Pedido</th>
         <th scope="col">Estado de la orden</th>
+        <th scope="col">Estado de envío de la orden</th>
         <th scope="col">Fecha Pagado</th>
         <th scope="col" colspan="2">Acciones</th>
       </tr>
@@ -64,6 +65,8 @@ $buy = $buyController->getBuyUserDetails($idUser);
                 <td><?=$b['idBuyUser']?></td>
                 <td><?=$b['dateOrder']?></td>
                 <td><?=$b['stateBuy']?></td>
+                <td>
+                  <?=$b['stateOrder']?></td>
                 <td>
                   <?=$b['dateBuy']?>
                 </td>

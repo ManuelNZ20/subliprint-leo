@@ -17,6 +17,7 @@ $cartController = new CartController();
 $idOrder = isset($_GET['idOrder']) ? $_GET['idOrder'] : null;
 $orderDetailsBuyUser = $orderController->getOrderProductsBuyDetails($idOrder);
 $buy = $buyController->getBuyUser($idOrder);
+// print_r($buy);
 ?>
 <!doctype html>
 <html lang="en">
@@ -242,10 +243,11 @@ $buy = $buyController->getBuyUser($idOrder);
                   document.getElementById('result-message').innerHTML = '<h6 class="text-wrap text-success">El pago fue realizado con éxito</h6>';
 
                 console.log(details);
+                // Conocer el metodo de pago
                 return fetch('../../../app/controller/BuyController.php', {
                     method: 'post',
                     headers: {
-                        'content-type': 'application/json'
+                        'content-type': 'application/json',
                     },
                     body: JSON.stringify({
                         orderID: <?=json_encode($idOrder)?>,

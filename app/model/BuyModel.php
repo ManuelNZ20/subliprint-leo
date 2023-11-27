@@ -42,7 +42,7 @@ class BuyModel {
     }
 
     public function getBuyUserDetails($idBuyUser) {
-        $sql = "SELECT buy.idBuyUser,buy.stateBuy,buy.dateBuy ,ob.dateOrder FROM buyuser buy INNER JOIN orderbuy ob ON buy.idOrder=ob.idOrderBuy WHERE idUser=:idUser";
+        $sql = "SELECT buy.idBuyUser,buy.stateBuy,buy.dateBuy ,ob.dateOrder,ob.stateOrder FROM buyuser buy INNER JOIN orderbuy ob ON buy.idOrder=ob.idOrderBuy WHERE idUser=:idUser";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
         $stmt->bindParam(':idUser',$idBuyUser);
         $stmt->execute();
@@ -81,6 +81,28 @@ class BuyModel {
         $stmt->execute();
         $stmt->closeCursor();
         return $stmt?true:false;
+    }
+
+    // Crear un grafico que muestre el total de ordenes pagadas por los usuarios por me listando todos los meses del año actual y el total de ordenes pagadas por mes 
+    public function listOrdersBuyByMonth() {
+        $sql = "SELECT
+        MONTHNAME(calendar.month) AS monthName,
+        IFNULL(COUNT(buy.dateBuy), 0) AS total
+    FROM (
+        SELECT
+            DATE_FORMAT(STR_TO_DATE(CONCAT('2023-', LPAD(a.m, 2, '0'), '-01'), '%Y-%m-%d'), '%Y-%m-%d') AS month
+        FROM (
+            SELECT 1 AS m UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12
+        ) AS a
+    ) calendar
+    LEFT JOIN buyuser buy ON MONTH(buy.dateBuy) = MONTH(calendar.month) AND YEAR(buy.dateBuy) = YEAR(calendar.month) AND buy.stateBuy='Pagado'
+    GROUP BY MONTHNAME(calendar.month);
+    ";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+        $stmt->closeCursor();
+        return $data;
     }
         
 

@@ -34,6 +34,22 @@ class UserModel {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function getUserById($idUser) {
+        $sql = "SELECT * FROM user WHERE idUser = :idUser";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->bindParam(':idUser',$idUser);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function activeAccountUserById($idUser) {
+        $sql = "UPDATE user SET stateAccount = 1 WHERE idUser = :idUser";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->bindParam(':idUser',$idUser);
+        $stmt->execute();
+        return $stmt?true:false;
+    }
+
 
     public function getUserData($idUser) {
         $sql = "SELECT idUser,
@@ -116,6 +132,25 @@ class UserModel {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function updatePasswordUser($idUser,$password) {
+        $sql = "UPDATE user SET password = :password WHERE idUser = :idUser";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->bindParam(':idUser',$idUser);
+        $stmt->bindParam(':password',$password);
+        $stmt->execute();
+        return $stmt?true:false;
+    }
     
+    // Crear un grafico que muestre el total de usuarios por tipo de usuario
+    public function listUserTypeChart() {
+        $sql = "SELECT tu.name ,COUNT(*) AS total FROM user u INNER JOIN typeuser tu ON u.idTypeUser = tu.idTypeUser 
+        GROUP BY tu.idTypeUser;";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+        $stmt->closeCursor();
+        return $data;
+    }
 }
 ?>

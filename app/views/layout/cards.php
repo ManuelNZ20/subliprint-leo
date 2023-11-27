@@ -1,5 +1,5 @@
 <?php
-include ('../app/views/layout/buttons.php');
+include ('../../../app/views/layout/buttons.php');
 // include (__DIR__.'/buttons.php');
 
 function cardInformation($urlGeneral,$title,$information,$url,$class,$img,$textBtn){

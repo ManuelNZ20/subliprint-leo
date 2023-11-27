@@ -208,6 +208,15 @@ class ProductModel {
         return $products;
     }
 
+    // Crear un grafico que muestre el total de productos por categoria
+    public function listProductsCategoryChart() {
+        $sql = "SELECT c.nameCategory,COUNT(*) AS total FROM product p INNER JOIN category c ON p.idCategory = c.idCategory GROUP BY c.nameCategory;";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+        $stmt->closeCursor();
+        return $data;
+    }
 
 }
 ?>

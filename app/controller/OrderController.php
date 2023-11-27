@@ -50,6 +50,11 @@ class OrderController {
     {
         return $this->orderModel->listOrderBuyState();
     }
+
+    public function listOrderBuyStateChart() 
+    {
+        return $this->orderModel->listOrderBuyStateChart();
+    }
     // Confirmar envío de pedido
     public function onApproveOrder($idOrderBuy) 
     {

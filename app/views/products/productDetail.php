@@ -64,7 +64,7 @@ $product = $productController->getProductByIdInventoryByProduct($id);
                             <h6>Código de producto: </h6>
                         </div>
                         <div class="col-md-2">
-                            <h6 class="text-secondary"><?=$product['idProduct']?></h6>
+                            <h6 id="idProduct" class="text-secondary"><?=$product['idProduct']?></h6>
                         </div>
                     </div>
                     <div class="row">
@@ -93,7 +93,7 @@ $product = $productController->getProductByIdInventoryByProduct($id);
                                 <button type="button" class="btn btn-outline-secondary" onclick="decrementar('<?=$product['idProduct']?>')"> <i class="bi bi-dash-lg"></i></button>
                             </div>
                             <div class="col-md">
-                                <button type="submit"  class="btn background-general mb-2" onclick="" name="btn-addCart">
+                                <button type="submit" class="btn background-general mb-2" name="btn-addCart">
                                     Agregar al carrito
                                 </button>
                                 <a href="products.php" class="btn btn-outline-secondary mb-2">Cancelar</a>
@@ -136,9 +136,11 @@ $product = $productController->getProductByIdInventoryByProduct($id);
   <!-- footer --> 
   <?php
     require_once('../../../app/views/layout/footer.php');
-  ?> 
+  ?>
+   <!--importar jquery -->
   <script src="../../../public/js/amountProduct.js"></script>
   <!-- Bootstrap JavaScript Libraries -->
+  
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>

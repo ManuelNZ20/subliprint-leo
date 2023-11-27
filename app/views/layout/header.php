@@ -23,7 +23,16 @@ if($url == '/roberto-cotlear/public/') {
 <header class="fixed-top" >
 <nav class="navbar bg-body-tertiary text-lime-50">
   <div class="container" style="height:50px;">
-    <a class="navbar-brand" href="<?=$url?>">Roberto Cotlear
+    <a class="navbar-brand" href="<?=$url?>">
+    <img src="
+    <?php
+      if($url == '/roberto-cotlear/public/') {
+        echo '../public/img/logo.png';
+      }else {
+        echo '../../../public/img/logo.png';
+      }
+    ?>
+    " alt="logo" style="margin-left: auto; margin-right: auto; width: 45px;"/>
   </a>
     <div class="d-flex">
       <?php
@@ -46,7 +55,14 @@ if($url == '/roberto-cotlear/public/') {
     </button>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Roberto Cotlear</h5>
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
+        <img src="<?php
+          if($url == '/roberto-cotlear/public/') {
+            echo '../public/img/logo.png';
+          }else {
+            echo '../../../public/img/logo.png';
+          }
+        ?>" alt="logo" style="margin-left: auto; margin-right: auto; width: 50px;"/>Ferretería Roberto Cotlear EIRL</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
@@ -104,10 +120,10 @@ if($url == '/roberto-cotlear/public/') {
             endif;
           ?>
           <?php
-            if(isset($_SESSION['idUser'])):
+            if(isset($user)):
           ?>
             <?php
-              if($_SESSION['idUser'] == 2):
+              if($user['idTypeUser'] === 2):
             ?>
               <li class="nav-item">
               <div class="dropdown">

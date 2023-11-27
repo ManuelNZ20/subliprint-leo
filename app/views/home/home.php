@@ -26,7 +26,7 @@ $_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '..
           <div class="mb-3" style="border:none; background-color:rgba(215, 139, 50, 0.1);">
             <div class="row g-0">
               <div class="col-md-6">
-                <img src="img/img-home.png" class="w-100 h-100 img-fluid card-img" alt="image-about" style="">
+                <img src="../public/img/img-home.png" class="w-100 h-100 img-fluid card-img" alt="image-about" style="">
               </div>
           <div class="col-md-6 p-4">
             <div class="card-body mx-auto p-2  w-75 text-start" >

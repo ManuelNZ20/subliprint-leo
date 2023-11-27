@@ -73,6 +73,12 @@ class UserController {
             }
         }
     }
+
+     // Crear un grafico que muestre el total de usuarios por tipo de usuario
+    public function listUserTypeChart() {
+        $listUserTypeChart = $this->userModel->listUserTypeChart();
+        return $listUserTypeChart;
+    }
 }
 
 ?>

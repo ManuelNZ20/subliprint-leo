@@ -149,6 +149,18 @@ $orderController = new OrderController();
       </div>
     </div>
   </div>
+  
+  <!-- Contenedor para el gráfico -->
+  <div class="row">
+    <div class="col-md-6">
+      <canvas class="container m-5" id="miGrafico1" width="400" height="200"></canvas>
+    </div>
+    <div class="col-md-6">
+      <canvas class="container m-5" id="miGrafico2" width="400" height="200"></canvas>
+    </div>
+  </div>
+
+  <hr>
   <div class="row justify-content-between mt-5">
     <h4 class="col"><span class=""><i class="bi bi-cart-dash"></i> Pedidos pendientes</span></h4>
     <h4 class="col text-end">N° <?=$orderController->countOrderBuyState()?></h4>
@@ -216,8 +228,93 @@ $orderController = new OrderController();
   </table>
 </div>
 </main>
-<!-- footer -->
-<!-- include('../../../presentation/templates/footer.php'); -->
+
+<?php
+  // Obtener la lista de usuario para el grafico
+  $user = $userController-> listUserTypeChart();
+  // print_r($user['total']);
+
+?>
+<!-- Incluye Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // obtener datos para formar un grafico que muestre el total de ordenes por estado
+  var datos1 = {
+    labels: [
+     "Aceptados",
+     "Pendientes"
+    ],
+    datasets: [{
+      label: "Total de pedidos por estado",
+      // color general segun este #cb9351
+      backgroundColor: "rgba(203, 147, 81, 0.2)",
+      // color de la linea
+      borderColor: "rgba(203, 147, 81, 1)",
+      borderWidth: 5,
+      data: [
+        <?php
+          $order = $orderController->listOrderBuyStateChart();
+          foreach($order as $o):
+        ?>
+          <?=$o?>,
+        <?php
+          endforeach;
+        ?>
+      ],
+    }]
+  };
+
+  var datos2 = {
+    labels: [
+      "Cliente",
+      "Administrador",
+    ],
+    datasets: [{
+      label: "Usuarios por tipo",
+      // color general segun este #cb9351
+      backgroundColor: "rgba(203, 147, 81, 0.2)",
+      // color de la linea
+      borderColor: "rgba(203, 147, 81, 1)",
+      borderWidth: 5,
+      data: [
+        <?php
+       $user = $userController-> listUserTypeChart();
+        foreach($user as $u):
+      ?>
+        "<?=$u?>",
+      <?php
+        endforeach;
+      ?>
+      ],
+    }]
+  };
+
+  // Configuración del gráfico
+  var opciones = {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    }
+  };
+
+  // Obtén el contexto del lienzo
+  var ctx1 = document.getElementById('miGrafico1').getContext('2d');
+  var ctx2 = document.getElementById('miGrafico2').getContext('2d');
+
+  // Crea el gráfico
+  var miGrafico = new Chart(ctx1, {
+    type: 'bar',
+    data: datos1,
+    options: opciones
+  });
+  var miGrafico = new Chart(ctx2, {
+    type: 'bar',
+    data: datos2,
+    options: opciones
+  });
+</script>
+
   <!-- Bootstrap JavaScript Libraries -->
   <script src="../../../public/js/temporizador.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
