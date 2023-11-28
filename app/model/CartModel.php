@@ -1,5 +1,4 @@
 <?php
-// session_start();
 require_once(__DIR__.'/../../config/database.php');
 $cartModel = new CartModel();
 
@@ -27,7 +26,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 class CartModel {
 
     public function __construct() {
-        if(!isset($_SESSION)) {
+        if(!session_id()) {
             session_start();
         }
     }

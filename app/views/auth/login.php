@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 require_once('../../../app/controller/AuthController.php');
 // $_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '../../../public/';
 ?>
@@ -65,11 +67,11 @@ require_once('../../../app/controller/AuthController.php');
             endif;
           ?>
           <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="mail">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="mail" required>
             <label for="floatingInput">Correo electrónico</label>
           </div>
           <div class="form-floating  position-relative mb-3">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" maxlength="8">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" maxlength="8" required>
             <label for="floatingPassword">Contraseña</label>
             <!-- Botón para mostrar/ocultar contraseña -->
             <div class="border-none input-group-append position-absolute" style="bottom:10px; right:10px;">
@@ -89,10 +91,10 @@ require_once('../../../app/controller/AuthController.php');
                     if($_SESSION['last_page'] !== '/roberto-cotlear/app/views/auth/login.php') {
                       echo $_SESSION['last_page'];
                     } else {
-                      echo '/roberto-cotlear/public/';
+                      echo '../../../app/views/home/home.php';
                     }
                   } else {
-                    echo '/roberto-cotlear/public/';
+                    echo '../../../app/views/home/home.php';
                   }
                   ?>" class="text-body-secondary text-end link">Volver</a>
               <a href="recoverPassword.php" class="link text-truncate">Olvidaste tu contraseña?</a>

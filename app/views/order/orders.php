@@ -66,7 +66,34 @@ $buy = $buyController->getBuyUserDetails($idUser);
                 <td><?=$b['dateOrder']?></td>
                 <td><?=$b['stateBuy']?></td>
                 <td>
-                  <?=$b['stateOrder']?></td>
+                  <?php
+                    if($b['stateOrder']==='Aceptado'):
+                  ?>
+                  <span class="badge bg-success">
+                    Recibido <i class="bi bi-check-circle-fill"></i> y en proceso de envío
+                  </span>
+                  <?php
+                    elseif($b['stateOrder']==='Pendiente'):
+                  ?>
+                  <span class="badge bg-warning">
+                    Pendiente <i class="bi bi-clock"></i> de confirmación
+                  </span>
+                  <?php
+                    elseif($b['stateOrder']==='Rechazado'):
+                  ?>
+                  <span class="badge bg-danger">
+                    Rechazado <i class="bi bi-x-circle-fill"></i>
+                  </span>
+                  <?php
+                    elseif($b['stateOrder']==='Enviado'):
+                  ?>
+                  <span class="badge bg-info">
+                    Enviado <i class="bi bi-truck"></i>
+                  </span>
+                  <?php
+                    endif;
+                  ?>
+                  </td>
                 <td>
                   <?=$b['dateBuy']?>
                 </td>

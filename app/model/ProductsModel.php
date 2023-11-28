@@ -44,10 +44,10 @@ class ProductModel {
         return $product;
     }
     // Creamos un productos en la tabla products y en la tabla productinventory
-    public function createProduct($idInventory,$amount,$id,$name,$brand,$description,$status,$img,$price,$unit,$create,$update,$idCategory) {
+    public function createProduct($idInventory,$amount,$id,$name,$brand,$description,$status,$img,$price,$unit,$create,$update,$idCategory,$expire) {
         // Creamos el producto
-        $sql = "INSERT INTO product (idProduct,nameProduct,brand,description,statusProduct,imgProduct,price,unit,create_at,update_at,idCategory) VALUES 
-         (:idProduct,:nameProduct,:brand,:description,:statusProduct,:imgProduct,:price,:unit,:create_at,:update_at,:idCategory)";
+        $sql = "INSERT INTO product (idProduct,nameProduct,brand,description,statusProduct,imgProduct,price,unit,create_at,update_at,idCategory,expire_product) VALUES 
+         (:idProduct,:nameProduct,:brand,:description,:statusProduct,:imgProduct,:price,:unit,:create_at,:update_at,:idCategory,:expire_product)";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
         $stmt->bindParam(':idProduct',$id);
         $stmt->bindParam(':nameProduct',$name);
@@ -60,6 +60,7 @@ class ProductModel {
         $stmt->bindParam(':create_at',$create);
         $stmt->bindParam(':update_at',$update);
         $stmt->bindParam(':idCategory',$idCategory);
+        $stmt->bindParam(':expire_product',$expire);
         $stmt->execute();
 
         // Obtenemos el id del producto recien creado
@@ -85,9 +86,10 @@ class ProductModel {
         return $stmt? true : false;
     }
 
-    public function updateProdudct($amount,$id,$name,$brand,$description,$status,$img,$price,$unit,$update,$idCategory) {
+    public function updateProdudct($amount,$id,$name,$brand,$description,$status,$img,$price,$unit,$update,$idCategory,$expire) {
         // Actualizar producto
-        $sql = "UPDATE product SET nameProduct = :nameProduct, brand = :brand, description = :description, statusProduct = :statusProduct, imgProduct = :imgProduct, price = :price, unit = :unit, update_at = :update_at, idCategory = :idCategory WHERE idProduct = :idProduct";
+        $sql = "UPDATE product SET nameProduct = :nameProduct, brand = :brand, description = :description, statusProduct = :statusProduct, imgProduct = :imgProduct, price = :price, unit = :unit, update_at = :update_at, idCategory = :idCategory, expire_product=:expire_product
+        WHERE idProduct = :idProduct";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
         $stmt->bindParam(':idProduct',$id);
         $stmt->bindParam(':nameProduct',$name);
@@ -99,6 +101,7 @@ class ProductModel {
         $stmt->bindParam(':unit',$unit);
         $stmt->bindParam(':update_at',$update);
         $stmt->bindParam(':idCategory',$idCategory);
+        $stmt->bindParam(':expire_product',$expire);
         $stmt->execute();
         // Actualizar producto en el inventario
         $sql = "CALL UpdateProductInventory(:idProduct,:priceInit,:amountInit)";
@@ -210,12 +213,11 @@ class ProductModel {
 
     // Crear un grafico que muestre el total de productos por categoria
     public function listProductsCategoryChart() {
-        $sql = "SELECT c.nameCategory,COUNT(*) AS total FROM product p INNER JOIN category c ON p.idCategory = c.idCategory GROUP BY c.nameCategory;";
+        $sql = "SELECT c.nameCategory, COUNT(*) AS total FROM product p INNER JOIN category c ON p.idCategory = c.idCategory GROUP BY c.nameCategory;";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
         $stmt->execute();
-        $data = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
-        $stmt->closeCursor();
-        return $data;
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $products;
     }
 
 }

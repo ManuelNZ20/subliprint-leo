@@ -62,29 +62,29 @@
             <hr>
             <div class="col-md-6">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="name" placeholder="Nombres" name="name">
+              <input type="text" class="form-control" id="name" placeholder="Nombres" name="name" required >
               <label for="name">Nombres</label>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="last-name" placeholder="Apellidos" name="lastname">
+              <input type="text" class="form-control" id="last-name" placeholder="Apellidos" name="lastname" required >
               <label for="last-name">Apellidos</label>
             </div>
           </div>
 
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="address" placeholder="Direccion" name="address">
+            <input type="text" class="form-control" id="address" placeholder="Direccion" name="address" required >
             <label for="address">Dirección</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="reference-address" placeholder="Direccion" name="reference" >
+            <input type="text" class="form-control" id="reference-address" placeholder="Direccion" name="reference"  required >
             <label for="reference-address">Dirección de referencia</label>
           </div>
           
         <div class="col-md-6">
           <div class="form-floating mb-3">
-              <select id="inputCity" name="city" class="form-select" aria-label="Floating label select example">
+              <select id="inputCity" name="city" class="form-select" aria-label="Floating label select example" required>
                   <option value="Amazonas">Amazonas</option>
                   <option value="Áncash">Áncash</option>
                   <option value="Apurímac">Apurímac</option>
@@ -118,7 +118,7 @@
           <div class="col-md-6">
 
             <div class="form-floating mb-3">
-              <input type="tel" class="form-control" id="phone" placeholder="Teléfono" pattern="[0-9]{9}" oninput="validarTelefono(this)" name="phone" maxlength="9">
+              <input type="tel" class="form-control" id="phone" placeholder="Teléfono" pattern="[0-9]{9}" oninput="validarTelefono(this)" name="phone" maxlength="9" required>
               <label for="phone">Teléfono</label>
             </div>
           </div>
@@ -128,13 +128,13 @@
           <h3>Datos de cuenta</h3>
           <hr>
           <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="mail">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="mail" required>
             <label for="floatingInput">Correo electrónico</label>
           </div>
   </div>
   <div class="col-md-6">
     <div class="form-floating  position-relative mb-3">
-      <input type="password" class="form-control" id="floatingPassword1" placeholder="Password" name="password1" maxlength="8">
+      <input type="password" class="form-control" id="floatingPassword1" placeholder="Password" name="password1" maxlength="8" required>
             <label for="floatingPassword">Contraseña</label>
             <!-- Botón para mostrar/ocultar contraseña -->
             <div class="border-none input-group-append position-absolute" style="bottom:10px; right:10px;">
@@ -147,7 +147,7 @@
         </div>
           <div class="col-md-6">
           <div class="form-floating  position-relative mb-3">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password2" maxlength="8">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password2" maxlength="8" required>
             <label for="floatingPassword">Confirmar Contraseña</label>
             <!-- Botón para mostrar/ocultar contraseña -->
             <div class="border-none input-group-append position-absolute" style="bottom:10px; right:10px;">
@@ -172,7 +172,6 @@
 </main>
 <?php
     require_once('../../../app/views/layout/footer.php');
-    // require_once '../app/views/layout/header.php';
   ?> 
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -182,8 +181,7 @@ function validarTelefono(input) {
     input.value = input.value.replace(/\D/g, '');
 }
 </script>
-<script src="../../../public/js/scriptPasswordLogin.js">
-</script>
+<script src="../../../public/js/scriptPasswordLogin.js"></script>
 <script>
   
 $(document).ready(function() {

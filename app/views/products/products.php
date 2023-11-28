@@ -4,7 +4,7 @@ require_once('../../../app/controller/ProductController.php');
 require_once('../../../app/controller/CategoryController.php');
 $categoryController = new CategoryController();
 $productController = new ProductController();
-$_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '../../../public/';
+$_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '../../../app/views/home/home.php';
 ?>
 <!doctype html>
 <html lang="en">

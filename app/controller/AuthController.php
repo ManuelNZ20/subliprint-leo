@@ -1,24 +1,12 @@
 <?php
+error_reporting(E_ALL); // Error/Exception engine, always use E_ALL permite mostrar todos los errores
+ini_set('display_errors', 1); // Error/Exception display, use ini_set to override permite mostrar todos los errores
 session_start();
 date_default_timezone_set('America/Lima');
 require_once(__DIR__.'/../model/AuthModel.php');
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    unset($_SESSION['error']);
-    unset($_SESSION['errorMail']);
-    unset($_SESSION['errorPassword']);
-    unset($_SESSION['successMailAccount']);
-    unset($_SESSION['successPassword']);
-    unset($_SESSION['successActiveAccount']);
-    unset($_SESSION['errorToken']);
-    unset($_SESSION['errorTokenAccount']);
     $authController = new AuthController();
     if(isset($_POST['btnLogin'])) {
-        unset($_SESSION['error']);
-        unset($_SESSION['errorMail']);
-        unset($_SESSION['errorPassword']);
-        unset($_SESSION['successMailAccount']);
-        unset($_SESSION['successPassword']);
-        unset($_SESSION['successActiveAccount']);
         $authController->login();
     } elseif(isset($_POST['btnRegister'])) {
         $authController->createUser();
@@ -50,16 +38,16 @@ class AuthController {
     public function login () {
         $user = $this->authModel->getUser($_POST['mail']);
         if($user) {
-          if($user['stateAccount'] == 0) {
+            if($user['stateAccount'] == 0) {
               $_SESSION['error'] = 'La cuenta no está activada, verifica tu correo electrónico';
               header('Location: ../../app/views/auth/login.php');
               exit;
-          }
-          if(password_verify($_POST['password']
-              ,$user['password'])) {
+            }
+            if(password_verify($_POST['password']
+            ,$user['password'])) {
               $_SESSION['idUser'] = $user['idUser'];
               $_SESSION['name'] = $user['name'];
-              header('Location: '.$_SESSION['last_page'] ?? '../../../public/');
+              header('Location: '.$_SESSION['last_page'] ?? '../../app/views/home/home.php');
               exit;
           } else {
               $_SESSION['error'] = 'La contraseña es incorrecta';
@@ -71,7 +59,6 @@ class AuthController {
             header('Location: ../../app/views/auth/login.php');
             exit;
         }
-        exit;
     }
 
     public function createUser() {
@@ -297,7 +284,7 @@ class AuthController {
     public function recoverPassword() {
         $user = $this->authModel->getUser($_POST['mail']);
         if($user) {
-            $tokenUser = bin2hex(random_bytes(4)); // Generar un token aleatorio, en hexadecimal dadome un valor como 32 bytes, ejemplo como esto 5
+            $tokenUser = bin2hex(random_bytes(4));
             $token = $this->authModel->createToken($user['idUser'],$tokenUser,'Recuperar contraseña');
             $this->sendMailTokenPasswork($user['idUser'],$user['mail'],$tokenUser);
         } else {

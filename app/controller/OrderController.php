@@ -8,6 +8,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         session_start();
         header('Location: '.$_SESSION['last_page']);
         exit;
+    } elseif(isset($_POST['btn-sendOrder'])) {
+        $idBuyUser = $_POST['idBuyUser'];
+        $orderController->onSendOrder($idBuyUser);
+        session_start();
+        header('Location: '.$_SESSION['last_page']);
+        exit;
     }
 }
 
@@ -61,9 +67,19 @@ class OrderController {
         $this->orderModel->onApproveOrder($idOrderBuy);
     }
 
+    // Confirmar envío de pedido
+    public function onSendOrder($idOrderBuy) 
+    {
+        $this->orderModel->onSendOrder($idOrderBuy);
+    }
+
     public function listOrdersBuy() 
     {
         return $this->orderModel->listOrdersBuy();
+    }
+
+    public function listOrderBuyWeekChart() {
+        return $this->orderModel->listOrderBuyWeekChart();
     }
 
     public function paginationOrdersBuy($init,$end) {

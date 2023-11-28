@@ -6,6 +6,7 @@ require_once('TokenModel.php');
 class AuthModel {
     private $dbCon;
     private $userModel;
+    private $tokenModel;
 
     public function __construct() {
         $this->dbCon = new ConnectionDataBase();
@@ -34,7 +35,6 @@ class AuthModel {
         return $updatePasswordUser?true:false;
     }
     // Token Model
-
     public function getToken($idUser) {
         $getToken = $this->tokenModel->getToken($idUser);
         return $getToken;

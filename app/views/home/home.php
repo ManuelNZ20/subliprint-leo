@@ -2,7 +2,7 @@
 session_start();
 require_once('../../../app/controller/ProductController.php');
 require_once('../../../app/controller/UserController.php');
-$_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '../../../app/views/home/home.php';
+$_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '../../../public/';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -91,7 +91,7 @@ $_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '..
           <p class="card-text text-truncate fs-5" style="color:rgba(203, 147, 81, 1);">S/. <?=number_format($product['price'],2)?></p>
         </div>
         <div class="card-body">
-          <a href="../app/views/products/productDetail.php?idProduct=<?=$product['idProduct']?>" class="btn btn-outline-secondary rounded-circle"><i class="bi bi-bag-plus"></i></a>
+          <a href="../../../app/views/products/productDetail.php?idProduct=<?=$product['idProduct']?>" class="btn btn-outline-secondary rounded-circle"><i class="bi bi-bag-plus"></i></a>
         </div>
       </div>
     <?php

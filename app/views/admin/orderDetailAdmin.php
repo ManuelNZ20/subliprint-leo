@@ -6,7 +6,8 @@ if(!isset($_SESSION['idUser'])) {
 }
 require_once('../../../app/controller/OrderController.php');
 require_once('../../../app/controller/BuyController.php');
-// $_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '../../../public/';
+$_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '../../../app/views/admin/orders.php';
+
 $orderController = new OrderController();
 $buyController = new BuyController();
 
@@ -37,8 +38,8 @@ $buy = $buyController->getBuyUser($idOrder);
     <h1 class="col-md-12 text-center pt-4 pb-3 text-truncate" style="background-color:var(--about-1);color:white;"><i class="bi bi-cart-dash"></i> Pedido <?=$idOrder?></h1>
 </div>
     <div class="col-md-12">
-      <div class="row mb-3 justify-content-between">
-        <h5 class="col-md-6 text-truncate">ID Orden: <?=$buy['idBuyUser']?></h5>
+      <div class="row mb-1 justify-content-between gap-1">
+        <h5 class="col-md-4 text-truncate">ID Orden: <?=$buy['idBuyUser']?></h5>
         <?php
           if($buy['stateBuy'] == 'Pagado'):
         ?>
@@ -50,8 +51,61 @@ $buy = $buyController->getBuyUser($idOrder);
         <?php
           endif;
         ?>
+
+        <?php
+          if($orderDetailsBuyUser[0]['stateOrder'] == 'Enviado'):
+        ?>
+            <h5 id="stateSend-Order" class="col-md-3 text-truncate border border-info rounded-pill text-info text-center py-1 px-1">Estado de envío: <?=$orderDetailsBuyUser[0]['stateOrder']?></h5>
+        <?php
+          elseif($orderDetailsBuyUser[0]['stateOrder'] == 'Cancelado'):
+        ?>
+            <h5 id="stateSend-Order" class="col-md-3 text-truncate border border-danger rounded-pill text-danger text-center py-1 px-1">Estado de envío: <?=$orderDetailsBuyUser[0]['stateOrder']?></h5>
+        <?php
+          elseif($orderDetailsBuyUser[0]['stateOrder'] == 'Pendiente'):
+        ?>
+            <h5 id="stateSend-Order" class="col-md-3 text-truncate border border-warning rounded-pill text-warning text-center py-1 px-1">Estado de envío: <?=$orderDetailsBuyUser[0]['stateOrder']?></h5>
+        <?php
+          // pedido recibido(Aceptado)
+          elseif($orderDetailsBuyUser[0]['stateOrder'] == 'Aceptado'):
+        ?>
+        <h5 id="stateSend-Order" class="col-md-3 text-truncate border border-success rounded-pill text-success text-center py-1 px-1">Estado de envío: <?=$orderDetailsBuyUser[0]['stateOrder']?></h5>
+        <?php
+          endif;
+        ?>
+            
+
       </div>
     </div>
+    <div class="container border-secondary-subtle rounded-4 mb-3" style="
+    background-color:rgba(203, 147, 81, 0.2);
+    ">
+  <div class="row">
+    <h4 class="text-start rounded-top-4 p-2 " style="background-color:rgba(203, 147, 81, 0.2);">Datos de envío</h1>
+    <div class="col-md-6">
+      <h6>Nombres: <span class="fw-light"><?=$orderDetailsBuyUser[0]['name']?></span></h6>
+    </div>
+    <div class="col-md-6">
+      <h6>Apellidos: <span class="fw-light"><?=$orderDetailsBuyUser[0]['lastname']?></span></h6>
+    </div>
+    <div class="col-md-12">
+      <h6>Correo electronico: <span class="fw-light"><?=$orderDetailsBuyUser[0]['mail']?></span></h6>
+    </div>
+    <div class="col-md-6">
+      <h6>Número de contacto: <span class="fw-light"><?=$orderDetailsBuyUser[0]['phone']?></span></h6>
+    </div>
+    <div class="col-md-6">
+      <h6>Ciudad: <span class="fw-light"><?=$orderDetailsBuyUser[0]['city']?></span></h6>
+    </div>
+    <div class="col-md-6">
+      <h6>Dirección: <span class="fw-light"><?=$orderDetailsBuyUser[0]['address']?></span></h6>
+    </div>
+    <div class="col-md-6">
+      <h6>Dirección de referencia: <span class="fw-light"><?=$orderDetailsBuyUser[0]['reference']?></span></h6>
+    </div>
+    
+  </div>
+</div>
+
 <div class="row mb-3 justify-content-between">
   <div class="col-md-12 table-responsive mb-2" style="height:450px;">
     <table class="table table-sm table-hover">
@@ -111,16 +165,23 @@ $buy = $buyController->getBuyUser($idOrder);
     </tbody>
   </table>
 </div>
-    <div class="col-md-12">
+<div class="col-md-12">
           <div class="row justify-content-between align-items-center">
-            <a href="<?=$_SESSION['last_page']?>" class="col-md-2 btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Volver
-        </a>
-            <form action="../../../app/controller/OrderController.php" method="POST" class="col-md-2">
+            <a href="<?='../../../app/views/admin/orders.php';
+            ?>" class="col-md-2 btn btn-outline-secondary mb-2"><i class="bi bi-arrow-left"></i> Volver</a>
+            <form action="../../../app/controller/OrderController.php" method="POST" class="col-md-auto mb-2">
                 <input type="hidden" name="idBuyUser" value="<?=$idOrder?>">
-                <button class="col-md-12 me-2 btn btn-outline-success" name="btn-successOrder" ><i class="bi bi-check-circle"></i> Confirmar</button>
+                <div class="row gap-1">
+                  <button class="col-md-auto mt-2 btn btn-outline-success" name="btn-successOrder" ><i class="bi bi-check-circle"></i> Confirmar</button>
+                  <button class="col-md-auto mt-2 btn btn-outline-danger" name="btn-cancelOrder" ><i class="bi bi-x-circle"></i> Cancelar</button>
+                  <!-- Boton de enviar -->
+                  <button class="col-md-auto mt-2 btn btn-outline-info" name="btn-sendOrder" ><i class="bi bi-truck"></i> Enviar</button>
+                  
+                </div>
+
             </form>
             </div>
-    </div>
+</div>
 </div>
 
 </main>

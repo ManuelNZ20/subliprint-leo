@@ -78,7 +78,8 @@ class ProviderController {
            isset($_POST['addressProvider']) &&
            isset($_POST['emailProvider']) &&
            isset($_POST['dateProvider']) &&
-           isset($_POST['descriptionProvider'])
+           isset($_POST['descriptionProvider'])  &&
+           isset($_POST['rucProvider'])
            ) {
             $name = $_POST['nameProvider'];
             $state = $_POST['stateProvider'];
@@ -87,7 +88,8 @@ class ProviderController {
             $email = $_POST['emailProvider'];
             $dateRegister = $_POST['dateProvider'];
             $description = $_POST['descriptionProvider'];
-            $create = $this -> providerModel -> createProvider($name, $state, $phone, $address, $email, $dateRegister,$description);
+            $ruc = $_POST['rucProvider'];
+            $create = $this -> providerModel -> createProvider($name, $state, $phone, $address, $email, $dateRegister,$description,$ruc);
             if($create) {
                 echo '<div class="alert alert-success">'.
                     '<strong>Éxito!</strong> Provider creado exitosamente'.
@@ -101,7 +103,6 @@ class ProviderController {
             echo '<div class="alert alert-danger">'.
             '<strong>Error!</strong> No se pudo crear el proveedor Fuera'.
             '</div>';
-            return;
         }
     }
 
@@ -113,7 +114,9 @@ class ProviderController {
             isset($_POST['addressProvider']) &&
             isset($_POST['emailProvider']) &&
             isset($_POST['dateProvider']) &&
-            isset($_POST['descriptionProvider'])) {
+            isset($_POST['descriptionProvider']) &&
+            isset($_POST['rucProvider'])
+            ) {
 
             $name = $_POST['nameProvider'];
             $state = $_POST['stateProvider'];
@@ -122,8 +125,9 @@ class ProviderController {
             $email = $_POST['emailProvider'];
             $dateRegister = $_POST['dateProvider'];
             $description = $_POST['descriptionProvider'];
+            $ruc = $_POST['rucProvider'];
             echo $description;
-            $update = $this -> providerModel -> updateProvider($id, $name, $state, $phone, $address, $email, $dateRegister,$description);
+            $update = $this -> providerModel -> updateProvider($id, $name, $state, $phone, $address, $email, $dateRegister,$description,$ruc);
             if($update) {
                 echo '<div class="alert alert-success">'.
                     '<strong>Éxito!</strong> Proveedor actualizado exitosamente'.

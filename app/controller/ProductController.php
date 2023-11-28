@@ -71,11 +71,13 @@ class ProductController
         && isset($_POST['priceProduct'])
         && isset($_POST['unitProduct'])
         && isset($_POST['categoryProduct'])
+        && isset($_POST['expireProduct'])
             ) {
 
             if($_FILES['imgProduct']['name']!=="") {
                 $imgProduct = $_FILES['imgProduct']['name'];
-                $route = $_SERVER['DOCUMENT_ROOT'].'/roberto-cotlear/app/controller/helpers/';
+                // $route = $_SERVER['DOCUMENT_ROOT'].'/roberto-cotlear/app/controller/helpers/';
+                $route = __DIR__.'/helpers/';
                 $uploadSecure = $this->upload->uploadImage($imgProduct,$route);
                 $this->deleteImageHelpers($imgProduct);
             } else {
@@ -91,10 +93,11 @@ class ProductController
             $img = $uploadSecure;
             $price = $_POST['priceProduct'];
             $unit = $_POST['unitProduct'];
-            $create = date('Y-m-d');
-            $update = date('Y-m-d');
+            $create = date('Y-m-d H:i:s');
+            $update = date('Y-m-d H:i:s');
+            $expire = $_POST['expireProduct'];
             $idCategory = $_POST['categoryProduct'];
-            $product = $this->productModel->createProduct($idInventory,$amount,$id,$name,$brand,$description,$status,$img,$price,$unit,$create,$update,$idCategory);
+            $product = $this->productModel->createProduct($idInventory,$amount,$id,$name,$brand,$description,$status,$img,$price,$unit,$create,$update,$idCategory,$expire);
             
             if($product) {
                 $this->deleteImageHelpers($imgProduct);
@@ -120,11 +123,10 @@ class ProductController
         && isset($_POST['priceProduct'])
         && isset($_POST['unitProduct'])
         && isset($_POST['categoryProduct'])
+        && isset($_POST['expireProduct'])
         ) {
             // si se sube una imagen, se elimina la imagen anterior y se sube la nueva
-
             $idInventory = $_POST['idInventory'];// id del inventario, nos permite redireccionar a la pagina de productos segun el inventario
-
             $amount = $_POST['amountProduct'];
             $id = $_POST['idProduct'];
             $name = $_POST['nameProduct'];
@@ -133,22 +135,24 @@ class ProductController
             $status = $_POST['statusProduct'];
             $price = $_POST['priceProduct'];
             $unit = $_POST['unitProduct'];
-            $update = date('Y-m-d');
+            $update = date('Y-m-d H:i:s');
+            $expire = $_POST['expireProduct'];
             $idCategory = $_POST['categoryProduct'];
-            $imgInit = 
-            $this->productModel->getProductByIdInventoryByProduct($id)['imgProduct']; // obtener la imagen anterior
+            $imgInit =    $this->productModel->getProductByIdInventoryByProduct($id)['imgProduct']; // obtener la imagen anterior
             if($_FILES['imgProduct']['name']!=="") {
                 $this->upload->deleteImage($imgInit); // eliminar imagen anterior
                 $this->createImageHelpers();
                 $imgProduct = $_FILES['imgProduct']['name'];
-                $route = $_SERVER['DOCUMENT_ROOT'].'/roberto-cotlear/app/controller/helpers/';
+                // Que la ruta no dependa del nombre de la carpeta del proyecto osea sin el nombre de roberto-cotlear
+                $route = /* $_SERVER['DOCUMENT_ROOT'].''. */__DIR__.'/helpers/';
+                // $route = $_SERVER['DOCUMENT_ROOT'].'//app/controller/helpers/';
                 $uploadSecure = $this->upload->uploadImage($imgProduct,$route); // subir imagen a cloudinary
                 $img = $uploadSecure;
             }else {
                 $img = $imgInit;
             }
             
-            $product = $this->productModel->updateProdudct($amount,$id,$name,$brand,$description,$status,$img,$price,$unit,$update,$idCategory);
+            $product = $this->productModel->updateProdudct($amount,$id,$name,$brand,$description,$status,$img,$price,$unit,$update,$idCategory,$expire);
             
             if($product) {
                 $this->deleteImageHelpers($imgProduct);
@@ -159,7 +163,7 @@ class ProductController
             }
         }else {
             echo 'Error al crear el producto';
-            return;
+            exit;
         }
     }
 
@@ -231,6 +235,11 @@ class ProductController
                 return $products;
             }
         }
+        return $products;
+    }
+
+    public function listProductsCategoryChart() {
+        $products = $this->productModel->listProductsCategoryChart();
         return $products;
     }
 

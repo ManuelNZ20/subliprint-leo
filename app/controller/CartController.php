@@ -3,11 +3,6 @@ require_once(__DIR__.'/../model/CartModel.php');
 require_once(__DIR__.'/../model/ProductsModel.php');
 $cartController = new CartController();
 
-// if($_SERVER['REQUEST_METHOD'] == 'POST') {
-//     $cartController->addProduct();
-//     echo json_encode($cartController->countProducts());
-// }
-
 class CartController {
     public $cartModel;
 

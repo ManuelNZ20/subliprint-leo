@@ -83,7 +83,7 @@ class BuyModel {
         return $stmt?true:false;
     }
 
-    // Crear un grafico que muestre el total de ordenes pagadas por los usuarios por me listando todos los meses del año actual y el total de ordenes pagadas por mes 
+    // Grafico que muestra el total de ordenes pagadas por los usuarios por lista de todos los meses del año actual y el total de ordenes pagadas por mes 
     public function listOrdersBuyByMonth() {
         $sql = "SELECT
         MONTHNAME(calendar.month) AS monthName,
@@ -100,11 +100,33 @@ class BuyModel {
     ";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
         $stmt->execute();
-        $data = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $stmt->closeCursor();
-        return $data;
+        return $products;
     }
-        
+
+    // Grafico que muestra el total de ganancias por semana
+    public function listOrdersBuyByWeek() {
+        $sql = "SELECT
+        WEEK(calendar.week) AS weekName,
+        IFNULL(COUNT(buy.dateBuy), 0) AS total
+    FROM (
+        SELECT
+            DATE_FORMAT(STR_TO_DATE(CONCAT('2023-', LPAD(a.m, 2, '0'), '-01'), '%Y-%m-%d'), '%Y-%m-%d') AS week
+        FROM (
+            SELECT 1 AS m UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12
+        ) AS a
+    ) calendar 
+    LEFT JOIN buyuser buy ON WEEK(buy.dateBuy) = WEEK(calendar.week) AND YEAR(buy.dateBuy) = YEAR(calendar.week) AND buy.stateBuy='Pagado'
+    GROUP BY WEEK(calendar.week);
+    ";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->execute();
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->closeCursor();
+        return $products;
+    }
+
 
 }
 

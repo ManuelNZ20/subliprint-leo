@@ -9,8 +9,8 @@ class ProviderModel {
     }
 
     // crear proveedor
-    public function createProvider($name, $state, $phone, $address, $email, $dateRegister,$description) {
-        $sql = "INSERT INTO providers (name, state, phone, address, email, dateRegister,description) VALUES (:name, :state, :phone, :address, :email, :dateRegister, :description)";
+    public function createProvider($name, $state, $phone, $address, $email, $dateRegister,$description,$ruc) {
+        $sql = "INSERT INTO providers (name, state, phone, address, email, dateRegister,description,ruc) VALUES (:name, :state, :phone, :address, :email, :dateRegister, :description,:ruc)";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':state', $state, PDO::PARAM_STR);
@@ -19,6 +19,7 @@ class ProviderModel {
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':dateRegister', $dateRegister, PDO::PARAM_STR);
         $stmt->bindParam(':description', $description, PDO::PARAM_STR);
+        $stmt->bindParam(':ruc', $ruc, PDO::PARAM_STR);
         $stmt->execute();
         if ($stmt) {
             return true;
@@ -28,8 +29,8 @@ class ProviderModel {
     }
 
     // Actualizar al proveedor
-    public function updateProvider($id,$name, $state, $phone, $address, $email, $dateRegister,$description) {
-        $sql = "UPDATE providers SET name = :name, state = :state, phone = :phone, address = :address, email = :email, dateRegister = :dateRegister, description = :description WHERE idProvider = :id";
+    public function updateProvider($id,$name, $state, $phone, $address, $email, $dateRegister,$description,$ruc) {
+        $sql = "UPDATE providers SET name = :name, state = :state, phone = :phone, address = :address, email = :email, dateRegister = :dateRegister, description = :description, ruc=:ruc WHERE idProvider = :id";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
@@ -39,6 +40,7 @@ class ProviderModel {
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':dateRegister', $dateRegister, PDO::PARAM_STR);
         $stmt->bindParam(':description', $description, PDO::PARAM_STR);
+        $stmt->bindParam(':ruc', $ruc, PDO::PARAM_STR);
         $stmt->execute();
         if ($stmt) {
             return true;

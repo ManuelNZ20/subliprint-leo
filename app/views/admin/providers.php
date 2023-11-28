@@ -1,3 +1,8 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,6 +95,7 @@
         <th scope="col">Teléfono</th>
         <th scope="col">Dirección</th>
         <th scope="col">Correo</th>
+        <th scope="col">Ruc</th>
         <th scope="col">Registro</th>
         <th class="text-center" colspan="2" scope="col">Acción</th>
       </tr>
@@ -135,6 +141,11 @@
             <td class="align-middle">
               <span class="d-inline-block text-truncate" style="max-width: 150px;">
                 <?= $value['email']?>
+              </span>
+            </td>
+            <td class="align-middle">
+              <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                <?= $value['ruc']?>
               </span>
             </td>
             <td class="align-middle">

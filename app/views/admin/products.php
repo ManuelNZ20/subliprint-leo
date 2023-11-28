@@ -1,5 +1,6 @@
 <?php
-  require_once('../../../app/controller/ProductController.php');
+session_start();
+require_once('../../../app/controller/ProductController.php');
   require_once('../../../app/controller/CategoryController.php');
   if(isset($_GET['idInventory'])) {
     $idInventory = $_GET['idInventory'];
@@ -148,9 +149,21 @@
               <?=$product['nameCategory']?>
             </span>
           </td>
+          <?php
+            if($product['statusProduct'] == 'activo'):
+          ?>
           <td  class="text-truncate align-middle text-success">
             <i class="bi bi-circle"></i> <?=$product['statusProduct']?>
           </td>
+          <?php
+            else:
+          ?>
+          <td  class="text-truncate align-middle text-danger">
+            <i class="bi bi-circle"></i> <?=$product['statusProduct']?>
+          </td>
+          <?php
+            endif;
+          ?>
           <td class="align-middle">
               <a href="../../../app/views/admin/FormProduct.php?id=<?=$product['idProduct']?>&idInventory=<?=$idInventory?>" class="col me-2 btn btn-outline-secondary"><i class="bi bi-pencil" >
               </i> Editar</a>

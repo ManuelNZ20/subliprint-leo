@@ -11,8 +11,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         foreach($cart as $c) {
             $total += $c['subtotal'];
         }
-        $json_cart = json_encode($cart); // conver
-        echo $json_cart;
         $buyController->addBuy($total);
         exit;
     } else if(isset($_POST['btn-deleteOrder'])) {
@@ -23,12 +21,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Confirmar Compra 
     $json = file_get_contents('php://input'); // obtener los datos que envia paypal
     $data = json_decode($json,true);
-    echo $data['payer']['payer_info']['payment_method'];
-    // var_dump($json);
-    // var_dump($data);
     $buyController->onApproveBuy($data['orderID']);
-    echo "Compra aprobada";
-    // return;
+    exit;
 }
 
 class BuyController {
@@ -40,7 +34,6 @@ class BuyController {
         $this->userModel = new UserModel();
     }
 
-
     public function addBuy($totalOrder) {
         if(isset($_POST['cart']) &&
            isset($_POST['idUser'])) {
@@ -48,7 +41,6 @@ class BuyController {
             $cart = unserialize($_POST['cart']);
             $json_cart = json_encode($cart); // convertir el array en json
             $this->buyModel->addBuy($idUser,$totalOrder,$json_cart);
-            $idBuy = $this->getLastInsertId($idUser);
             // actualizar datos del usuario
             $name = $_POST['name'];
             $lastname = $_POST['lastname'];
@@ -57,6 +49,7 @@ class BuyController {
             $city = $_POST['city'];
             $phone = $_POST['phone'];
             $this->userModel->updateUser($idUser,$name,$lastname,$address,$reference,$phone,$city);
+            $idBuy = $this->getLastInsertId($idUser);
             header('Location: ../../app/views/order/orderDetail.php?idOrder='.$idBuy);
         }
     }
@@ -94,6 +87,9 @@ class BuyController {
         }
     }
 
+    public function listOrdersBuyByMonth() {// listar las compras por mes
+        return $this->buyModel->listOrdersBuyByMonth();
+    }
 
 }
 ?>

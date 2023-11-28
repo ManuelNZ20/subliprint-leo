@@ -42,7 +42,15 @@ class ImageControllerCloudinary {
             } 
             else if ($extension == 'jpeg') {
                 $img_delete = str_replace('.jpeg', '', $image_url);
+            } 
+            else if ($extension == 'gif') {
+                $img_delete = str_replace('.gif', '', $image_url);
             }
+            else {
+                $img_delete = $image_url;
+            }
+
+
             $upload = (new AdminApi())->deleteAssets($img_delete, [
                 'resource_type' => 'image',
                 'type' => 'upload',

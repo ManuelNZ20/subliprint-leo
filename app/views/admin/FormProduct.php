@@ -1,4 +1,5 @@
 <?php
+session_start();
 date_default_timezone_set('America/Lima');// zona horaria
 // TODO: Cambiar el controllador y revisar detalles
 require_once('../../../app/controller/ProductController.php');
@@ -23,6 +24,7 @@ if(isset( $_GET['id'] )){
   $imgUrl = $product['imgProduct'];
   $idCategory = $product['idCategory'];
   $create = $product['create_at'];
+  $expire_product = $product['expire_product'];
 } else {
   $edit = false;
   $id = $controller->createIdUUID();
@@ -88,7 +90,7 @@ if(isset( $_GET['id'] )){
         <label for="idProduct" class="form-label">Id producto</label>
         <input type="text" class="form-control" id="idProduct" name="idProduct" value="<?=$id?>" required readonly>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-9">
         <label for="nameProduct" class="form-label">Nombre del producto</label>
         <input type="text" class="form-control" id="nameProduct" name="nameProduct" value="<?= ($edit===true)?$name:'';?>" required>
       </div>
@@ -130,6 +132,11 @@ if(isset( $_GET['id'] )){
               ?>
           </select>
       </div>
+      <div class="col-md-12">
+        <label for="expireProduct" class="form-label">Fecha de vencimiento</label>
+        <input type="date" class="form-control" id="expireProduct" name="expireProduct" value="<?= ($edit===true)?$expire_product:'';?>" required>
+        <!-- <label for=""><?=$expire_product==NULL?'si':'no'?></label> -->
+      </div>
   </div>
   </div>
 
@@ -144,7 +151,7 @@ if(isset( $_GET['id'] )){
         <h4 class="text-start">Imagen</h4>
         <input class="form-control mb-2" type="file" id="imageInput" name="imgProduct" accept="image/*" multiple>
         <div class="container mt-2 pt-4 pb-2" style="height:180px; background-color:var(--bs-tertiary-bg);">
-            <img id="imgShow" class="img-fluid float-start rounded mx-auto d-block" src="<?=($edit===true)?$imgUrl:''?>" alt=""  style="width: 16rem; height:150px; display:<?=($edit===true)?"block":"none;"?>">
+            <img id="imgShow" class="img-fluid float-start rounded mx-auto d-block" src="<?=($edit===true)?$imgUrl:''?>" alt="Seleccione una imagen para el producto"  style="width: 16rem; height:150px; display:<?=($edit===true)?"block":"none";?>">
       </div>
       <hr>
       </div>
@@ -164,7 +171,8 @@ if(isset( $_GET['id'] )){
           if($idInventory != null){ 
             echo '../../../app/views/admin/products.php?idInventory='.$idInventory;
           } else {
-            echo '../../../app/views/admin/admin.php';
+            // echo '../../../app/views/admin/admin.php';
+            echo $_SESSION['last_page'];
           }?>">
     <i class="bi bi-arrow-left-circle"></i> Cerrar
     </a>

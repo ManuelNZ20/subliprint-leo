@@ -1,4 +1,5 @@
 <?php
+session_start();
 date_default_timezone_set('America/Lima');
 if(isset($_GET['id'])){
   include_once '../../../app/controller/ProviderController.php';
@@ -10,6 +11,7 @@ if(isset($_GET['id'])){
   $phone = $provider['phone'];
   $address = $provider['address'];
   $email = $provider['email'];
+  $ruc = $provider['ruc'];
   $dateOriginal = $provider['dateRegister'];
   $dateRegister = date("Y-m-d", strtotime($dateOriginal));
   $description = $provider['description'];
@@ -105,6 +107,11 @@ if(isset($_GET['id'])){
         <option value="activo" <?php if($state=='activo') echo 'selected';?>>Activo</option>
         <option value="inactivo" <?php if($state=='inactivo') echo 'selected';?>>Inactivo</option>
     </select>
+  </div>
+  <div class="col-md-2">
+    <label for="rucProvider" class="form-label">RUC</label>
+    <input type="text" class="form-control" id="rucProvider" name="rucProvider" maxlength="11"
+     value="<?= ($id>0)?$ruc:'';?>" required>
   </div>
   <div class="col-12">
   <label for="descriptionProvider" class="form-label">Descripción</label>

@@ -24,7 +24,7 @@ class TokenModel {
         $stmt->bindParam(':token',$token);
         $stmt->bindParam(':detailsToken',$detailsToken);
         $stmt->execute();
-        return $stmt?true:false;
+        return $stmt ? true : false;
     }
 
     public function updateToken($idToken,$token) {

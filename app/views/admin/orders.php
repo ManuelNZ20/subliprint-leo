@@ -1,11 +1,14 @@
 <?php
 // Condicional funciona si el usuario es administrador
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 session_start();
 if(!isset($_SESSION['idUser'])) {
   header('Location: ../../../public/');
 }
 // guardar la ruta de acceso
-$_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '../../../public/';
+$_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '
+../../../app/views/admin/orders.php';
 require_once('../../../app/controller/OrderController.php');
 $orderController = new OrderController();
 
@@ -51,6 +54,10 @@ $orderController = new OrderController();
               <label class="btn btn-outline-success" for="btnradio1">Aceptado</label>
               <input type="radio" class="btn-check" name="stateOrder" id="btnradio3" autocomplete="off" value="Pendiente">
               <label class="btn btn-outline-warning" for="btnradio3">Pendiente</label>
+              <input type="radio" class="btn-check" name="stateOrder" id="btnradio2" autocomplete="off" value="Cancelado">
+              <label class="btn btn-outline-danger" for="btnradio2">Cancelado</label>
+              <input type="radio" class="btn-check" name="stateOrder" id="btnradio4" autocomplete="off" value="Enviado">
+              <label class="btn btn-outline-info" for="btnradio4">Enviado</label>
             </div>
             <button type="submit" class="btn btn-outline-secondary" id="basic-addon1" name="filter-order">Filtrar</button>
             <button type="submit" class="btn btn-outline-secondary" id="basic-addon1" name=""><i class="bi bi-arrow-clockwise"></i></button>
@@ -145,6 +152,16 @@ $orderController = new OrderController();
               <span class="d-inline-block text-truncate text-success" style="max-width: 150px;">
               <i class="bi bi-check-circle"></i> <?=$o['stateOrder']?></span>
             <?php
+              elseif($o['stateOrder'] == 'Cancelado'):
+            ?>
+              <span class="d-inline-block text-truncate text-danger" style="max-width: 150px;">
+              <i class="bi bi-x-circle"></i> <?=$o['stateOrder']?></span>
+              <?php 
+              elseif($o['stateOrder'] == 'Enviado'):
+              ?>
+              <span class="d-inline-block text-truncate text-info" style="max-width: 150px;">
+              <i class="bi bi-truck"></i> <?=$o['stateOrder']?></span>
+            <?php
              else:
             ?>
               <span class="d-inline-block text-truncate text-warning" style="max-width: 150px;">
@@ -158,7 +175,7 @@ $orderController = new OrderController();
         </td>
         <td class="aling-middle">
           <?php
-            if($o['stateOrder'] != 'Aceptado'):
+            if($o['stateOrder'] != 'Aceptado' AND $o['stateOrder'] != 'Enviado'):
           ?>
           <form action="../../../app/controller/OrderController.php" method="POST">
                 <input type="hidden" name="idBuyUser" value="<?=$o['idBuyUser']?>">

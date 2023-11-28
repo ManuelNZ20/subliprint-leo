@@ -1,4 +1,5 @@
 <?php
+session_start();
     require_once('../../../app/controller/ProviderController.php');
     $providerController = new ProviderController();
     date_default_timezone_set('America/Lima');

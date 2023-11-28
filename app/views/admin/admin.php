@@ -10,10 +10,13 @@ if(!isset($_SESSION['idUser'])) {
 $_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '../../../public/';
 require_once('../../../app/controller/UserController.php');
 require_once('../../../app/controller/OrderController.php');
+require_once('../../../app/controller/ProductController.php');
+require_once('../../../app/controller/BuyController.php');
 
 $userController = new UserController();
 $orderController = new OrderController();
-
+$productController = new ProductController();
+$buyController = new BuyController();
 ?>
 <!doctype html>
 <html lang="en">
@@ -151,12 +154,21 @@ $orderController = new OrderController();
   </div>
   
   <!-- Contenedor para el gráfico -->
-  <div class="row">
+  <div class="row g-2">
     <div class="col-md-6">
-      <canvas class="container m-5" id="miGrafico1" width="400" height="200"></canvas>
+      <canvas class="w-100 h-100" id="miGrafico1"></canvas>
     </div>
     <div class="col-md-6">
-      <canvas class="container m-5" id="miGrafico2" width="400" height="200"></canvas>
+      <canvas class="w-100 h-100" id="miGrafico2"></canvas>
+    </div>
+    <div class="col-md-6">
+      <canvas class="w-100 h-100" id="miGrafico3"></canvas>
+    </div>
+    <div class="col-md-6">
+      <canvas class="w-100 h-100" id="miGrafico4"></canvas>
+    </div>
+    <div class="col-md-12">
+      <canvas class="w-100 h-100" id="miGrafico5"></canvas>
     </div>
   </div>
 
@@ -228,13 +240,6 @@ $orderController = new OrderController();
   </table>
 </div>
 </main>
-
-<?php
-  // Obtener la lista de usuario para el grafico
-  $user = $userController-> listUserTypeChart();
-  // print_r($user['total']);
-
-?>
 <!-- Incluye Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
@@ -289,6 +294,113 @@ $orderController = new OrderController();
     }]
   };
 
+  var datos3 = {
+    labels: [
+      <?php
+        $product = $productController->listProductsCategoryChart();
+        foreach($product as $p):
+      ?>
+        "<?=$p['nameCategory']?>",
+      <?php
+        endforeach;
+      ?>
+    ],
+    datasets: [{
+      label: "Productos por categoria",
+      // color general segun este #cb9351
+      backgroundColor: [
+        // Color rosa
+        "rgba(255, 99, 132, 0.2)",
+        // Color rojo
+        "rgba(255, 99, 132, 0.2)",
+        // Color azul
+        "rgba(54, 162, 235, 0.2)",
+        // Color amarillo
+        "rgba(255, 206, 86, 0.2)",
+        // Color naranja
+        "rgba(255, 159, 64, 0.2)",
+        // Color morado
+        "rgba(153, 102, 255, 0.2)",
+        // Color verde
+        "rgba(75, 192, 192, 0.2)",
+        // Color gris
+        "rgba(201, 203, 207, 0.2)",
+      ],
+      // color de la linea
+      borderColor: "rgba(203, 147, 81, 1)",
+      data: [
+        <?php
+          $product = $productController->listProductsCategoryChart();
+          foreach($product as $p):
+        ?>
+          <?=$p['total']?>,
+        <?php
+          endforeach;
+        ?>
+      ],
+    }]
+  }
+
+  var datos4 = {
+    labels: [
+      <?php
+        $buy = $buyController->listOrdersBuyByMonth();
+        foreach($buy as $b):
+      ?>
+        "<?=$b['monthName']?>",
+      <?php
+        endforeach;
+      ?>
+    ],
+    datasets: [{
+      label: "Pedidos por mes",
+      // color general segun este #cb9351
+      backgroundColor: "rgba(203, 147, 81, 0.2)",
+      // color de la linea
+      borderColor: "rgba(203, 147, 81, 1)",
+      data: [
+        <?php
+          $buy = $buyController->listOrdersBuyByMonth();
+          foreach($buy as $b):
+        ?>
+          <?=$b['total']?>,
+        <?php
+          endforeach;
+        ?>
+      ],
+    }]
+  }
+
+  var datos5 = {
+    labels: [
+      <?php
+        $orders = $orderController->listOrderBuyWeekChart();
+        foreach($orders as $o):
+      ?>
+        "<?=$o['dayOfWeek']?>",
+      <?php
+        endforeach;
+      ?>
+    ],
+    datasets: [{
+      label: "Ganacias por semana",
+      // color general segun este #cb9351
+      backgroundColor: "rgba(203, 147, 81, 0.2)",
+      // color de la linea
+      borderColor: "rgba(203, 147, 81, 1)",
+      data: [
+        <?php
+          $orders = $orderController->listOrderBuyWeekChart();
+          foreach($orders as $o):
+        ?>
+          <?=$o['total']?>,
+        <?php
+          endforeach;
+        ?>
+      ],
+    }]
+  }
+
   // Configuración del gráfico
   var opciones = {
     scales: {
@@ -297,11 +409,34 @@ $orderController = new OrderController();
       },
     }
   };
+  // Configuracion para el diagrama de torta
+  var optionsPie = {
+    responsive: true,
+    maintainAspectRatio: false,
+    title: {
+        display: true,
+        text: 'Productos por categoría', // Puedes cambiar el texto según tus necesidades
+        fontSize: 18
+    },
+  };
+
+  // Configuración para el diagrama en line
+  var optionsLine = {
+    responsive: true,
+    maintainAspectRatio: false,
+    title: {
+        display: true,
+        text: 'Pedidos por mes', // Puedes cambiar el texto según tus necesidades
+        fontSize: 18
+    },
+  };
 
   // Obtén el contexto del lienzo
   var ctx1 = document.getElementById('miGrafico1').getContext('2d');
   var ctx2 = document.getElementById('miGrafico2').getContext('2d');
-
+  var ctx3 = document.getElementById('miGrafico3').getContext('2d');
+  var ctx4 = document.getElementById('miGrafico4').getContext('2d');
+  var ctx5 = document.getElementById('miGrafico5').getContext('2d');
   // Crea el gráfico
   var miGrafico = new Chart(ctx1, {
     type: 'bar',
@@ -312,6 +447,21 @@ $orderController = new OrderController();
     type: 'bar',
     data: datos2,
     options: opciones
+  });
+  var miGrafico = new Chart(ctx3, {
+    type: 'pie',
+    data: datos3,
+    options: optionsPie
+  });
+  var miGrafico = new Chart(ctx4, {
+    type: 'line',
+    data: datos4,
+    options: optionsLine
+  });
+  var miGrafico = new Chart(ctx5, {
+    type: 'line',
+    data: datos5,
+    options: optionsLine
   });
 </script>
 
