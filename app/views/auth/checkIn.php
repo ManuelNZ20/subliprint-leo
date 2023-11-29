@@ -12,6 +12,8 @@
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../../../public/css/main.css">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="https://res.cloudinary.com/dqpzipc8i/image/upload/v1701189129/ecommerce/hiu2muzuuzzsykiqljju.ico" type="image/x-icon">
     <style>
       @media(max-width:770px) {
           .img-login {
@@ -85,33 +87,19 @@
         <div class="col-md-6">
           <div class="form-floating mb-3">
               <select id="inputCity" name="city" class="form-select" aria-label="Floating label select example" required>
-                  <option value="Amazonas">Amazonas</option>
-                  <option value="Áncash">Áncash</option>
-                  <option value="Apurímac">Apurímac</option>
-                  <option value="Arequipa">Arequipa</option>
-                  <option value="Ayacucho">Ayacucho</option>
-                  <option value="Cajamarca">Cajamarca</option>
-                  <option value="Callao">Callao</option>
-                  <option value="Cusco">Cusco</option>
-                  <option value="Huancavelica">Huancavelica</option>
-                  <option value="Huánuco">Huánuco</option>
-                  <option value="Ica">Ica</option>
-                  <option value="Junín">Junín</option>
-                  <option value="La Libertad">La Libertad</option>
-                  <option value="Lambayeque">Lambayeque</option>
-                  <option value="Lima">Lima</option>
-                  <option value="Loreto">Loreto</option>
-                  <option value="Madre de Dios">Madre de Dios</option>
-                  <option value="Moquegua">Moquegua</option>
-                  <option value="Pasco">Pasco</option>
+                  <option value="" selected>Selecciona tu distrito</option>
                   <option value="Piura">Piura</option>
-                  <option value="Puno">Puno</option>
-                  <option value="San Martín">San Martín</option>
-                  <option value="Tacna">Tacna</option>
-                  <option value="Tumbes">Tumbes</option>
-                  <option value="Ucayali">Ucayali</option>
+                  <option value="Castilla">Castilla</option>
+                  <option value="Catacaos">Catacaos</option>
+                  <option value="Cura Mori">Cura Mori</option>
+                  <option value="El Tallán">El Tallán</option>
+                  <option value="La Arena">La Arena</option>
+                  <option value="La Unión">La Unión</option>
+                  <option value="Las Lomas">Las Lomas</option>
+                  <option value="Tambogrande">Tambogrande</option>
+                  <option value="Veintiséis de Octubre">Veintiséis de Octubre</option>
               </select>
-            <label for="inputCity">Selecciona tu región</label>
+            <label for="inputCity">Selecciona tu distrito</label>
           </div> 
         </div>
 

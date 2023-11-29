@@ -635,6 +635,7 @@ return array(
     'Cloudinary\\Utils' => $vendorDir . '/cloudinary/cloudinary_php/src/Utils/Utils.php',
     'Cloudinary\\Utils\\SignatureVerifier' => $vendorDir . '/cloudinary/cloudinary_php/src/Utils/SignatureVerifier.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'FPDF' => $vendorDir . '/setasign/fpdf/fpdf.php',
     'PhpToken' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
     'Stringable' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
     'UnhandledMatchError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',

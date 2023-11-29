@@ -23,7 +23,7 @@ if($url == '/roberto-cotlear/public/') {
 <header class="fixed-top" >
 <nav class="navbar bg-body-tertiary text-lime-50">
   <div class="container" style="height:50px;">
-    <a class="navbar-brand" href="<?=$url?>">
+    <a class="navbar-brand" href="<?='../../../app/views/home/home.php'?>">
     <img src="
     <?php
       if($url == '/roberto-cotlear/public/') {

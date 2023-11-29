@@ -46,6 +46,8 @@ if(isset( $_GET['id'] )){
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../../../public/css/main.css">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="https://res.cloudinary.com/dqpzipc8i/image/upload/v1701189129/ecommerce/hiu2muzuuzzsykiqljju.ico" type="image/x-icon">
 </head>
 <body>
   <!-- header -->
@@ -97,11 +99,11 @@ if(isset( $_GET['id'] )){
       <!--  Categoría -->
     <div class="col-md-6">
       <label for="amountProduct" class="form-label">Cantidad</label>
-      <input type="text" class="form-control" id="amountProduct" name="amountProduct" value="<?= ($edit===true)?$amount:'';?>" required>
+      <input type="number" pattern="[0-9]*" class="form-control" id="amountProduct" name="amountProduct" value="<?= ($edit===true)?$amount:'';?>" required>
     </div>
     <div class="col-md-6">
       <label for="priceProduct" class="form-label">Precio</label>
-      <input type="text" class="form-control" id="priceProduct" name="priceProduct" value="<?= ($edit===true)?$price:'';?>" required>
+      <input type="number" step="0.001" pattern="[0-9]+(\.[0-9]{3,})?" class="form-control" id="priceProduct" name="priceProduct" value="<?= ($edit===true)?$price:'';?>" required>
     </div>
     <div class="col-md-6">
       <label for="brandProduct" class="form-label">Marca</label>
@@ -122,7 +124,7 @@ if(isset( $_GET['id'] )){
       <div class="col-md-6">
           <label for="categoryProduct" class="form-label">Categoría</label>
           <select class="form-select" aria-label="Default select example" name="categoryProduct" id="categoryProduct" required>
-              <option value="all" <?php if($state=='all') echo 'selected';?>>Seleccionar</option>
+             <option value="">Seleccionar</option>
               <?php
                 foreach ($categoryController->getCategory() as $state) {
               ?>

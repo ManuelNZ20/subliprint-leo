@@ -13,6 +13,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $phone = $_POST['phoneUser'];
         $city = $_POST['cityUser'];
         $updateUser = $userController->updateUser($idUser,$name,$lastname,$address,$reference,$phone,$city);
+    } elseif(isset($_POST['btnConfirm'])) {
+        $idUser = $_POST['idUser'];
+        $typeUser = $_POST['typeUser'];
+        $updateUser = $userController->updateTypeUser($idUser,$typeUser);
     }
 }
 
@@ -53,6 +57,17 @@ class UserController {
     public function getUsers() {
         $users = $this->userModel->getUsers();
         return $users;
+    }
+
+    public function updateTypeUser($idUser,$typeUser) {
+        $updateTypeUser = $this->userModel->updateTypeUser($idUser,$typeUser);
+        if($updateTypeUser)
+        {   
+            session_start();
+            $_SESSION['messageUser'] = 'Se actualizo el tipo de usuario';
+            header('location: ../../app/views/admin/users.php');
+        }
+        return $updateTypeUser?true:false;
     }
 
     public function updateUser($idUser,$name,$lastname,$address,$reference,$phone,$city) {

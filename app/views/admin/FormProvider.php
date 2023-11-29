@@ -35,6 +35,8 @@ if(isset($_GET['id'])){
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../../../public/css/main.css">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="https://res.cloudinary.com/dqpzipc8i/image/upload/v1701189129/ecommerce/hiu2muzuuzzsykiqljju.ico" type="image/x-icon">
 </head>
 <body>
   <!-- header -->
@@ -98,7 +100,7 @@ if(isset($_GET['id'])){
   </div>
   <div class="col-md-4">
     <label for="phoneProvider" class="form-label">Teléfono</label>
-    <input type="text" class="form-control" id="phoneProvider" name="phoneProvider" value="<?= ($id>0)?$phone:'';?>" required>
+    <input type="tel" class="form-control" id="phoneProvider"  name="phoneProvider" placeholder="" pattern="[0-9]{9}" oninput="validarTelefono(this)" maxlength="9" value="<?= ($id>0)?$phone:'';?>" required>
   </div>
   <div class="col-md-2">
     <label for="stateProvider" class="form-label">Estado</label>
@@ -110,7 +112,7 @@ if(isset($_GET['id'])){
   </div>
   <div class="col-md-2">
     <label for="rucProvider" class="form-label">RUC</label>
-    <input type="text" class="form-control" id="rucProvider" name="rucProvider" maxlength="11"
+    <input type="text" class="form-control" id="rucProvider" name="rucProvider" oninput="validarTelefono(this)" maxlength="11"
      value="<?= ($id>0)?$ruc:'';?>" required>
   </div>
   <div class="col-12">
@@ -135,6 +137,13 @@ if(isset($_GET['id'])){
   
 </main>
 <!-- Script -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script>
+function validarTelefono(input) {
+    // Eliminar caracteres no numéricos
+    input.value = input.value.replace(/\D/g, '');
+}
+</script>
   <!-- Bootstrap JavaScript Libraries -->  
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>

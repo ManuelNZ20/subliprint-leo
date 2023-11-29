@@ -133,6 +133,14 @@ class UserModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function updateTypeUser($idUser,$idTypeUser) {
+        $sql = "UPDATE user SET idTypeUser = :idTypeUser WHERE idUser = :idUser";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->bindParam(':idUser',$idUser);
+        $stmt->bindParam(':idTypeUser',$idTypeUser);
+        $stmt->execute();
+        return $stmt?true:false;
+    }
     public function updatePasswordUser($idUser,$password) {
         $sql = "UPDATE user SET password = :password WHERE idUser = :idUser";
         $stmt = $this->dbCon->getConnection()->prepare($sql);

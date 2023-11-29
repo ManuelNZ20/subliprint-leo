@@ -16,6 +16,8 @@ session_start();
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../../../public/css/main.css">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="https://res.cloudinary.com/dqpzipc8i/image/upload/v1701189129/ecommerce/hiu2muzuuzzsykiqljju.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -41,6 +43,17 @@ session_start();
     <h4 class="col"><span class=""><i class="bi bi-people"></i> Usuarios</span></h4>
     <h4 class="col text-end">N° <?=$userController->countUser();?></h4>
   </div>
+  <?php
+    if(isset($_SESSION['messageUser'])):
+  ?>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong><?=$_SESSION['messageUser']?></strong> 
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <?php
+    unset($_SESSION['messageUser']);
+    endif;
+  ?>
   <hr>
     <div class="table-responsive mb-5"  style="height:500px;">
     <table class="table table-sm table-hover">
@@ -95,10 +108,22 @@ session_start();
             </span>
         </td>
         <td class="">
-          <form action="../../../app/controller/UserController?mail=<?=$value['mail']?>" method="POST">
+          <form action="../../../app/controller/UserController.php" method="POST">
+          <input type="hidden" name="idUser" value="<?=$value['idUser']?>">
           <select class="form-select" aria-label="Default select example"  name="typeUser">
-            <option value="user">Usuario</option>
-            <option value="admin">Administrador</option>
+            <?php
+              if($value['idTypeUser'] == 1):
+            ?>
+            <option value="1" selected>Administrador</option>
+            <option value="2">Cliente</option>
+            <?php
+              else:
+            ?>
+            <option value="1">Administrador</option>
+            <option value="2" selected>Cliente</option>
+            <?php
+              endif;
+            ?>
           </select>
             <button class="col me-2 btn btn-outline-success" name="btnConfirm" ><i class="bi bi-check-circle"></i> Confirmar
           </button>
