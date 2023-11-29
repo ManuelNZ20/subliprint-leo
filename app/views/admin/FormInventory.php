@@ -59,6 +59,17 @@ session_start();
   </div>
   <form class="row g-3" action="../../../app/controller/InventoryController.php" method="POST">
   <div class="col-md-12">
+    <?php
+        if(isset($_SESSION['messageInventory'])){
+    ?>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <?= $_SESSION['messageInventory'];?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php
+        unset($_SESSION['messageInventory']);
+        }
+    ?>
   <label for="noteInventory" class="form-label">Nota</label>
   <textarea class="form-control" id="noteInventory" name="noteInventory" rows="3" cols="4" style="resize:none;" required><?=($id>0)?$description:''; ?></textarea>
   </div>

@@ -31,15 +31,26 @@ $user = $userController->getUserData($idUser);
 <!-- main -->
 <main class="container pt-4">
   <div class="container pt-5 pb-3">
-    <form action="
-    " method="post">
+    <form action="../../../app/controller/UserController.php" method="post">
         <div class="row">
           <div class="col-md-6 rounded mb-3">
             <h5 class="text-secondary">Información de tu cuenta</h5>
+            <?php
+              if(isset($_SESSION['messageSettingUser'])):
+            ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong><?=$_SESSION['messageSettingUser']?></strong>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <?php
+              unset($_SESSION['messageSettingUser']);
+              endif;
+            ?>
                 <div class="row justify-content-between">
                     <h6 class="col-md-auto">ID: <?=$idUser?></h6>
-                    <h6 class="col-md-auto"><?=$userController->getNameTypeUser($idUser)['nameTypeUser']?></h6>
+                    <h6 class="col-md-auto">Tipo de usuario: <span class="fw-light"><?=$userController->getNameTypeUser($idUser)['nameTypeUser']?></span></h6>
                 </div>
+                <input type="hidden" name="idUser" value="<?=$idUser?>">
                 <div class="mb-2">
                   <label for="nameUser" class="form-label">Nombres</label>
                   <input type="text" class="form-control" id="nameUser" placeholder="Nombres" name="nameUser" value="<?=isset($user['name']) ? $user['name']:'';?>">
@@ -59,22 +70,34 @@ $user = $userController->getUserData($idUser);
                   <label for="addressReference" class="form-label">Referencia</label>
                   <input type="text" class="form-control" id="addressReference" placeholder="Referencia" name="addressReference" value="<?=isset($user['reference'])?$user['reference']:''?>">
                 </div>
-                
-           <div class="mb-2">
-                  <label for="phoneUser" class="form-label">Teléfono</label>
-                  <input type="text" class="form-control" id="phoneUser" placeholder="Teléfono" name="phoneUser" value="<?=isset($user['phone'])?$user['phone']:''?>">
-                </div>
 
+                <div class="mb-2">
+                  <label for="phoneUser" class="form-label">Teléfono</label>
+                  <input type="text" class="form-control" id="phoneUser" placeholder="Teléfono" name="phoneUser" pattern="[0-9]{9}" oninput="validarTelefono(this)"  value="<?=isset($user['phone'])?$user['phone']:''?>" maxlength="9">
+                </div>
               <div class="mb-2">
                 <label for="emailUser" class="form-label">Email</label>
                 <input type="email" class="form-control" id="emailUser" placeholder="name@example.com" name="emailUser" value="<?=isset($user['mail'])?$user['mail']:''?>">
               </div>
               <div class="mb-2">
-                <label for="cityUser" class="form-label">Ciudad</label>
-                <textarea class="form-control" id="cityUser" rows="3" cols="1" style="resize:none;"><?=isset($user['city'])?$user['city']:''?></textarea>
+                <label for="cityUser" class="form-label">Distrito de Piura</label>
+                <!-- <textarea class="form-control" id="cityUser" rows="3" cols="1" style="resize:none;"><?=isset($user['city'])?$user['city']:''?></textarea> -->
+                <select class="form-select" aria-label="Default select example" name="cityUser" id="cityUser">
+                  <option value="Piura" <?=isset($user['city']) && $user['city'] == 'Piura' ? 'selected':''?>>Piura</option>
+                  <option value="Castilla" <?=isset($user['city']) && $user['city'] == 'Castilla' ? 'selected':''?>>Castilla</option>
+                  <option value="Catacaos" <?=isset($user['city']) && $user['city'] == 'Catacaos' ? 'selected':''?>>Catacaos</option>
+                  <option value="Cura Mori" <?=isset($user['city']) && $user['city'] == 'Cura Mori' ? 'selected':''?>>Cura Mori</option>
+                  <option value="El Tallan" <?=isset($user['city']) && $user['city'] == 'El Tallan' ? 'selected':''?>>El Tallan</option>
+                  <option value="La Arena" <?=isset($user['city']) && $user['city'] == 'La Arena' ? 'selected':''?>>La Arena</option>
+                  <option value="La Unión" <?=isset($user['city']) && $user['city'] == 'La Unión' ? 'selected':''?>>La Unión</option>
+                  <option value="Las Lomas" <?=isset($user['city']) && $user['city'] == 'Las Lomas' ? 'selected':''?>>Las Lomas</option>
+                  <option value="Tambo Grande" <?=isset($user['city']) && $user['city'] == 'Tambo Grande' ? 'selected':''?>>Tambo Grande</option>
+                  <option value="Veintiséis de Octubre" <?=isset($user['city']) && $user['city'] == 'Veintiséis de Octubre' ? 'selected':''?>>Veintiséis de Octubre</option>
+                </select>
+
               </div>
-              <button type="submit "class="btn background-general mb-2" style="width:150px;">Modificar</button>
-              <a href="#" class="btn btn-outline-secondary mb-2" style="width:183px;">Modificar constraseña</a>
+              <button type="submit" class="btn background-general mb-2" style="width:150px;" name="btn-updateUser">Modificar</button>
+              <a href="../../../app/views/auth/verifyToken.php?mailUser=<?=isset($user['mail'])?$user['mail']:''?>" class="btn btn-outline-secondary mb-2" style="width:183px;">Modificar constraseña</a>
             </div>
         </div>
     </form>
@@ -103,6 +126,12 @@ $user = $userController->getUserData($idUser);
     require_once('../../../app/views/layout/footer.php');
     // require_once '../app/views/layout/header.php';
   ?> 
+  <script>
+function validarTelefono(input) {
+    // Eliminar caracteres no numéricos
+    input.value = input.value.replace(/\D/g, '');
+}
+</script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="../../../public/js/scriptPassword.js"></script>
   <!-- Bootstrap JavaScript Libraries -->

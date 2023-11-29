@@ -69,9 +69,14 @@ class UserController {
         }
         return $updateTypeUser?true:false;
     }
-
+    
     public function updateUser($idUser,$name,$lastname,$address,$reference,$phone,$city) {
         $updateUser = $this->userModel->updateUser($idUser,$name,$lastname,$address,$reference,$phone,$city);
+        if($updateUser) {
+            session_start();
+            $_SESSION['messageSettingUser'] = 'Se actualizo los datos del usuario';
+            header('location: ../../app/views/checkout/settingsUser.php');
+        }
         return $updateUser?true:false;
     }
 

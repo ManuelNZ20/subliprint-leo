@@ -6,6 +6,8 @@ session_start();
 if(!isset($_SESSION['idUser'])) {
   header('Location: ../../../public/');
 }
+// hora local
+date_default_timezone_set('America/Lima');
 // guardar la ruta de acceso
 $_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '
 ../../../app/views/admin/orders.php';

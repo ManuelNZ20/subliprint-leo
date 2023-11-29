@@ -56,6 +56,19 @@ session_start();
     <h4 class="col"><span class="">Inventarios</span></h4>
     <h4 class="col text-end"><i class="bi bi-box"></i> N° <?=$inventoryController->countInventory()?></h4>
   </div>
+  <?php
+    if(isset($_SESSION['messageInventory'])) {
+  ?>
+
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
+    <?= $_SESSION['messageInventory']?>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <?php
+      unset($_SESSION['messageInventory']);
+    }
+  ?>
+
   <hr>
   <!-- table products -->
   <?php

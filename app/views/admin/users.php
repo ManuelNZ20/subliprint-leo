@@ -114,13 +114,13 @@ session_start();
             <?php
               if($value['idTypeUser'] == 1):
             ?>
-            <option value="1" selected>Administrador</option>
-            <option value="2">Cliente</option>
-            <?php
+                <option value="1" selected>Cliente</option>
+                <option value="2">Administrador</option>
+                <?php
               else:
-            ?>
-            <option value="1">Administrador</option>
-            <option value="2" selected>Cliente</option>
+                ?>
+                <option value="1">Cliente</option>
+                <option value="2" selected>Administrador</option>
             <?php
               endif;
             ?>

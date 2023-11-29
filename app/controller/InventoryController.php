@@ -46,11 +46,14 @@ class InventoryController {
                 $note = $_POST['noteInventory'];
                 $create = $this -> inventoryModel -> createInventory($date,$idProvider,$note);
                 if($create) {
-                    echo 'Creado correctamente';
+                    session_start();
+                    $_SESSION['messageInventory'] = 'Se creo el inventario';
                     header('Location: '.'../../app/views/admin/inventory.php');
                 }
                 else {
-                    echo "Error al crear el inveddntario";
+                    session_start();
+                    $_SESSION['messageInventory'] = 'No se creo el inventario';
+                    header('Location: '.'../../app/views/admin/inventory.php');
                     
                 }
             } catch (\Throwable $th) {

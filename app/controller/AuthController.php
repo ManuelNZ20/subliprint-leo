@@ -14,6 +14,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $authController->recoverPassword();
     } elseif(isset($_POST['btnResetPassword'])) {
         $authController->resetPassword();
+    } elseif(isset($_POST['btnSendMailContact'])) {
+        $authController->sendMailContact();
     }
 }
 
@@ -64,16 +66,12 @@ class AuthController {
     public function createUser() {
         $user = $this->authModel->getUser($_POST['mail']);
         if($user) {
-                echo '<div class="alert alert-danger" role="alert">
-                        El correo electrónico ya está registrado
-                    </div>';
-                return;
+            session_start();
+            $_SESSION['messageCreateUser'] = 'El correo electrónico ya está registrado';
         } else {
             if($_POST['password1'] != $_POST['password2']) {
-                echo '<div class="alert alert-danger" role="alert">
-                Las contraseñas no coinciden
-                </div>';
-                return;
+                session_start();
+                $_SESSION['messageCreateUser'] = 'Las contraseñas no coinciden';
             } else {
                 if(isset($_POST['name']) && 
                    isset($_POST['lastname']) && 
@@ -110,6 +108,86 @@ class AuthController {
         }
        
     }
+
+    // función para que el usuario nos envie un mensaje de correo electronico desde el formulario de contacto
+    public function sendMailContact() {
+        $user_email = $_ENV['USER_EMAIL'];
+        $user_password = $_ENV['USER_PASSWORD'];
+        $the_subject = 'Contacto';
+        $address_to = $_POST['mail'];
+        $subject = $_POST['subject'];
+        $mail = new PHPMailer\PHPMailer\PHPMailer();
+        $mail->Username = $user_email; // Correo completo a utilizar
+        $mail->Password = $user_password; // Contraseña
+        $mail->SMTPSecure = 'ssl';
+        $mail->Host  = 'smtp.gmail.com'; // Servidor SMTP
+        $mail->Port = 465; // Puerto SMTP en el servidor SMTP
+        $mail->FromName = 'Ferretería Roberto Cotlear';
+        $mail->From = $user_email; // Desde donde enviamos (Para mostrar)
+        $mail->IsSMTP();
+        $mail->SMTPAuth = true;
+        $mail->AddAddress($user_email); // Esta es la dirección a donde enviamos
+        $mail->IsHTML(true); // El correo se envía como HTML
+        $mail->Subject = 'Contacto'; // Este es el titulo del email.
+        $mail->Body = '<!DOCTYPE html>'.
+        '<html lang="en">'.
+        '<head>
+            <title>Contacto</title>
+        </head>'.
+        '<body>'.
+            '<footer style="background-color: #f8f9fa; padding: 25px 0; margin-top: 25px;">'.
+                '<div class="container">'.
+                    '<div class="row">'.
+                        '<div class="col-md-12">'.
+                        '<h1 style="text-align: center;">Ferretería Roberto Cotlear</h1>'.
+                        '</div>'.
+                    '</div>'.
+                '</div>'.
+            '</footer>'.
+        '<main style="padding: 25px 0; margin-top: 25px;">'.
+            '<div class="container">'.
+                '<div class="row">'.
+                    '<div class="col-md-12">'.
+                        '<div class="">'.
+                            '<div class="">'.
+                            '<h1>Contacto</h1>'.
+                            '<p>De: '.$address_to.'</p>'.
+                            '<p>'.$subject.'</p>'.
+                            '</div>'.
+                        '</div>'.
+                    '</div>'.
+                '</div>'.
+            '</div>'.
+        '</main>'.
+        '<header style="background-color: #f8f9fa; padding: 25px 0; margin-top: 25px;">'.
+            '<div class="container">'.
+            '<div class="row">'.
+            '<div class="col-md-12">'.
+                '<p style="text-align: center;">Av. Sanchez Cerro 929-633</p>'.
+                '<p style="text-align: center;">Teléfono: 969518850</p>'.
+                '<p style="text-align: center;">Correo electrónico: ventas@ferreteriacotlear.com</p>'.
+                '<p style="text-align: center;">Horario de atención: Lunes a Sábado de 8:00 a.m. a 6:00 p.m.</p>'.
+                '<p style="text-align: center;">Domingos de 8:00 a.m. a 1:00 p.m.</p>'.
+                '<p style="text-align: center;">Feriados de 8:00 a.m. a 1:00 p.m.</p>'.
+            '</div>'.
+            '</div>'.
+            '</div>'.
+        '</header>'.
+        '</body>'.
+        '</html>';
+        $mail->AltBody = 'Este es el mansaje en texto plano para clientes que no admitan HTML';
+        $mail->CharSet = 'UTF-8';
+        if(!$mail->Send()) {
+            $_SESSION['messageSendMail'] = 'Error al enviar el correo electrónico: '. $mail->ErrorInfo;
+            header('Location: ../../app/views/about/contact.php');
+            exit;
+        } else {
+            $_SESSION['messageSendMail'] = 'Mensaje enviado correctamente';
+            header('Location: ../../app/views/about/contact.php');
+            exit;
+        }
+    }
+
 
     public function sendMailTokenConfirmAccount($idUser,$mail,$token) {
         $user = $this->authModel->getUser($mail);

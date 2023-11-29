@@ -63,16 +63,27 @@ $_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '..
       </div>
       <div class="col-md-8 mb-3">
       <h1 class="text-center fs-3">Contactate con nosotros</h1>
-        <form action="">
+        <?php
+          if(isset($_SESSION['messageSendMail'])) {
+        ?>
+          <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <?= $_SESSION['messageSendMail']?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <?php
+          unset($_SESSION['messageSendMail']);
+          }
+        ?>
+        <form action="../../../app/controller/AuthController.php" method="POST">
           <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Email</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="mail">
           </div>
           <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Mensaje</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" cols="5" style="resize:none;"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" cols="5" style="resize:none;" name="subject"></textarea>
           </div>
-          <button type="submit "class="col-4 btn btn-landing-page mb-2">Enviar</button>
+          <button type="submit "class="col-4 btn btn-landing-page mb-2" name="btnSendMailContact">Enviar</button>
         </form>
       </div>
     </div>

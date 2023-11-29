@@ -1,4 +1,8 @@
-<?php session_start();?>
+<?php 
+session_start();
+// hora local
+date_default_timezone_set('America/Lima');
+?>
 <!doctype html>
 <html lang="en">
 
@@ -59,6 +63,18 @@
               <img src="../../../public/img/logo.png" alt="logo" style="margin-left: auto; margin-right: auto; width: 80px; padding-right:20px;"/>
               REGISTRARSE
             </h2>
+            <?php
+              if(isset($_POST['messageCreateUser'])):
+                ?>
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                  <strong>Nota: </strong> <?= $_POST['messageCreateUser'] ?>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <?php
+                unset($_POST['messageCreateUser']);
+              endif;
+            ?>
+
           <div class="row g-3">
             <h2>Datos de personales</h2>
             <hr>

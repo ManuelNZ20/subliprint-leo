@@ -81,7 +81,9 @@ class UserModel {
     }
 
     public function updateUser($idUser,$name,$lastname,$address,$reference,$phone,$city) {
-        $sql = "UPDATE user SET name = :name, lastname = :lastname, address = :address, reference = :reference, phone = :phone, city = :city,update_user = :update_user WHERE idUser = :idUser";
+        $sql = "UPDATE user SET name = :name, lastname = :lastname, address = :address, reference = :reference, phone = :phone, city = :city, update_user = :update_user WHERE idUser = :idUser";
+        
+        $update_user = date('Y-m-d');
         $stmt = $this->dbCon->getConnection()->prepare($sql);
         $stmt->bindParam(':idUser',$idUser);
         $stmt->bindParam(':name',$name);
@@ -90,7 +92,7 @@ class UserModel {
         $stmt->bindParam(':reference',$reference);
         $stmt->bindParam(':phone',$phone);
         $stmt->bindParam(':city',$city);
-        $stmt->bindParam(':update_user',date('Y-m-d'));
+        $stmt->bindParam(':update_user',$update_user);
         $stmt->execute();
         return $stmt?true:false;
     }
