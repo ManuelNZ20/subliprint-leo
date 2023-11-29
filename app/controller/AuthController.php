@@ -66,12 +66,12 @@ class AuthController {
     public function createUser() {
         $user = $this->authModel->getUser($_POST['mail']);
         if($user) {
-            session_start();
             $_SESSION['messageCreateUser'] = 'El correo electrónico ya está registrado';
+            header('Location: ../../app/views/auth/checkIn.php');
         } else {
             if($_POST['password1'] != $_POST['password2']) {
-                session_start();
                 $_SESSION['messageCreateUser'] = 'Las contraseñas no coinciden';
+                header('Location: ../../app/views/auth/checkIn.php');
             } else {
                 if(isset($_POST['name']) && 
                    isset($_POST['lastname']) && 

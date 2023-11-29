@@ -90,17 +90,7 @@ date_default_timezone_set('America/Lima');
               <label for="last-name">Apellidos</label>
             </div>
           </div>
-
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="address" placeholder="Direccion" name="address" required >
-            <label for="address">Dirección</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="reference-address" placeholder="Direccion" name="reference"  required >
-            <label for="reference-address">Dirección de referencia</label>
-          </div>
-          
-        <div class="col-md-6">
+          <div class="col-md-6">
           <div class="form-floating mb-3">
               <select id="inputCity" name="city" class="form-select" aria-label="Floating label select example" required>
                   <option value="" selected>Selecciona tu distrito</option>
@@ -126,6 +116,16 @@ date_default_timezone_set('America/Lima');
               <label for="phone">Teléfono</label>
             </div>
           </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="address" placeholder="Direccion" name="address" required >
+            <label for="address">Dirección</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="reference-address" placeholder="Direccion" name="reference"  required >
+            <label for="reference-address">Dirección de referencia</label>
+          </div>
+          
+        
 
           <div class="col-md-12">
           
