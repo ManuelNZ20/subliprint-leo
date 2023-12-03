@@ -86,7 +86,7 @@ class ProductModel {
         return $stmt? true : false;
     }
 
-    public function updateProdudct($amount,$id,$name,$brand,$description,$status,$img,$price,$unit,$update,$idCategory,$expire) {
+    public function updateProduct($amount,$id,$name,$brand,$description,$status,$img,$price,$unit,$update,$idCategory,$expire) {
         // Actualizar producto
         $sql = "UPDATE product SET nameProduct = :nameProduct, brand = :brand, description = :description, statusProduct = :statusProduct, imgProduct = :imgProduct, price = :price, unit = :unit, update_at = :update_at, idCategory = :idCategory, expire_product=:expire_product
         WHERE idProduct = :idProduct";
@@ -199,6 +199,30 @@ class ProductModel {
         $stmt->execute();
         $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $products;
+    }
+
+    public function getMostProductSold() {
+        $sql = "SELECT
+        p.idProduct,
+        p.nameProduct,
+        p.price,
+        p.imgProduct,
+        p.brand,
+        pr.amountInit AS amountProduct,
+        SUM(od.amountProduct) AS totalSold
+    FROM
+        orderdetail od
+    INNER JOIN product p ON p.idProduct=od.idProduct
+    INNER JOIN productinventory pr ON p.idProduct=pr.idProduct
+    GROUP BY
+        p.idProduct
+    ORDER BY
+        totalSold DESC
+    LIMIT 1;";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->execute();
+        $product = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $product;
     }
 
     public function getProductsRand() {

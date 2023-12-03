@@ -12,17 +12,19 @@ require_once('../../../app/controller/UserController.php');
 require_once('../../../app/controller/OrderController.php');
 require_once('../../../app/controller/ProductController.php');
 require_once('../../../app/controller/BuyController.php');
+require_once('../../../app/controller/InfoPageController.php');
 
 $userController = new UserController();
 $orderController = new OrderController();
 $productController = new ProductController();
 $buyController = new BuyController();
+$infoPageController = new InfoPageController();
 ?>
 <!doctype html>
 <html lang="en">
 
 <head>
-  <title>Roberto Cotlear</title>
+  <title>Ferretería  Roberto Cotlear</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -42,7 +44,7 @@ $buyController = new BuyController();
     require_once('../../../app/views/layout/header.php');
   ?> 
 <!-- main -->
-<main class="container pt-4">
+<main class="pt-4">
   <div class="container mt-5" style="padding-top:10px;">
     <div class="row gap-2">
       <div class="card col-md-3">
@@ -129,7 +131,6 @@ $buyController = new BuyController();
           </div>
         </div>
       </div>
-
       <div class="card col-md-3">
         <div class="row pt-3 mb-2">
           <div class="col-md mb-2">
@@ -153,33 +154,131 @@ $buyController = new BuyController();
         </div>
       </div>
     </div>
+    <div class="row gap-2 mt-2">
+      <div class="card col-md-3">
+        <?php
+          $product = $productController->getMostProductSold();
+        ?>
+        <div class="row pt-3 mb-2">
+          <div class="col-md mb-2">
+            <span class="border border-dark-subtle rounded" style="padding:12px;">
+            <i class="bi bi-tools"></i>
+            </span>
+          </div>
+          <div class="col-md-10 mb-2 mt-2">
+            <div class="row gap-2 align-items-center justify-content-between">
+              <h5 class="col-md-auto text-secondary text-start">Producto más vendido</h5>
+              <div class="col-1">
+                <a href="<?='FormProduct.php?id='.$product['idProduct'];?>" class="btn btn-outline-secondary">
+                  <i class="bi bi-three-dots"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <img src="<?=$product['imgProduct']?>" alt="<?=$product['nameProduct']?>" class="w-100 rounded border p-2" style="height:150px;object-fit:contain;">
+            <h6 class="fs-6">Código: <span class="fw-normal"><?=$product['idProduct']?></span></h6>
+            <h6 class="fs-6">Nombre: <span class="fw-normal"><?=$product['nameProduct']?></span></h6>
+            <h6 class="fs-6">Precio: <span class="fw-normal"><?=$product['price']?></span></h6>
+            <h6 class="fs-6">Stock actual: <span class="fw-normal"><?=$product['amountProduct']?></span></h6>
+            <h6 class="fs-6">Marca: <span class="fw-normal"><?=$product['brand']?></span></h6>
+            <h6 class="fs-6">Total de veces vendido: <span class="fw-normal"><?=$product['totalSold']?></span></h6>
+          </div>
+        </div>
+      </div>
+      <div class="card col-md">
+      <div class="row mb-2">
+          <div class="card-header p-6">
+            <div class="row align-items-center justify-content-between">
+              <h5 class="col-md-auto text-dark text-start">Información general</h5>
+            </div>
+          </div>
+          <?php
+            $info = $infoPageController->getInformationPage()[0];
+          ?>
+          <div class="col-md-12 card-body">
+              <form action="../../../app/controller/InfoPageController.php" method="POST">
+              <input type="hidden" name="idInfoPage" value="<?=$info['id']?>" required>
+              <label for="name" class="form-label">Nombre de la empresa</label>
+              <input type="text" class="form-control" id="name" name="name" value="<?=$info['name']?>" required>
+              <label for="ruc" class="form-label">RUC</label>
+              <input type="text" class="form-control" id="ruc" name="ruc" value="<?=$info['ruc']?>" maxlength="11" required>
+              <label for="address" class="form-label">Dirección</label>
+              <input type="text" class="form-control" id="address" name="address" value="<?=$info['address']?>" required>
+              <label for="phone" class="form-label">Teléfono</label>
+              <input type="text" class="form-control" id="phone" name="phone" value="<?=$info['phone']?>" required>
+              <label for="email" class="form-label">Correo electrónico</label>
+              <input type="email" class="form-control" id="email" name="email" value="<?=$info['email']?>" required>
+              <label for="web" class="form-label">Precio del dolar en soles</label>
+              <input type="number" class="form-control" id="dollarValue" name="dollarValue" value="<?=$info['dollarValue']?>" required>
+              <button type="submit" class="mt-3 mb-3 btn btn-outline-success" style="width:130px;" name="btnUpdateInfoPage">
+                <i class="bi bi-pencil-square"></i> Grabar
+              </button>
+              <?php
+            if(isset($_SESSION['messageInfoPage'])):
+          ?>
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+              <?= $_SESSION['messageInfoPage']?>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          <?php
+            unset($_SESSION['messageInfoPage']);
+            endif;
+          ?>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  
+  <h3 class="text-center m-4"><i class="bi bi-bar-chart-fill"></i> Estadísticas</h3>
+  <hr>
   <!-- Contenedor para el gráfico -->
-  <div class="row g-2">
-    <div class="col-md-6">
-      <canvas class="w-100 h-100" id="miGrafico1"></canvas>
+  <div class="row align-items-center justify-content-center py-2 m-0 p-3">
+  <div class="row gap-3 g-1">
+    <div class="col-md card p-0">
+      <h5 class="card-header">Total de pedidos por estado</h5>
+      <div class="card-body">
+        <canvas class="" id="miGrafico1"></canvas>
+      </div>
     </div>
-    <div class="col-md-6">
-      <canvas class="w-100 h-100" id="miGrafico2"></canvas>
+    <div class="col-md card p-0">
+      <h5 class="card-header">Usuarios por tipo</h5>
+      <div class="card-body">
+        <canvas class="" id="miGrafico2"></canvas>
+      </div>
     </div>
-    <div class="col-md-6">
-      <canvas class="w-100 h-100" id="miGrafico3"></canvas>
+    <div class="col-md card p-0">
+      <h5 class="card-header">Pedidos por mes</h5>
+      <div class="card-body">
+        <canvas class="w-100 h-100" id="miGrafico4"></canvas>
+      </div>
     </div>
-    <div class="col-md-6">
-      <canvas class="w-100 h-100" id="miGrafico4"></canvas>
+  </div>
+  <div class="row gap-4 g-1">
+    <div class="col-md card p-0">
+      <h5 class="card-header">Productos por categoría</h5>
+      <div class="card-body">
+        <canvas class="" id="miGrafico3"></canvas>
+      </div>
     </div>
-    <div class="col-md-12">
-      <canvas class="w-100 h-100" id="miGrafico5"></canvas>
+    <div class="col-md-8 card p-0">
+      <h5 class="card-header">Ordenes por semana</h5>
+      <div class="card-body">
+        <canvas class="" id="miGrafico5"></canvas>
+      </div>
     </div>
+  </div>
   </div>
 
   <hr>
+  <div class="container">
   <div class="row justify-content-between mt-5">
     <h4 class="col"><span class=""><i class="bi bi-cart-dash"></i> Pedidos pendientes</span></h4>
     <h4 class="col text-end">N° <?=$orderController->countOrderBuyState()?></h4>
   </div>
   <hr>
+
   <div class="table-responsive mb-5"  style="height:400px;">
     <table class="table table-sm table-hover">
       <thead class="table-dark">
@@ -240,6 +339,7 @@ $buyController = new BuyController();
         ?>
     </tbody>
   </table>
+</div>
 </div>
 </main>
 <!-- Incluye Chart.js -->
@@ -311,8 +411,6 @@ $buyController = new BuyController();
       label: "Productos por categoria",
       // color general segun este #cb9351
       backgroundColor: [
-        // Color rosa
-        "rgba(255, 99, 132, 0.2)",
         // Color rojo
         "rgba(255, 99, 132, 0.2)",
         // Color azul
@@ -327,6 +425,16 @@ $buyController = new BuyController();
         "rgba(75, 192, 192, 0.2)",
         // Color gris
         "rgba(201, 203, 207, 0.2)",
+        // Color teal
+        "rgba(54, 162, 235, 0.2)",
+        // Color cyan
+        "rgba(75, 192, 192, 0.2)",
+        // Color verde lima
+        "rgba(255, 205, 86, 0.2)",
+        // Color azul claro
+        "rgba(54, 162, 235, 0.2)",
+        // Color celeste
+        "rgba(153, 102, 255, 0.2)",
       ],
       // color de la linea
       borderColor: "rgba(203, 147, 81, 1)",
@@ -379,7 +487,7 @@ $buyController = new BuyController();
         $orders = $orderController->listOrderBuyWeekChart();
         foreach($orders as $o):
       ?>
-        "<?=$o['dayOfWeek']?>",
+        "<?=$o['dayName']?>",
       <?php
         endforeach;
       ?>

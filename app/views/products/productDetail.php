@@ -90,7 +90,8 @@ $product = $productController->getProductByIdInventoryByProduct($id);
                         <div class="col-md">
                             <form action="../../../app/model/CartModel.php" method="post">
                                 <input type="hidden" name="idProduct" value="<?=$product['idProduct']?>">
-                                <button type="button" class="btn btn-outline-secondary" onclick="incrementar('<?=$product['idProduct']?>')"><i class="bi bi-plus-lg"></i></button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="incrementar('<?=$product['idProduct']?>', <?=$product['amountInit']?>
+                                )"><i class="bi bi-plus-lg"></i></button>
                                 <input class="align-middle m-2 fs-4 d-inline-flex focus-ring py-1 px-2 text-decoration-none border rounded-2" type="text" id="contadorInput<?=$product['idProduct']?>" value="<?=$amount?>" style="width:80px; text-align:center;" name="amount" readonly>
                                 <button type="button" class="btn btn-outline-secondary" onclick="decrementar('<?=$product['idProduct']?>')"> <i class="bi bi-dash-lg"></i></button>
                             </div>
@@ -140,7 +141,29 @@ $product = $productController->getProductByIdInventoryByProduct($id);
     require_once('../../../app/views/layout/footer.php');
   ?>
    <!--importar jquery -->
-  <script src="../../../public/js/amountProduct.js"></script>
+  <script>
+    function incrementar(idProduct, stock) {
+    var contadorInput = document.getElementById('contadorInput'+idProduct);
+    var valorActual = parseInt(contadorInput.value, 10);
+    // Asegurarse de que el valor no sea mayor que el stock
+    if (valorActual >= stock) {
+        contadorInput.value = stock;
+        return;
+    }
+    contadorInput.value = valorActual + 1;
+}
+
+// Función para decrementar el contador
+function decrementar(idProduct) {
+    var contadorInput = document.getElementById('contadorInput'+idProduct);
+    var valorActual = parseInt(contadorInput.value, 10);
+    
+    // Asegurarse de que el valor no sea negativo
+    if (valorActual > 1) {
+        contadorInput.value = valorActual - 1;
+    }
+}
+  </script>
   <!-- Bootstrap JavaScript Libraries -->
   
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

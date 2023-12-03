@@ -49,7 +49,13 @@ class AuthController {
             ,$user['password'])) {
               $_SESSION['idUser'] = $user['idUser'];
               $_SESSION['name'] = $user['name'];
-              header('Location: '.$_SESSION['last_page'] ?? '../../app/views/home/home.php');
+              $userType = $this->authModel->getUser($user['mail']);
+              print_r($userType);
+              if($userType['idTypeUser'] == 1) {
+                  header('Location: '.$_SESSION['last_page'] ?? '../../app/views/home/home.php');
+                } else {
+                    header('Location: ../../app/views/admin/admin.php');
+              }
               exit;
           } else {
               $_SESSION['error'] = 'La contraseña es incorrecta';
@@ -89,7 +95,8 @@ class AuthController {
                     $phone = $_POST['phone'];
                     $city = $_POST['city'];
                     $idTypeUser = $_POST['idTypeUser'] ?? 1;
-                    $create = date('Y-m-d');
+                    $create_uesr = date('Y-m-d H:i:s');
+                    $create = $create_user;
                     $user = $this->authModel->register($password,$name,$lastname,$address,$reference,$mail,$phone,$city,$idTypeUser,$create);
                     if($user) {
                         // Enviar un correo electrónico para confirmar el correo electrónico del usuario

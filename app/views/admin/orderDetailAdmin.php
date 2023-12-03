@@ -6,10 +6,12 @@ if(!isset($_SESSION['idUser'])) {
 }
 require_once('../../../app/controller/OrderController.php');
 require_once('../../../app/controller/BuyController.php');
+require_once('../../../app/controller/ShipmentController.php');
 $_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '../../../app/views/admin/orders.php';
 
 $orderController = new OrderController();
 $buyController = new BuyController();
+$shipmentController = new ShipmentController();
 
 $idOrder = isset($_GET['idOrder']) ? $_GET['idOrder'] : null;
 $orderDetailsBuyUser = $orderController->getOrderProductsBuyDetails($idOrder);
@@ -36,6 +38,7 @@ $buy = $buyController->getBuyUser($idOrder);
     require_once('../../../app/views/layout/header.php');
   ?>
 <main class="container mb-3">
+
   <div class="row pt-5">
     <h1 class="col-md-12 text-center pt-4 pb-3 text-truncate" style="background-color:var(--about-1);color:white;"><i class="bi bi-cart-dash"></i> Pedido <?=$idOrder?></h1>
 </div>
@@ -78,36 +81,42 @@ $buy = $buyController->getBuyUser($idOrder);
 
       </div>
     </div>
+    <?php
+      $shipment = $shipmentController->getShipmentInformationById($buy['lastId']);
+      if($shipment != null):
+        ?>
     <div class="container border-secondary-subtle rounded-4 mb-3" style="
     background-color:rgba(203, 147, 81, 0.2);
     ">
   <div class="row">
     <h4 class="text-start rounded-top-4 p-2 " style="background-color:rgba(203, 147, 81, 0.2);">Datos de envío</h1>
     <div class="col-md-6">
-      <h6>Nombres: <span class="fw-light"><?=$orderDetailsBuyUser[0]['name']?></span></h6>
+      <h6>Nombres: <span class="fw-light"><?=$shipment['nameUser']?></span></h6>
     </div>
     <div class="col-md-6">
-      <h6>Apellidos: <span class="fw-light"><?=$orderDetailsBuyUser[0]['lastname']?></span></h6>
+      <h6>Apellidos: <span class="fw-light"><?=$shipment['lastnameUser']?></span></h6>
     </div>
     <div class="col-md-12">
       <h6>Correo electronico: <span class="fw-light"><?=$orderDetailsBuyUser[0]['mail']?></span></h6>
     </div>
     <div class="col-md-6">
-      <h6>Número de contacto: <span class="fw-light"><?=$orderDetailsBuyUser[0]['phone']?></span></h6>
+      <h6>Número de contacto: <span class="fw-light"><?=$shipment['phoneContact']?></span></h6>
     </div>
     <div class="col-md-6">
-      <h6>Ciudad: <span class="fw-light"><?=$orderDetailsBuyUser[0]['city']?></span></h6>
+      <h6>Ciudad: <span class="fw-light"><?=$shipment['location']?></span></h6>
     </div>
     <div class="col-md-6">
-      <h6>Dirección: <span class="fw-light"><?=$orderDetailsBuyUser[0]['address']?></span></h6>
+      <h6>Dirección: <span class="fw-light"><?=$shipment['address']?></span></h6>
     </div>
     <div class="col-md-6">
-      <h6>Dirección de referencia: <span class="fw-light"><?=$orderDetailsBuyUser[0]['reference']?></span></h6>
+      <h6>Dirección de referencia: <span class="fw-light"><?=$shipment['reference']?></span></h6>
     </div>
     
   </div>
 </div>
-
+<?php
+  endif;
+?>
 <div class="row mb-3 justify-content-between">
   <div class="col-md-12 table-responsive mb-2" style="height:450px;">
     <table class="table table-sm table-hover">
@@ -173,9 +182,10 @@ $buy = $buyController->getBuyUser($idOrder);
             ?>" class="col-md-2 btn btn-outline-secondary mb-2"><i class="bi bi-arrow-left"></i> Volver</a>
             <form action="../../../app/controller/OrderController.php" method="POST" class="col-md-auto mb-2">
                 <input type="hidden" name="idBuyUser" value="<?=$idOrder?>">
+                <input type="hidden" name="idUser" value="<?=$buy['idUser']?>">
                 <div class="row gap-1">
                   <button class="col-md-auto mt-2 btn btn-outline-success" name="btn-successOrder" ><i class="bi bi-check-circle"></i> Confirmar</button>
-                  <button class="col-md-auto mt-2 btn btn-outline-danger" name="btn-cancelOrder" ><i class="bi bi-x-circle"></i> Cancelar</button>
+                  <!-- <button class="col-md-auto mt-2 btn btn-outline-danger" name="btn-cancelOrder" ><i class="bi bi-x-circle"></i> Cancelar</button> -->
                   <!-- Boton de enviar -->
                   <button class="col-md-auto mt-2 btn btn-outline-info" name="btn-sendOrder" ><i class="bi bi-truck"></i> Enviar</button>
                   

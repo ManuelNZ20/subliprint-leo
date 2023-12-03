@@ -135,7 +135,8 @@ class ProductController
             $status = $_POST['statusProduct'];
             $price = $_POST['priceProduct'];
             $unit = $_POST['unitProduct'];
-            $update = date('Y-m-d H:i:s');
+            $update_product = date('Y-m-d H:i:s');
+            $update = $update_product;
             $expire = $_POST['expireProduct'];
             $idCategory = $_POST['categoryProduct'];
             $imgInit =    $this->productModel->getProductByIdInventoryByProduct($id)['imgProduct']; // obtener la imagen anterior
@@ -144,7 +145,7 @@ class ProductController
                 $this->createImageHelpers();
                 $imgProduct = $_FILES['imgProduct']['name'];
                 // Que la ruta no dependa del nombre de la carpeta del proyecto osea sin el nombre de roberto-cotlear
-                $route = /* $_SERVER['DOCUMENT_ROOT'].''. */__DIR__.'/helpers/';
+                $route = __DIR__.'/helpers/';
                 // $route = $_SERVER['DOCUMENT_ROOT'].'//app/controller/helpers/';
                 $uploadSecure = $this->upload->uploadImage($imgProduct,$route); // subir imagen a cloudinary
                 $img = $uploadSecure;
@@ -152,7 +153,7 @@ class ProductController
                 $img = $imgInit;
             }
             
-            $product = $this->productModel->updateProdudct($amount,$id,$name,$brand,$description,$status,$img,$price,$unit,$update,$idCategory,$expire);
+            $product = $this->productModel->updateProduct($amount,$id,$name,$brand,$description,$status,$img,$price,$unit,$update,$idCategory,$expire);
             
             if($product) {
                 $this->deleteImageHelpers($imgProduct);
@@ -165,6 +166,11 @@ class ProductController
             echo 'Error al crear el producto';
             exit;
         }
+    }
+
+    public function getMostProductSold() {
+        $products = $this->productModel->getMostProductSold();
+        return $products;
     }
 
     public function deleteProduct() {

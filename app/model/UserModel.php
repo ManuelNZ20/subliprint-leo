@@ -83,7 +83,7 @@ class UserModel {
     public function updateUser($idUser,$name,$lastname,$address,$reference,$phone,$city) {
         $sql = "UPDATE user SET name = :name, lastname = :lastname, address = :address, reference = :reference, phone = :phone, city = :city, update_user = :update_user WHERE idUser = :idUser";
         
-        $update_user = date('Y-m-d');
+        $update_user = date('Y-m-d H:i:s');
         $stmt = $this->dbCon->getConnection()->prepare($sql);
         $stmt->bindParam(':idUser',$idUser);
         $stmt->bindParam(':name',$name);

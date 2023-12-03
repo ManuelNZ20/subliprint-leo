@@ -9,7 +9,7 @@ $_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '..
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roberto Cotlear</title>
+    <title>Ferretería Roberto Cotlear</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -28,7 +28,7 @@ $_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '..
           <div class="mb-3" style="border:none; background-color:rgba(215, 139, 50, 0.1);">
             <div class="row g-0">
               <div class="col-md-6">
-                <img src="../../../public/img/img-home.png" class="w-100 h-100 img-fluid card-img" alt="image-about" style="">
+                <img src="../../../public/img/img-home-1.png" class="w-100 h-100 img-fluid card-img" alt="image-about" style="">
               </div>
           <div class="col-md-6 p-4">
             <div class="card-body mx-auto p-2  w-75 text-start" >
@@ -65,7 +65,7 @@ $_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '..
             <img src="../../../public/icons/delivery.svg" alt="payment" style="width:35px;">
             Envío gratis
           </h5>
-          <p class="card-subtitle mb-2 text-body-secondary">Por ordenes mayores a S/. 99</p>
+          <p class="card-subtitle mb-2 text-body-secondary">Por ordenes mayores a S/. 99 Soles</p>
       </div>
       <div class="col-md">
       <h5 class="">

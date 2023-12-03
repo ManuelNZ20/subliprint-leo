@@ -10,8 +10,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     if(isset($_POST['btnVerifyToken'])) {
         $tokenPost = $_POST['token-1'].$_POST['token-2'].$_POST['token-3'].$_POST['token-4'].$_POST['token-5'].$_POST['token-6'].$_POST['token-7'].$_POST['token-8'];
         $tokenVerify = $token->getVerifyToken($_POST['idUserToken']);
-        // var_dump($tokenVerify);
-        // return;
         if($tokenVerify) {
             if($tokenVerify['token'] == $tokenPost) {
                 $idUser = $_POST['idUserToken'];
@@ -20,8 +18,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 exit;
             } else {
                 $_SESSION['errorToken'] = 'El token es incorrecto';
-                // echo $_SESSION['errorToken'];
-                // return;
                 header('Location: ../../app/views/auth/verifyToken.php');
                 exit;
             }

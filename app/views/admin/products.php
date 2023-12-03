@@ -17,7 +17,7 @@ require_once('../../../app/controller/ProductController.php');
 <html lang="en">
 
 <head>
-  <title>Roberto Cotlear</title>
+  <title>Ferretería Roberto Cotlear</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -84,6 +84,19 @@ require_once('../../../app/controller/ProductController.php');
     <h4 class="col-md-2 text-truncate"><span class="align-middle"><i class="bi bi-box"></i> Inventario <?= $idInventory ?></span></h4>
     <h4 class="col text-end"><span class="align-middle">N° <?=$productController->countProducts($idInventory)?></span>
     </h4>
+    <?php
+      if($productController->countProducts($idInventory) > 0):
+    ?>
+    <form class="col-md" action="../../../app/controller/ReportController.php" method="POST" target="_blank">
+      <input type="hidden" name="idInventory" value="<?=$idInventory; ?>">
+      <button type="submit" class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#exampleModal" name="btn-generate-report-inventory">
+        <i class="bi bi-filetype-pdf"></i> Generar reporte de inventario
+      </form>
+    </button>
+    <?php
+      endif;
+    ?>
+
   </div>
   <hr>
   <?php

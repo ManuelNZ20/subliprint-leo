@@ -37,7 +37,7 @@ $_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '..
         </div>
       </div>
       <div class="col-md-6">
-        <img src="../../../public/img/img-home.png" class="w-100 h-100 img-fluid card-img" alt="image-about" style="">
+        <img src="../../../public/img/img-home-1.png" class="w-100 h-100 img-fluid card-img" alt="image-about" style="">
       </div>
     </div>
     </div>

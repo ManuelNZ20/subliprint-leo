@@ -1,5 +1,7 @@
 <?php
 session_start();
+// hora local
+date_default_timezone_set('America/Lima');
 // proteger est pagina para que no se pueda acceder si no se ha iniciado sesion
 if(!isset($_SESSION['idUser'])) {
   header('Location: ../../../public/');
@@ -8,16 +10,23 @@ require_once('../../../app/controller/OrderController.php');
 require_once('../../../app/controller/BuyController.php');
 require_once('../../../app/controller/ProductController.php');
 require_once('../../../app/controller/CartController.php');
+require_once('../../../app/controller/ShipmentController.php');
+require_once('../../../app/controller/InfoPageController.php');
+
 $_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '../../../public/';
 $orderController = new OrderController();
 $productControlelr = new ProductController();
 $buyController = new BuyController();
 $cartController = new CartController();
+$shipmentController = new ShipmentController();
+$infoPageController = new InfoPageController();
 
 $idOrder = isset($_GET['idOrder']) ? $_GET['idOrder'] : null;
 $orderDetailsBuyUser = $orderController->getOrderProductsBuyDetails($idOrder);
 $buy = $buyController->getBuyUser($idOrder);
-// print_r($buy);
+$info = $infoPageController->getInformationPage()[0];
+$total = $orderDetailsBuyUser[0]['total'];
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -42,7 +51,19 @@ $buy = $buyController->getBuyUser($idOrder);
   ?>
 <main class="container mb-3">
   <div class="row pt-5">
-    <h1 class="col-md-12 text-center pt-4 pb-3 text-truncate" style="background-color:var(--about-1);color:white;"><i class="bi bi-cart-dash"></i> Pedido</h1>
+    <h1 class="col-md-12 text-center pt-4 pb-3 text-truncate" style="background-color:var(--about-1);color:white;">
+    <?php
+      if($buy['stateBuy'] == 'Pagado'):
+    ?>
+      <i class="bi bi-cart-check"></i>
+    <?php
+      else:
+    ?>
+      <i class="bi bi-cart-dash"></i>
+    <?php
+     endif;
+    ?>
+    Pedido</h1>
 </div>
     <div class="col-md-12">
       <div class="row mb-3 justify-content-between">
@@ -61,7 +82,7 @@ $buy = $buyController->getBuyUser($idOrder);
       </div>
     </div>
 <div class="row mb-3 justify-content-between">
-  <div class="col-md-9 table-responsive mb-2" style="height:360px;">
+  <div class="col-md-9 table-responsive mb-2" style="height:570px;">
     <table class="table table-sm table-hover">
       <thead class="table-dark">
       <tr>
@@ -150,7 +171,17 @@ $buy = $buyController->getBuyUser($idOrder);
           <h6>Costo de envío:</h6>
         </div>
         <div class="col-md-6">
-          <h6 class="text-end text-danger text-decoration-line-through">S/. 10.00</h6>
+          <h6 class="text-end <?=$orderDetailsBuyUser[0]['total']>=99?'text-danger text-decoration-line-through':'text-info';?>">  
+            <?php
+              if($orderDetailsBuyUser[0]['total'] <= 100):
+                $total += 10;
+                echo 'S/. 10.00';
+              else:
+                echo 'S/. 0.00';
+              endif;
+            ?>
+            <!-- S/. 10.00 -->
+          </h6>
         </div>
       </div>  
       <hr>
@@ -159,7 +190,7 @@ $buy = $buyController->getBuyUser($idOrder);
           <h6>Total a pagar en soles:</h6>
         </div>
         <div class="col-md-6">
-          <h6 class="text-end">S/. <?=number_format($orderDetailsBuyUser[0]['total'],2)?></h6>
+          <h6 class="text-end">S/. <?=number_format($total,2)?></h6>
         </div>
       </div>
       <div class="row mb-3">
@@ -168,7 +199,7 @@ $buy = $buyController->getBuyUser($idOrder);
         </div>
         <div class="col-md-6">
           <h6 class="text-end">
-            USD <?=number_format($orderDetailsBuyUser[0]['total'] / 3.85 ,2)?>
+            USD <?=number_format($total / $info['dollarValue'] ,2)?>
           </h6>
         </div>
       </div>
@@ -194,17 +225,127 @@ $buy = $buyController->getBuyUser($idOrder);
     </form>
     <hr>
     <p class="fw-normal">
-        <b>*</b> El total a pagar de tu compra sera ejecutada en dolares, el tipo de cambio es de S/. 3.85
+        <b>*</b> El total a pagar de tu compra sera ejecutada en dolares, el tipo de cambio es de S/. <?=$info['dollarValue']?> por cada dolar.
       </p>
   </div>
 <?php
   endif;
 ?>
 </div>
-  <div class="col-md">
-      <div class="col-md-12">
-        <a href="../../../app/views/order/orders.php" class="btn btn-outline-secondary">Volver a mis ordenes</a>
-      </div>
+<div class="col-md-4 mb-3">
+  <?php
+      $shipment = $shipmentController->getShipmentInformationById($buy['lastId']);
+      if($shipment != null):
+        ?>
+        <div class="card">
+    <div class="card-header">
+      <h5 class="text-secondary text-center">Datos de envío</h5>
+    </div>
+    <div class="card-body">
+      <h6 class="card-title text-wrap">Nombre: 
+        <span class="fw-normal">
+        <?=$shipment['nameUser']?>
+      </span>
+      </h6> 
+      <h6 class="card-title text-wrap">Apellidos: 
+        <span class="fw-normal">
+        <?=$shipment['lastnameUser']?>
+      </span>
+      </h6> 
+      <h6 class="card-title text-wrap">Número de contacto: 
+        <span class="fw-normal">
+        <?=$shipment['phoneContact']?>
+      </span>
+      </h6>
+      <h6 class="card-title text-wrap">Dirección: 
+        <span class="fw-normal">
+        <?=$shipment['address']?>
+      </span>
+      </h6> 
+      <h6 class="card-title text-wrap">Dirección de referencia: 
+        <span class="fw-normal">
+        <?=$shipment['reference']?>
+      </span>
+      </h6> 
+       
+      <h6 class="card-title">Localidad: 
+        <span class="fw-normal">
+        <?=$shipment['location']?>
+      </span>
+      </h6> 
+    </div>
+    
+  </div>
+    <?php
+      endif;
+    ?>
+</div>
+
+<div class="col-md mb-3">
+    <div class="card" style="height:100%;">
+       <div class="card-header">
+         <h5 class="text-secondary text-center">Información de contacto</h5>
+       </div>
+       <div class="card-body">
+       <div class="row">
+       <div class="col-md-5">
+        <div class="card-body">
+         <h6 class="card-title"><i class="bi bi-geo-alt"></i> <?=$info['address']?></h6>
+          <h6 class="card-title"><i class="bi bi-envelope"></i> <?=$info['email']?></h6>
+          <h6 class="card-title"><i class="bi bi-telephone"></i> <?=$info['phone']?></h6>
+          <?php
+            $day = date('N');
+            echo '<h6 class="card-title">Horario de atención de hoy: <span class="fw-normal">';
+            switch($day) {
+              case 1:
+              case 2:
+              case 3:
+              case 4:
+              case 5:
+                echo $info['workingHours'];
+                break;
+              case 6:
+              case 7:
+                echo $info['holidayHours'];
+                break;
+            }
+            echo '</span></h6>';
+          ?>  
+          </div>
+          <div class="row g-1 gap-1 align-items-center">
+            <button class="col-md btn btn-outline-secondary">Revisar</button>
+            <button class="col-md btn btn-outline-secondary" style="" id="btnActualizar">
+              <i class="bi bi-arrow-clockwise"></i>
+            </button>
+            <div class="col-md text-center border rounded-end ">
+              <h3 class="fs-4" id="tiempo-restante">30</h3>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md">
+          <div class="container rounded border border-secondary mb-1" style="height:150px;">
+            <div id="chat-box">
+
+            </div>
+          </div>
+            <form id="chat-form" action="" method="post">
+              <span class="d-flex gap-1">
+                <input type="text"
+                class="form-control" placeholder="Mensaje" name="message" id="message" aria-describedby="helpId">
+                <button type="" class="btn btn-outline-secondary rounded-circle"><i class="bi bi-send"></i></button>
+              </span>
+            </form>
+        </div>
+       </div> 
+       </div>
+    </div>
+</div>
+
+
+  <div class="col-md-12">
+    <div class="col-md-12">
+      <a href="../../../app/views/order/orders.php" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Volver a mis ordenes</a></div>
   </div>
 </div>
 
@@ -212,9 +353,8 @@ $buy = $buyController->getBuyUser($idOrder);
   <!-- footer -->
   <?php
     require_once('../../../app/views/layout/footer.php');
-  ?> 
-   <!-- <script src="../../../public/js/paymentPaypal.js"></script> -->
-   <script>
+  ?>
+  <script>
     paypal.Buttons(
     {
         style:{
@@ -226,7 +366,7 @@ $buy = $buyController->getBuyUser($idOrder);
             return actions.order.create({
                 purchase_units: [{
                     amount: {
-                        value: <?=number_format($orderDetailsBuyUser[0]['total'] / 3.85 ,2)?>,
+                        value: <?=number_format($orderDetailsBuyUser[0]['total'] / $info['dollarValue'] ,2)?>,
                     }
                 }]
             });
@@ -270,9 +410,9 @@ $buy = $buyController->getBuyUser($idOrder);
         },
     }
 ).render('#paypal-button-container');
-   </script>
-  <!-- <script src="../../../public/js/amountProduct.js"></script> -->
+  </script>
+  <script src="../../../public/js/temporizador.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
 </html>

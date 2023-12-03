@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__.'/../../config/database.php');
-
+// hora local
+date_default_timezone_set('America/Lima');
 class BuyModel {
     private $dbCon;
 
@@ -10,11 +11,13 @@ class BuyModel {
 
     // Agregar una orden de compra usando un procedimiento almacenado
     public function addBuy($idUser,$totalOrder,$products) {
-        $sql = "CALL InsertOrderProducts(:idUser,:totalOrder,:products)";
+        $sql = "CALL InsertOrderProducts(:idUser,:totalOrder,:products,:date_create_order)";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
         $stmt->bindParam(':idUser',$idUser);
         $stmt->bindParam(':totalOrder',$totalOrder);
         $stmt->bindParam(':products',$products);
+        $date_create_order = date('Y-m-d H:i:s');
+        $stmt->bindParam(':date_create_order',$date_create_order);
         $stmt->execute();
         $stmt->closeCursor();
         return $stmt?true:false;
@@ -74,19 +77,55 @@ class BuyModel {
         return $data;
     }
 
-    public function onApproveBuy($idBuyUser) {
-        $sql = "UPDATE buyuser SET stateBuy='Pagado' WHERE idBuyUser=:idBuyUser";
+    public function getBuyUserProductsTotal($idBuyUser) {
+        $sql = "SELECT 
+        ob.idProduct,
+        p.nameProduct,
+        ob.priceProduct,
+        ob.amountProduct,
+        SUM(ob.priceProduct*ob.amountProduct) AS total_producto
+    FROM
+        orderdetail ob 
+        INNER JOIN orderbuy ord ON ord.idOrderBuy=ob.idOrderBuy 
+        INNER JOIN buyuser buy ON buy.idOrder=ord.idOrderBuy 
+        INNER JOIN product p ON p.idProduct=ob.idProduct
+    WHERE buy.idBuyUser=:idBuyUser
+    GROUP BY
+     ob.idProduct,ob.priceProduct,ob.amountProduct;";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
         $stmt->bindParam(':idBuyUser',$idBuyUser);
         $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $stmt->closeCursor();
-        return $stmt?true:false;
+        return $data;
+    }
+
+    public function getBuyByLastId($idBuyUser) {
+        $sql = "SELECT * FROM buyuser WHERE idBuyUser=:idBuyUser";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->bindParam(':idBuyUser',$idBuyUser);
+        $stmt->execute();
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->closeCursor();
+        return $data;
+    }
+
+    public function onApproveBuy($idBuyUser) {
+        $sql = "UPDATE buyuser SET stateBuy='Pagado',dateBuy=:dateBuy
+        WHERE idBuyUser=:idBuyUser";
+        $stmt = $this->dbCon->getConnection()->prepare($sql);
+        $stmt->bindParam(':idBuyUser',$idBuyUser);
+        $dateBuy = date('Y-m-d H:i:s');
+        $stmt->bindParam(':dateBuy',$dateBuy);
+        $stmt->execute();
+        $stmt->closeCursor();
+        return $stmt ? true : false;
     }
 
     // Grafico que muestra el total de ordenes pagadas por los usuarios por lista de todos los meses del año actual y el total de ordenes pagadas por mes 
     public function listOrdersBuyByMonth() {
         $sql = "SELECT
-        MONTHNAME(calendar.month) AS monthName,
+        IF(MONTH(calendar.month) = 1, 'Enero', IF(MONTH(calendar.month) = 2, 'Febrero', IF(MONTH(calendar.month) = 3, 'Marzo', IF(MONTH(calendar.month) = 4, 'Abril', IF(MONTH(calendar.month) = 5, 'Mayo', IF(MONTH(calendar.month) = 6, 'Junio', IF(MONTH(calendar.month) = 7, 'Julio', IF(MONTH(calendar.month) = 8, 'Agosto', IF(MONTH(calendar.month) = 9, 'Septiembre', IF(MONTH(calendar.month) = 10, 'Octubre', IF(MONTH(calendar.month) = 11, 'Noviembre', IF(MONTH(calendar.month) = 12, 'Diciembre', 'No existe')))))))))))) AS monthName,
         IFNULL(COUNT(buy.dateBuy), 0) AS total
     FROM (
         SELECT
@@ -96,7 +135,7 @@ class BuyModel {
         ) AS a
     ) calendar
     LEFT JOIN buyuser buy ON MONTH(buy.dateBuy) = MONTH(calendar.month) AND YEAR(buy.dateBuy) = YEAR(calendar.month) AND buy.stateBuy='Pagado'
-    GROUP BY MONTHNAME(calendar.month);
+    GROUP BY MONTHNAME(calendar.month) ORDER BY MONTH(calendar.month) ASC;
     ";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
         $stmt->execute();

@@ -1,5 +1,6 @@
 <?php
 require_once(__DIR__.'/../../config/database.php');
+date_default_timezone_set('America/Lima');
 
 class TokenModel {
 
@@ -18,11 +19,15 @@ class TokenModel {
     }
 
     public function createToken($idUser,$token,$detailsToken) {
-        $sql = "INSERT INTO token (idUser,token,detailsToken) VALUES (:idUser,:token,:detailsToken)";
+        $sql = "INSERT INTO token (idUser,token,detailsToken,create_token,expire_token) VALUES (:idUser,:token,:detailsToken,:create_token,:expire_token)";
+        $create_token = date('Y-m-d H:i:s');
+        $expire_token = date('Y-m-d H:i:s',strtotime('+10 minutes',strtotime($create_token)));
         $stmt = $this->dbCon->getConnection()->prepare($sql);
         $stmt->bindParam(':idUser',$idUser);
         $stmt->bindParam(':token',$token);
         $stmt->bindParam(':detailsToken',$detailsToken);
+        $stmt->bindParam(':create_token',$create_token);
+        $stmt->bindParam(':expire_token',$expire_token);
         $stmt->execute();
         return $stmt ? true : false;
     }
@@ -33,7 +38,7 @@ class TokenModel {
         $stmt->bindParam(':token',$token);
         $stmt->bindParam(':idToken',$idToken);
         $stmt->execute();
-        return $stmt?true:false;
+        return $stmt ? true : false;
     }
 
     public function getVerifyToken($idUser) {

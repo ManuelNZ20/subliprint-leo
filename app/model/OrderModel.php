@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__.'/../../config/database.php');
-
+// hora local
+date_default_timezone_set('America/Lima');
 class OrderModel {
     private $dbCon;
 
@@ -9,9 +10,7 @@ class OrderModel {
     }
 
     // obtener el ultimo id de la tabla orders
-    
     public function getOrderProductsBuyDetails($idBuyUser) {
-        // $sql = "CALL GetBuyDetails(:idBuyUser)";
         $sql = "SELECT \n"
     . "      bu.idBuyUser,\n"
     . "      bu.stateBuy,\n"
@@ -82,6 +81,7 @@ class OrderModel {
         return $data;
     }
 
+    // esta funcion permite sumar el total de ordenes de compra
     public function sumOrderBuyState() {
         $sql = "SELECT SUM(orderbuy.total) FROM buyuser INNER JOIN orderbuy ON buyuser.idOrder=orderbuy.idOrderBuy WHERE buyuser.stateBuy='Pagado'";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
@@ -93,9 +93,11 @@ class OrderModel {
     // Confirmar envío de pedido
     public function onApproveOrder($idOrderBuy) {
         $sql = "UPDATE buyuser bu INNER JOIN orderbuy od ON bu.idOrder=od.idOrderBuy
-        SET od.stateOrder = 'Aceptado' WHERE bu.idBuyUser=:idOrderBuy;";
+        SET od.stateOrder = 'Aceptado',od.dateConfirm=:dateConfirm WHERE bu.idBuyUser=:idOrderBuy;";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
         $stmt->bindParam(':idOrderBuy',$idOrderBuy);
+        $dateConfirm = date('Y-m-d H:i:s');
+        $stmt->bindParam(':dateConfirm',$dateConfirm);
         $stmt->execute();
         $stmt->closeCursor();
     }
@@ -103,9 +105,11 @@ class OrderModel {
     // confirmar envio del pedido
     public function onSendOrder($idOrderBuy) {
         $sql = "UPDATE buyuser bu INNER JOIN orderbuy od ON bu.idOrder=od.idOrderBuy
-        SET od.stateOrder = 'Enviado' WHERE bu.idBuyUser=:idOrderBuy;";
+        SET od.stateOrder = 'Enviado', od.dateDelivery=:dateDelivery WHERE bu.idBuyUser=:idOrderBuy;";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
         $stmt->bindParam(':idOrderBuy',$idOrderBuy);
+        $dateDelivery = date('Y-m-d H:i:s');
+        $stmt->bindParam(':dateDelivery',$dateDelivery);
         $stmt->execute();
         $stmt->closeCursor();
         // Actualizar la cantidad de productos
@@ -128,7 +132,7 @@ class OrderModel {
 
     // listar todas las ordenes de la tabla orderbuy que su estado sea diferente de 'Aceptado'
     public function listOrderBuyState() {
-        $sql = "SELECT buy.idBuyUser,o.idLastOrderBuy, o.idOrderBuy,us.name,o.dateOrder,o.total,o.stateOrder FROM buyuser buy INNER JOIN user us ON buy.idUser = us.idUser INNER JOIN orderbuy o ON o.idOrderBuy = buy.idOrder WHERE o.stateOrder<>'Aceptado' AND buy.stateBuy='Pagado';";
+        $sql = "SELECT buy.idBuyUser,o.idLastOrderBuy, o.idOrderBuy,us.name,o.dateOrder,o.total,o.stateOrder FROM buyuser buy INNER JOIN user us ON buy.idUser = us.idUser INNER JOIN orderbuy o ON o.idOrderBuy = buy.idOrder WHERE o.stateOrder='Pendiente' AND buy.stateBuy='Pagado';";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
         $stmt->execute();
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -188,18 +192,12 @@ class OrderModel {
         return $data;
     }
 
-    // obtener datos para formar un grafico que muestre el total de ordenes por semana
-    public function listOrderBuyWeekChart() {
-        $sql = "SELECT
-        CONVERT(DAYNAME(dateOrder) USING utf8) AS dayOfWeek,
-        COUNT(*) AS total
-    FROM
-        orderbuy
-    GROUP BY
-        dayOfWeek
-    ORDER BY
-        MIN(dateOrder);
-    ";
+    // obtener datos para formar un grafico que muestre el total de ordenes por semana con el nombre del dia en español ya sea Monday es Lunes, Tuesday es Martes, etc
+    public function listOrderBuyWeekChart()
+    {
+        // $sql = "SELECT DAYNAME(o.dateOrder) AS dayName
+        // ,COUNT(*) AS total FROM buyuser bu INNER JOIN orderbuy o ON bu.idOrder=o.idOrderBuy WHERE bu.stateBuy='Pagado' GROUP BY DAYNAME(o.dateOrder);";
+        $sql = "SELECT IF(DAYNAME(o.dateOrder)='Monday','Lunes',IF(DAYNAME(o.dateOrder)='Tuesday','Martes',IF(DAYNAME(o.dateOrder)='Wednesday','Miercoles',IF(DAYNAME(o.dateOrder)='Thursday','Jueves',IF(DAYNAME(o.dateOrder)='Friday','Viernes',IF(DAYNAME(o.dateOrder)='Saturday','Sabado',IF(DAYNAME(o.dateOrder)='Sunday','Domingo',''))))))) AS dayName ,COUNT(*) AS total FROM buyuser bu INNER JOIN orderbuy o ON bu.idOrder=o.idOrderBuy WHERE bu.stateBuy='Pagado' GROUP BY DAYNAME(o.dateOrder) ORDER BY o.dateOrder ASC;";
         $stmt = $this->dbCon->getConnection()->prepare($sql);
         $stmt->execute();
         $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);

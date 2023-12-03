@@ -1,5 +1,5 @@
 <?php
-require __DIR__.'/../model/ProviderModel.php';
+require_once(__DIR__.'/../model/ProviderModel.php');
 $controllerProvider = new ProviderController();
 // crear proveedor
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -126,7 +126,7 @@ class ProviderController {
             $dateRegister = $_POST['dateProvider'];
             $description = $_POST['descriptionProvider'];
             $ruc = $_POST['rucProvider'];
-            echo $description;
+            // echo $description;
             $update = $this -> providerModel -> updateProvider($id, $name, $state, $phone, $address, $email, $dateRegister,$description,$ruc);
             if($update) {
                 echo '<div class="alert alert-success">'.

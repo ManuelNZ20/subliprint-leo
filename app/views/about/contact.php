@@ -77,11 +77,11 @@ $_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '..
         <form action="../../../app/controller/AuthController.php" method="POST">
           <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Email</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="mail">
+            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="mail" required>
           </div>
           <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Mensaje</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" cols="5" style="resize:none;" name="subject"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" cols="5" style="resize:none;" name="subject" required></textarea>
           </div>
           <button type="submit "class="col-4 btn btn-landing-page mb-2" name="btnSendMailContact">Enviar</button>
         </form>
