@@ -7,7 +7,7 @@ function cardInformation($urlGeneral,$title,$information,$url,$class,$img,$textB
     return 
             '<div class="col-sm-6 mb-3 mb-sm-0">'.
             '<a href="'.$urlGeneral.'" class="link-default">'.
-                '<div class="card card-inf align-items-center shadow-sm rounded">'.
+                '<div class="card align-items-center shadow-sm rounded">'.
                     '<div class="row g-0">'.
                         '<div class="col-md-8">'.
                             '<div class="card-body">'.

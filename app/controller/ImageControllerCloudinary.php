@@ -24,7 +24,7 @@ class ImageControllerCloudinary {
 
     public function uploadImage($img,$route) {
         $upload = (new UploadApi())->upload($route.$img, [
-            'folder' => 'products',
+            'folder' => 'products-subliprint-leo',
             'resource_type' => 'auto',
         ]);
         return $upload['secure_url'];

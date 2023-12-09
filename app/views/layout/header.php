@@ -49,7 +49,7 @@ if($idUser != -1) {
       <?php
         if(!isset($_SESSION['idUser'])):
       ?>
-        <a class="btn btn-landing-page background-general m-2 p-2" type="" href="<?= $url_base.'auth/login.php'
+        <a class="btn btn-landing-page btn-primary m-2 p-2" type="" href="<?= $url_base.'auth/login.php'
         ?>">Iniciar sesión</a>
       <?php
         endif;
@@ -86,7 +86,7 @@ if($idUser != -1) {
           }else {
             echo '../../../public/img/logo.png';
           }
-        ?>" alt="logo" style="margin-left: auto; margin-right: auto; width: 50px;"/>Ferretería Roberto Cotlear EIRL</h5>
+        ?>" alt="logo" style="margin-left: auto; margin-right: auto; width: 50px;"/>Subliprint Leo</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
@@ -114,12 +114,8 @@ if($idUser != -1) {
             ?>"><i class="bi bi-house"></i> Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active rounded-pill" aria-current="page" href="<?= $url_base.'about/about.php'
-            ?>"><i class="bi bi-people"></i> Sobre nosotros</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link active rounded-pill" aria-current="page" href="
-            <?= $url_base.'products/products.php' ?>"><i class="bi bi-tools"></i> Catalogo Productos</a>
+            <?= $url_base.'products/products.php' ?>"><i class="bi bi-backpack"></i> Catalogo Productos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active rounded-pill" aria-current="page" href="
@@ -167,12 +163,8 @@ if($idUser != -1) {
             ?>"><i class="bi bi-house"></i> Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active rounded-pill" aria-current="page" href="<?= $url_base.'about/about.php'
-            ?>"><i class="bi bi-people"></i> Sobre nosotros</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link active rounded-pill" aria-current="page" href="
-            <?= $url_base.'products/products.php' ?>"><i class="bi bi-tools"></i> Catalogo Productos</a>
+            <?= $url_base.'products/products.php' ?>"><i class="bi bi-backpack"></i> Catalogo Productos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active rounded-pill" aria-current="page" href="

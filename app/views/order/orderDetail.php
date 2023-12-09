@@ -40,7 +40,7 @@ $total = $orderDetailsBuyUser[0]['total'];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../../../public/css/main.css">
     <!-- Favicon -->
-    <link rel="shortcut icon" href="https://res.cloudinary.com/dqpzipc8i/image/upload/v1701189129/ecommerce/hiu2muzuuzzsykiqljju.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://res.cloudinary.com/dqpzipc8i/image/upload/v1702060222/ecommerce/dzrsdoymsbzu225j8e3u.ico" type="image/x-icon">
     <script src="https://www.paypal.com/sdk/js?client-id=<?=PAYPAL_CLIENT_ID?>&currency=USD"></script>
 </head>
 
@@ -51,7 +51,7 @@ $total = $orderDetailsBuyUser[0]['total'];
   ?>
 <main class="container mb-3">
   <div class="row pt-5">
-    <h1 class="col-md-12 text-center pt-4 pb-3 text-truncate" style="background-color:var(--about-1);color:white;">
+    <h1 class="col-md-12 text-center pt-4 pb-3 text-truncate" style="background-color:rgba(1, 141, 821, .5); color:white;">
     <?php
       if($buy['stateBuy'] == 'Pagado'):
     ?>
@@ -323,7 +323,7 @@ $total = $orderDetailsBuyUser[0]['total'];
           </div>
 
         </div>
-        <div class="col-md">
+        <!-- <div class="col-md">
           <div class="container rounded border border-secondary mb-1" style="height:150px;">
             <div id="chat-box">
 
@@ -336,7 +336,7 @@ $total = $orderDetailsBuyUser[0]['total'];
                 <button type="" class="btn btn-outline-secondary rounded-circle"><i class="bi bi-send"></i></button>
               </span>
             </form>
-        </div>
+        </div> -->
        </div> 
        </div>
     </div>

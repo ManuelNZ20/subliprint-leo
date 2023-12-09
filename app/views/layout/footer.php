@@ -5,39 +5,14 @@ $data = $controllerInfoPage->getInformationPage()[0];
 ?>
 <!-- incluye todo lo que tiene que ver con navegación -->
 <footer class="bg-dark text-light p-5 bottom-0">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <h4 class="border-bottom border-4 border-bottom-title">Información de contacto</h4>
-                <p><i class="bi bi-geo-alt"></i> <?=$data['address']?></p>
-                <p class="text-truncate"><i class="bi bi-envelope"></i> <?=$data['email']?></p>
-                <p><i class="bi bi-telephone"></i> <?=$data['phone']?></p>
-            </div>
-            <div class="col-md-2">
-                <h4 class="border-bottom border-4 border-bottom-title">Enlaces útiles</h4>
-                <ul class="list-unstyled ">
-                    <li class="mb-3"><a href="<?=$url_base.'home/home.php' ?>" class="text-white text-decoration-none">Inicio</a></li>
-                    <li class="mb-3"><a href="<?=$url_base.'about/about.php'?>" class="text-white text-decoration-none">Acerca de nosotros</a></li>
-                    <li class="mb-3"><a href="<?=$url_base.'products/products.php' ?>" class="text-white text-decoration-none">Productos</a></li>
-                    <li class="mb-3"><a href="<?=$url_base.'about/contact.php' ?>" class="text-white text-decoration-none">Contacto</a></li>
-                </ul>
-            </div>
-            <div class="col-md-6">
-            <div class="card border-light h-100">
-                <div class="card-header">¿Quienes somos?</div>
-                <div class="card-body">
-                    Roberto Cotlear es una ferretería Piurana que cuenta con años de experiencia brindándole los mejores productos de las mejores marcas.
-                  </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <hr class="container">
     <div class="container">
         <div class="row gap-2">
             <h6 href="" class="col-md"><i class="bi bi-building-check"></i> <?=$data['name']?></h6>
-            <a href="https://www.google.com/maps?ll=-5.192676,-80.627593&z=16&t=m&hl=es-419&gl=PE&mapclient=embed&q=Av.+S%C3%A1nchez+Cerro+629+Piura+20001" class="link-offset-2 link-underline link-underline-opacity-0 link-secondary text-center align-items-center col-md-1 text-truncate" style="width:40px;"><i class="bi bi-geo-alt"></i></a>
-            <a href="" class="link-offset-2 link-underline link-underline-opacity-0 link-secondary text-center align-items-center col-md-1 text-truncate" style="width:40px;"><i class="bi bi-telephone"></i></a>
+            <a href="https://api.whatsapp.com/send?phone=%2B51981518655&data=ARD5bJFSxbZgBdTmUov3bmSnlKBli-ZJBjJxhzGlK2CYT3Oa51nnJ4CIROFUJevltehGqJP-06zgSwpeuy_bEuHtDMR4NfiO2Qo3u4wfZvRQEA-bxVvxFXTNZQJwyloCOFOo3lBsKz5QXXsbK3t8PLeczQ&source=FB_Page&app=facebook&entry_point=page_cta&fbclid=IwAR3uUucuj4XFwz-NMhbY0CH2CFJt4ckl0jlGWNz1-0ieFnqrn-kCzFd-Pkw" class="link-offset-2 link-underline link-underline-opacity-0 link-secondary text-center align-items-center col-md-1 text-truncate" style="width:40px;" target="_blank"><i class="bi bi-whatsapp"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=100084859817775&mibextid=ZbWKwL&_rdc=2&_rdr" class="link-offset-2 link-underline link-underline-opacity-0 link-secondary text-center align-items-center col-md-1 text-truncate" style="width:40px;" target="_blank"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/subliprint_leo/?igshid=OGQ5ZDc2ODk2ZA%3D%3D" class="link-offset-2 link-underline link-underline-opacity-0 link-secondary text-center align-items-center col-md-1 text-truncate" style="width:40px;" target="_blank"><i class="bi bi-instagram"></i></a>
+            <a href="https://www.tiktok.com/@subliprint_leo?_t=8hkG2iqs4MI&_r=1" class="link-offset-2 link-underline link-underline-opacity-0 link-secondary text-center align-items-center col-md-1 text-truncate" style="width:40px;" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2h0A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z" fill="#6c757d"/></svg></a>
         
         </div>
         

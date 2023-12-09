@@ -1,5 +1,7 @@
 :root{
-    --btn-color:rgba(203, 147, 81, 1);
+    /* --btn-color:rgba(203, 147, 81, 1); */
+    /* color primary de bootstrap */
+    --btn-color: #007bff;
 }
 /* interactiones de color del boton landing page */
 .btn.background-general {
@@ -7,11 +9,16 @@
     color:white;
 }
 .btn.background-general:hover{
-    border:.1px solid rgba(203, 147, 81, 0.8);
-    color:rgba(203, 147, 81, 1);
+    /* border:.1px solid rgba(203, 147, 81, 0.8); */
+    /* background-color: ; */
+    border:.1px solid rgba(0, 106, 219, 0.8);
+    color: rgba(0, 106, 219, 0.8);
+
 }
 .btn.background-general:active{
-    background-color:rgba(203, 147, 81, 0.8);
+    background-color: #007bff;
+    /* background-color:rgba(203, 147, 81, 0.8); */
+    /* color:rgba(203, 147, 81, 1); */
 }
 /* interancines de botones header */
 /* cuando el usuario da click */
@@ -34,12 +41,11 @@
 /* cuando el usuario pasa sobre el boton */
 .btn.btn-landing-page:hover,
 .btn.btn-login{
-    border:.1px solid rgba(203, 147, 81, 0.8);
-    color:rgba(203, 147, 81, 1);
+    border:.1px solid rgba(0, 106, 219, 0.8);
 }
 /* cuando el usuario da click */
 .btn.btn-landing-page:active{
-    background-color:rgba(203, 147, 81, 0.8);
+    background-color: #007bff;
 }
 .btn.btn-cart:active {
     border:none;

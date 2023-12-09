@@ -18,7 +18,7 @@ $cart = $cartController->getProducts();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../../../public/css/main.css">
     <!-- Favicon -->
-    <link rel="shortcut icon" href="https://res.cloudinary.com/dqpzipc8i/image/upload/v1701189129/ecommerce/hiu2muzuuzzsykiqljju.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://res.cloudinary.com/dqpzipc8i/image/upload/v1702060222/ecommerce/dzrsdoymsbzu225j8e3u.ico" type="image/x-icon">
 </head>
 
 
@@ -29,7 +29,7 @@ $cart = $cartController->getProducts();
   ?>
 <main class="container mb-3">
   <div class="row pt-5">
-    <h1 class="col-md-12 text-center pt-4 pb-3 text-truncate" style="background-color:var(--about-1);color:white;"><i class="bi bi-cart4"></i> Carrito de compras</h1>
+    <h1 class="col-md-12 text-center pt-4 pb-3 text-truncate" style="background-color:rgba(1, 141, 821, .5); color:white;"><i class="bi bi-cart4"></i> Carrito de compras</h1>
   </div>
   <div class="row mb-3 justify-content-between">
   <div class="<?php

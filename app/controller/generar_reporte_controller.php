@@ -24,7 +24,7 @@ class ReportePDF
     }
 
     public function setIcon() {
-        $this->pdf->Image('https://res.cloudinary.com/dqpzipc8i/image/upload/v1701632028/ecommerce/ypi6vyac45obw2mojjtj.png', 10, 10, 30);
+        $this->pdf->Image('https://res.cloudinary.com/dqpzipc8i/image/upload/v1702060240/ecommerce/gfmw862cxswwj10tyylk.png', 10, 10, 30);
     }
 
     public function generarPDF($nameReport)

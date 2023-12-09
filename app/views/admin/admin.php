@@ -34,7 +34,7 @@ $infoPageController = new InfoPageController();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../../../public/css/main.css">
     <!-- Favicon -->
-    <link rel="shortcut icon" href="https://res.cloudinary.com/dqpzipc8i/image/upload/v1701189129/ecommerce/hiu2muzuuzzsykiqljju.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://res.cloudinary.com/dqpzipc8i/image/upload/v1702060222/ecommerce/dzrsdoymsbzu225j8e3u.ico" type="image/x-icon">
 </head>
 
 
@@ -353,10 +353,23 @@ $infoPageController = new InfoPageController();
     ],
     datasets: [{
       label: "Total de pedidos por estado",
-      // color general segun este #cb9351
-      backgroundColor: "rgba(203, 147, 81, 0.2)",
-      // color de la linea
-      borderColor: "rgba(203, 147, 81, 1)",
+      // color de fondo azul 
+      backgroundColor: [
+        // Color azul
+        "rgba(54, 162, 235, 0.2)",
+        // Color rojo
+        "rgba(255, 99, 132, 0.2)",
+      ],
+      // backgroundColor: "rgba(203, 147, 81, 0.2)",
+      // backgroundColor: "rgba(203, 147, 81, 0.2)",
+      // color de la linea azul
+      borderColor:[
+        // Color azul
+        "rgba(54, 162, 235, 1)",
+        // Color rojo
+        "rgba(255, 99, 132, 1)",
+      
+      ],
       borderWidth: 5,
       data: [
         <?php
@@ -379,9 +392,19 @@ $infoPageController = new InfoPageController();
     datasets: [{
       label: "Usuarios por tipo",
       // color general segun este #cb9351
-      backgroundColor: "rgba(203, 147, 81, 0.2)",
+      backgroundColor: [
+        // Color azul
+        "rgba(54, 162, 235, 0.2)",
+        // Color verde
+        "rgba(75, 192, 192, 0.2)",
+      ],
       // color de la linea
-      borderColor: "rgba(203, 147, 81, 1)",
+      borderColor: [
+        // Color azul
+        "rgba(54, 162, 235, 1)",
+        // Color verde
+        "rgba(75, 192, 192, 1)",
+      ],
       borderWidth: 5,
       data: [
         <?php
@@ -465,9 +488,9 @@ $infoPageController = new InfoPageController();
     datasets: [{
       label: "Pedidos por mes",
       // color general segun este #cb9351
-      backgroundColor: "rgba(203, 147, 81, 0.2)",
+      backgroundColor: "rgba(75, 192, 192, 1)",
       // color de la linea
-      borderColor: "rgba(203, 147, 81, 1)",
+      borderColor: "rgba(75, 192, 192, 1)",
       data: [
         <?php
           $buy = $buyController->listOrdersBuyByMonth();
@@ -495,9 +518,9 @@ $infoPageController = new InfoPageController();
     datasets: [{
       label: "Ganacias por semana",
       // color general segun este #cb9351
-      backgroundColor: "rgba(203, 147, 81, 0.2)",
+      backgroundColor: "rgba(54, 162, 235, 0.2)",
       // color de la linea
-      borderColor: "rgba(203, 147, 81, 1)",
+      borderColor: "rgba(54, 162, 235, 0.2)",
       data: [
         <?php
           $orders = $orderController->listOrderBuyWeekChart();
