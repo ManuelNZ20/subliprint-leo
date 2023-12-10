@@ -1,4 +1,4 @@
-<h1>Proyecto Roberto Cotlear</h1>
+<h1>Proyecto Subliprint Leo</h1>
 <h2>Paquetes</h2>
 <h3>Pasos</h3>
 <ul>
