@@ -6,7 +6,7 @@ $_SESSION['last_page'] = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : '..
 <html lang="en">
 
 <head>
-  <title>Roberto Cotlear</title>
+  <title>Subliprint Leo</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
